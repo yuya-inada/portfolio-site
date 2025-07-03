@@ -8,15 +8,21 @@ export default {
         './storage/framework/views/*.php',
         './resources/views/**/*.blade.php',
         './resources/js/**/*.jsx',
+        './resources/js/**/*.js',
     ],
 
     theme: {
         extend: {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+                'crimson-text': ['"Crimson Text"', 'serif'],
             },
         },
     },
+
+    safelist: [
+        'accent-[#D4B08C]',
+    ],
 
     plugins: [forms],
 };

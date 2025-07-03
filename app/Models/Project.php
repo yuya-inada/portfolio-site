@@ -9,13 +9,19 @@ class Project extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'user_id',
         'title',
         'description',
         'url',
         'image_url',
         'github_url',
-        'created_at',
-        'updated_at',
+        'user_id',
     ];
+
+    public function skills(){
+        return $this->belongsToMany(Skill::class)->withTimestamps();
+    }
+
+    public function experiences(){
+        return $this->belongsToMany(Experience::class)->withTimestamps();
+    }
 }

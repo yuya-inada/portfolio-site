@@ -1,39 +1,53 @@
 import React, { useEffect, useState } from 'react';
-import AppLayout from '@/Layouts/AppLayout';
 import axios from 'axios';
+import AppLayout from '@/Layouts/AppLayout';
+import TopIntroSection from '@/Components/TopIntroSection';
+import SkillsSection from '@/Components/SkillsSection';
+import ExperienceSection from '@/Components/ExperienceSection';
+import ProjectsSection from '@/Components/ProjectsSection';
+import HobbiesSection from '@/Components/HobbiesSection';
+import ContactSection from '@/Components/ContactSection';
 
 export default function MainComponent() {
   const [projects, setProjects] = useState([]);
+  const [usedSkills, setSkills] = useState([]);
 
   useEffect(() => {
+    // プロジェクト取得
     axios.get('/api/projects')
       .then((res) => {
-        setProjects(res.data.data); // ← Resource形式のレスポンスに対応
+        setProjects(res.data.data || res.data);
       })
       .catch((err) => {
-        console.error('APIエラー:', err);
+        console.error('API取得失敗:', err);
       });
+
+    // 使用中のスキル取得
+    axios.get('/api/skills/used')
+    .then((res) => {
+      setSkills(res.data);
+    })
+    .catch((err) => {
+      console.error('スキル取得失敗: ', err);
+    });
   }, []);
+
+  function copyEmail(){
+    navigator.clipboard.writeText('youreMail@sample.com')
+      .then(() => alert('Copied!'))
+      .chatch((err) => console.error('コピーに失敗', err));
+  }
 
   return (
     <AppLayout>
-      <h1 className="text-3xl font-bold mb-4">ようこそ！</h1>
-      <p className="text-lg mb-6">これはReactで作られたポートフォリオサイトのホーム画面です。</p>
-
-      <h2 className="text-2xl font-semibold mb-2">プロジェクト一覧</h2>
-      <ul className="space-y-4">
-        {projects.map((project) => (
-          <li key={project.id} className="bg-white rounded shadow p-4">
-            <h3 className="text-xl font-bold">{project.title}</h3>
-            <p className="mb-2">{project.description}</p>
-            {project.url && (
-              <a href={project.url} className="text-blue-500 hover:underline" target="_blank" rel="noreferrer">
-                詳しく見る
-              </a>
-            )}
-          </li>
-        ))}
-      </ul>
+      <div className="bg-[#1C1C1C] min-h-screen">
+        <TopIntroSection copyEmail={copyEmail} />
+        <SkillsSection skills={usedSkills} />
+        <ExperienceSection />
+        <ProjectsSection projects={projects} />
+        <HobbiesSection />
+        <ContactSection />
+      </div>
     </AppLayout>
   );
 }

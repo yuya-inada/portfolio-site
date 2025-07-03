@@ -22,6 +22,7 @@ class ProjectResource extends JsonResource
             'url'         => $this->url,
             'github_url'  => $this->github_url,
             'image_url'   => $this->image_url,
+            'skills'      => $this->whenLoaded('skills'),
         ];
     }
 }

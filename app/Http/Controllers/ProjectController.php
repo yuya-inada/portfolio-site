@@ -15,7 +15,7 @@ class ProjectController extends Controller
     public function index()
     {
         // return Project::all();
-        return ProjectResource::collection(Project::all());
+        return ProjectResource::collection(Project::with('skills')->get());
     }
 
     /**
@@ -24,23 +24,39 @@ class ProjectController extends Controller
     // 詳細取得（GET /api/projexts/{id}）
     public function show(string $id)
     {
-        return Project::findOrFail($id);
+        return new ProjectResource(Project::with('skills')->findOrFail($id));
     }
 
     /**
      * Store a newly created resource in storage.
      */
     // 新規追加（POST /api/admin/projects）
-    public function store(Request $request)
-    {
+    public function store(Request $request){
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
             'url' => 'nullable|url',
+            'image_url' => 'nullable|url',
+            'github_url' => 'nullable|url',
+            'skill_ids' => 'array|nullable',
+            'skill_ids.*' => 'integer|exists:skills,id',
         ]);
 
+        // 🔑 Sanctumで認証されたユーザーのIDを取得
+        $validated['user_id'] = $request->user()->id;
+
+        // プロジェクト作成
         $project = Project::create($validated);
-        return response()->json($project, 201);
+
+        // スキルの関連付け
+        if (!empty($validated['skill_ids'])) {
+            $project->skills()->attach($validated['skill_ids']);
+        }
+
+        return response()->json([
+            'message' => 'Project created successfully.',
+            'data' => $project->load('skills'), // スキル情報も一緒に返す
+        ], 201);
     }
 
     /**

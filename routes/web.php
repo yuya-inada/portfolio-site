@@ -5,32 +5,51 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-// Route::get('/', function () {
-//     return Inertia::render('Welcome', [
-//         'canLogin' => Route::has('login'),
-//         'canRegister' => Route::has('register'),
-//         'laravelVersion' => Application::VERSION,
-//         'phpVersion' => PHP_VERSION,
-//     ]);
-// });
-
+// メインページ
 Route::get('/', function(){
     return Inertia::render('MainComponent');
 });
 
+// Hobiiesページを追加
+Route::get('/hobbies', function () {
+    return Inertia::render('Hobbies');
+});
 
+// コンタクトページ追加
+Route::get('/contact', function(){
+    return Inertia::render('Contact');
+});
+
+// プロジェクトページ追加
+Route::get('/projects', function(){
+    return Inertia::render('Projects');
+});
+
+// 自己紹介ページ追加
+Route::get('/about', function(){
+    return Inertia::render('TopIntro');
+});
+
+// スキル紹介ページ追加
+Route::get('/skills', function(){
+    return Inertia::render('Skills');
+});
+
+// 経歴ページ追加
+Route::get('/experience', function(){
+    return Inertia::render('Experience');
+});
+
+// Dashboard
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+// プロフィール編集など（認証要）
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
-
-// Route::get('/', function () {
-//     return 'Hello from Web!';
-// });
 
 require __DIR__.'/auth.php';
