@@ -41,6 +41,26 @@ export default function ProjectsSection({ projects }) {
     }));
   }
 
+  const handleUpdateProject = async () => {
+    try{
+      await axios.put(`/api/projects/${editingProject.id}`, {
+        ...formData,
+        skill_ids: selectedSkillIds,
+      });
+
+      // 閉じる＆初期化
+      setIsProjectModalOpen(false);
+      setEditingProject(null);
+      // あとで、更新後のUXを決める。
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      setTimeout(() => {
+        window.location.reload();
+      }, 500); // 0.5秒後にリロード
+    }catch(error){
+      console.error("プロジェクト更新失敗:", error);
+      alert("更新に失敗しました。");
+    }
+  };
   return (
     <>
     <section className="py-20 mx-7" id="projects">
@@ -177,7 +197,15 @@ export default function ProjectsSection({ projects }) {
           >
             Close
           </button>
+          {/* 編集保存ボタン */}
+          <button
+              onClick={handleUpdateProject}
+              className="mt-5 w-full bg-[#D4B08C] text-[#2A2A2A] rounded px-4 py-2 hover:bg-[#b2946f]"
+            >
+              Save
+          </button>
         </div>
+        
       </div>
     )}
     </>

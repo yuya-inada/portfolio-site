@@ -66,14 +66,34 @@ class ProjectController extends Controller
     public function update(Request $request, string $id)
     {
         $project = Project::findOrFail($id);
+
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
             'url' => 'nullable|url',
+            'image_url' => 'nullable|url',
+            'github_url' => 'nullable|url',
+            'skill_ids' => 'array|nullable',
+            'skill_ids.*' => 'integer|exists:skills,id',
         ]);
 
-        $project->update($validated);
-        return response()->json($project);
+        $project->update([
+            'title' => $validated['title'],
+            'description' => $validated['description'] ?? null,
+            'url' => $validated['url'] ?? null,
+            'image_url' => $validated['image_url'] ?? null,
+            'github_url' => $validated['github_url'] ?? null,
+        ]);
+
+        // スキルの関連付け
+        if (!empty($validated['skill_ids'])) {
+            $project->skills()->sync($validated['skill_ids']);
+        }
+
+        return response()->json([
+            'message' => 'Project updated successfully.',
+            'data' => new ProjectResource($project->load('skills')),
+        ]);
     }
 
     /**
