@@ -15,6 +15,7 @@ Route::middleware('auth:sanctum')->prefix('admin')->group(function (){
 // 一時認証を外して動作テスト
 // Route::middleware('auth:sanctum')->put('/projects/{id}', [ProjectController::class, 'update']);
 Route::put('/projects/{id}', [ProjectController::class, 'update']);
+Route::put('/experiences/{id}', [ExperienceController::class, 'update']);
 
 // 一般公開用（誰でもアクセス可）
 // Projects

@@ -8,34 +8,20 @@ import ProjectsSection from '@/Components/ProjectsSection';
 import HobbiesSection from '@/Components/HobbiesSection';
 import ContactSection from '@/Components/ContactSection';
 
-export default function MainComponent() {
-  const [projects, setProjects] = useState([]);
+export default function MainComponent({ projects }) {
   const [usedSkills, setSkills] = useState([]);
 
   useEffect(() => {
-    // プロジェクト取得
-    axios.get('/api/projects')
-      .then((res) => {
-        setProjects(res.data.data || res.data);
-      })
-      .catch((err) => {
-        console.error('API取得失敗:', err);
-      });
-
-    // 使用中のスキル取得
+    // 使用中のスキルだけ取得
     axios.get('/api/skills/used')
-    .then((res) => {
-      setSkills(res.data);
-    })
-    .catch((err) => {
-      console.error('スキル取得失敗: ', err);
-    });
+      .then((res) => setSkills(res.data))
+      .catch((err) => console.error('スキル取得失敗: ', err));
   }, []);
 
-  function copyEmail(){
+  function copyEmail() {
     navigator.clipboard.writeText('youreMail@sample.com')
       .then(() => alert('Copied!'))
-      .chatch((err) => console.error('コピーに失敗', err));
+      .catch((err) => console.error('コピーに失敗', err));
   }
 
   return (

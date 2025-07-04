@@ -30,4 +30,23 @@ class ExperienceController extends Controller
             'data' => $experience,
         ], 201);
     }
+
+    public function update(Request $request, $id){
+        $experience = Experience::findOrFail($id);
+        $experience->update([
+            'title'       => $request->input('title'),
+            'company'     => $request->input('company'),
+            'period'      => $request->input('period'),
+            'description' => $request->input('description'),
+        ]);
+
+        // プロジェクト同期処理（experience_projects 中間テーブル更新）
+        if($request->has('projects')){
+            $experience->projects()->sync($request->input('projects'));
+        }
+
+        return response()->json([
+            'message' => 'Experinece updated successfully.'
+        ]);
+    }
 }

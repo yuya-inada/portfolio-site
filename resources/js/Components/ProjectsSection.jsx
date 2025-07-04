@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
-export default function ProjectsSection({ projects }) {
+export default function ProjectsSection({ projects: initialProjects }) {
+  const [projects, setProjects] = useState(initialProjects || []);
   const [editingProject, setEditingProject] = useState(null);
   const [isProjectModalOpen, setIsProjectModalOpen] = useState(false);
   const [formData, setFormData] = useState({
@@ -42,25 +43,28 @@ export default function ProjectsSection({ projects }) {
   }
 
   const handleUpdateProject = async () => {
-    try{
-      await axios.put(`/api/projects/${editingProject.id}`, {
+    try {
+      const resPut = await axios.put(`/api/projects/${editingProject.id}`, {
         ...formData,
         skill_ids: selectedSkillIds,
       });
-
-      // 閉じる＆初期化
+  
+      console.log("PUT成功:", resPut);
+  
+      const resGet = await axios.get('/api/projects');
+      console.log("GET成功:", resGet);
+  
+      const updatedList = resGet.data.data || resGet.data;
+  
+      setProjects(updatedList);
       setIsProjectModalOpen(false);
       setEditingProject(null);
-      // あとで、更新後のUXを決める。
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      setTimeout(() => {
-        window.location.reload();
-      }, 500); // 0.5秒後にリロード
-    }catch(error){
-      console.error("プロジェクト更新失敗:", error);
+    } catch (error) {
+      console.error("本当に失敗？:", error);
       alert("更新に失敗しました。");
     }
   };
+
   return (
     <>
     <section className="py-20 mx-7" id="projects">

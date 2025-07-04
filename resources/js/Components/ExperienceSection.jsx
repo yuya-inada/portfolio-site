@@ -14,18 +14,80 @@ export default function ExperienceSection() {
     );
   };
 
+  const [editingExperience, setEditingExperience] = useState(null);
+  const [isExperienceModalOpen, setIsExperienceModalOpen] = useState(false);
+  const [experienceFormData, setFormData] = useState({
+    title: '',
+    company: '',
+    period: '',
+    description: '',
+    projects: [],
+  });
+  const [experienceSkillIds, setExperienceSkillIds] = useState([]);
+
   useEffect(() => {
     axios.get('/api/experiences')
       .then(res => setExperiences(res.data.data || res.data))
       .catch(err => console.error('経験取得エラー:', err));
   }, []);
 
+  const handleUpdateExperience = async () => {
+    try {
+      if (!editingExperience) return;
+  
+      await axios.put(`/api/experiences/${editingExperience.id}`, {
+        title: experienceFormData.title,
+        company: experienceFormData.company,
+        period: experienceFormData.period,
+        description: experienceFormData.description,
+        projects: experienceFormData.projects,
+      });
+      // 成功時：データを更新してモーダルを閉じる
+      const res = await axios.get('/api/experiences');
+      setExperiences(res.data.data || res.data);
+      setIsExperienceModalOpen(false);
+      setEditingExperience(null);
+    } catch (err) {
+      console.error('更新エラー:', err);
+      alert('更新に失敗しました');
+    }
+  };
+
+  const [allProjects, setAllProjects] = useState([]);
+
+  useEffect(() => {
+    axios.get('/api/projects')
+    .then(res => {
+      setAllProjects(res.data.data || res.data);
+      console.log('全プロジェクト:', res.data.data || res.data);
+    })
+    .catch(err => console.error('プロジェクト取得エラー:', err));
+  }, []);
+
   return (
+    <>
     <section className="py-20" id="experience">
       <h2 className="text-4xl font-playfair-display text-[#D4B08C] mb-12 text-center">Experience</h2>
       <div className="space-y-12 max-w-4xl mx-auto px-4">
         {experiences.map(exp => (
-          <div key={exp.id} className="bg-[#2A2A2A] p-8 rounded-lg border border-[#3D3D3D] transform transition-all duration-300 hover:scale-105 hover:bg-[#4A4A4A] hover:border-[#D4B08C] hover:shadow-[0_0_15px_rgba(212,176,140,0.3)]">
+          <div key={exp.id} className=" relative bg-[#2A2A2A] p-8 rounded-lg border border-[#3D3D3D] transform transition-all duration-300 hover:scale-105 hover:bg-[#4A4A4A] hover:border-[#D4B08C] hover:shadow-[0_0_15px_rgba(212,176,140,0.3)]">
+            {/* 編集ボタン */}
+            <button
+              onClick={() => {
+                setEditingExperience(exp);
+                setFormData({
+                  title: exp.title,
+                  company: exp.company,
+                  period: exp.period,
+                  description: exp.description,
+                  projects: exp.projects?.map(p => p.id) || [],
+                });
+                setIsExperienceModalOpen(true);
+              }}
+              className="absolute top-7 right-4 text-sm bg-[#D4B08C] text-[#2A2A2A] px-3 py-1 rounded hover:bg-[#b2946f]"
+            >
+              Edit
+            </button>
             <h3 className="text-2xl font-playfair-display text-[#D4B08C]">{exp.title}</h3>
             <p className="text-[#A8A8A8] italic mt-2 ml-5">{exp.company} • {exp.period}</p>
             <p className="mt-4 text-lg text-white ml-5">{exp.description}</p>
@@ -127,5 +189,91 @@ export default function ExperienceSection() {
         ))}
       </div>
     </section>
+    {/* モーダル */}
+    {isExperienceModalOpen && editingExperience && (
+      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div className="relative bg-[#1C1C1C] p-6 rounded-lg max-w-md w-full text-white border border-white shadow-2xl shadow-white/60">
+          <h2 className="text-xl mb-4 text-[#D4B08C]">Edit Experience</h2>
+
+          {/* フォーム */}
+          {/* Title */}
+          <label className="block mb-2 text-sm text-gray-300">Title</label>
+          <input
+            type="text"
+            value={experienceFormData.title}
+            onChange={e => setFormData({ ...experienceFormData, title: e.target.value })}
+            className="w-full mb-4 px-3 p-2 bg-[#333] border border-[#555] rounded text-white focus:outline-none focus:ring-2 focus:ring-[#D4B08C]"
+          />
+          {/* Company */}
+          <label className="block mb-2 text-sm text-gray-300">Company</label>
+          <input
+            type="text"
+            value={experienceFormData.company}
+            onChange={e => setFormData({ ...experienceFormData, company: e.target.value })}
+            className="w-full mb-4 px-3 p-2 bg-[#333] border border-[#555] rounded text-white focus:outline-none focus:ring-2 focus:ring-[#D4B08C]"
+          />
+          {/* Period */}
+          <label className="block mb-2 text-sm text-gray-300">Period</label>
+          <input
+            type="text"
+            value={experienceFormData.period}
+            onChange={e => setFormData({ ...experienceFormData, period: e.target.value })}
+            className="w-full mb-4 px-3 p-2 bg-[#333] border border-[#555] rounded text-white focus:outline-none focus:ring-2 focus:ring-[#D4B08C]"
+          />
+          {/* Description */}
+          <label className="block mb-2 text-sm text-gray-300">Description</label>
+          <input
+            type="text"
+            value={experienceFormData.description}
+            onChange={e => setFormData({ ...experienceFormData, description: e.target.value })}
+            className="w-full mb-4 px-3 p-2 bg-[#333] border border-[#555] rounded text-white focus:outline-none focus:ring-2 focus:ring-[#D4B08C]"
+          />
+          {/* Select Projects */}
+          <label className="block mb-2 text-sm text-gray-300 mt-4">Related Projects</label>
+          <div className="max-h-40 overflow-y-auto bg-[#1C1C1C] p-2 rounded border border-[#444]">
+            {allProjects.map(project => (
+              <label key={project.id} className="flex items-center mb-1 text-sm text-white">
+                <input 
+                  type="checkbox"
+                  checked={experienceFormData.projects?.includes(project.id) ?? falase}
+                  onChange={e => {
+                    if(e.target.checked){
+                      setFormData(prev => ({
+                        ...prev,
+                        projects: [...prev.projects,project.id]
+                      }));
+                    }else{
+                      setFormData(prev => ({
+                        ...prev,
+                        projects: prev.projects.filter(id => id !== project.id)
+                      }));
+                    }
+                  }}
+                  className="mr-2 text-[#D4B08C]"
+                />
+                {project.title}
+              </label>
+            ))}
+          </div>
+
+          {/* Button */}
+            {/* Save button */}
+            <button
+              onClick={handleUpdateExperience}
+              className="mt-5 w-full bg-[#D4B08C] text-[#2A2A2A] rounded px-4 py-2 hover:bg-[#b2946f]"
+            >
+              Save
+            </button>
+            {/* Close button */}
+            <button
+              onClick={() => setIsExperienceModalOpen(false)}
+              className="absolute top-7 right-5 text-sm bg-[#D4B08C] text-[#2A2A2A] rounded px-2 py-1 hover:bg-[#b2946f]"
+            >
+              Close
+            </button>
+        </div>
+      </div>
+    )}
+  </>
   );
 }

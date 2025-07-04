@@ -4,10 +4,12 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Models\Project;
 
-// メインページ
-Route::get('/', function(){
-    return Inertia::render('MainComponent');
+// // メインページ
+Route::get('/', function () {
+    $projects = Project::with('skills')->get();
+    return Inertia::render('MainComponent', ['projects' => $projects]);
 });
 
 // Hobiiesページを追加
@@ -21,8 +23,9 @@ Route::get('/contact', function(){
 });
 
 // プロジェクトページ追加
-Route::get('/projects', function(){
-    return Inertia::render('Projects');
+Route::get('/projects', function () {
+    $projects = App\Models\Project::with('skills')->get();  // 必要なデータを取得
+    return Inertia::render('Projects', ['projects' => $projects]);
 });
 
 // 自己紹介ページ追加
