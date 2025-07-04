@@ -42,8 +42,15 @@ class ProjectController extends Controller
             'skill_ids.*' => 'integer|exists:skills,id',
         ]);
 
-        // 🔑 Sanctumで認証されたユーザーのIDを取得
-        $validated['user_id'] = $request->user()->id;
+        // $user = $request->user();
+        // if(!$user){
+        //     return response()->json(['message' => '未承認のユーザーです。'], 401);
+        // }
+        // // 🔑 Sanctumで認証されたユーザーのIDを取得
+        // $validated['user_id'] = user()->id;
+
+        // 開発中の仮ユーザー：一時対応
+        $validated['user_id'] = 1;
 
         // プロジェクト作成
         $project = Project::create($validated);

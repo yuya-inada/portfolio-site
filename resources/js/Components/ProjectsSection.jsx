@@ -42,35 +42,79 @@ export default function ProjectsSection({ projects: initialProjects }) {
     }));
   }
 
-  const handleUpdateProject = async () => {
-    try {
-      const resPut = await axios.put(`/api/projects/${editingProject.id}`, {
-        ...formData,
-        skill_ids: selectedSkillIds,
-      });
+  // const handleUpdateProject = async () => {
+  //   try {
+  //     const resPut = await axios.put(`/api/projects/${editingProject.id}`, {
+  //       ...formData,
+  //       skill_ids: selectedSkillIds,
+  //     });
   
-      console.log("PUT成功:", resPut);
+  //     console.log("PUT成功:", resPut);
   
-      const resGet = await axios.get('/api/projects');
-      console.log("GET成功:", resGet);
+  //     const resGet = await axios.get('/api/projects');
+  //     console.log("GET成功:", resGet);
   
-      const updatedList = resGet.data.data || resGet.data;
+  //     const updatedList = resGet.data.data || resGet.data;
   
-      setProjects(updatedList);
+  //     setProjects(updatedList);
+  //     setIsProjectModalOpen(false);
+  //     setEditingProject(null);
+  //   } catch (error) {
+  //     console.error("本当に失敗？:", error);
+  //     alert("更新に失敗しました。");
+  //   }
+  // };
+
+  const handleSaveProject = async() => {
+    try{
+      if(editingProject){
+        // 更新処理
+        await axios.put(`/api/projects/${editingProject.id}`,{
+          ...formData,
+          skill_ids: selectedSkillIds,
+        });
+      }else{
+        await axios.post(`/api/projects`, {
+          ...formData,
+          skill_ids: selectedSkillIds,
+        });
+      }
+
+      // 共通処理：最新取得してリスト更新
+      const res = await axios.get('/api/projects');
+      setProjects(res.data.data || res.data);
       setIsProjectModalOpen(false);
       setEditingProject(null);
-    } catch (error) {
-      console.error("本当に失敗？:", error);
-      alert("更新に失敗しました。");
+    }catch(error){
+      console.error("保存失敗:", error);
+      alert("保存に失敗しました。");
     }
   };
-
   return (
     <>
     <section className="py-20 mx-7" id="projects">
-      <h2 className="text-4xl font-playfair-display text-[#D4B08C] mb-12 text-center">
-        Projects
-      </h2>
+      <div className="relative max-w-6xl max-auto mb-6">
+        <h2 className="text-4xl font-playfair-display text-[#D4B08C] mb-12 text-center">
+          Projects
+        </h2>
+        <button
+          onClick={() => {
+            setFormData({
+              title: '',
+              description: '',
+              image_url: '',
+              url: '',
+              github_url: '',
+            });
+            setSelectedSkillIds([]);
+            setEditingProject(null);
+            setIsProjectModalOpen(true);
+          }}
+          className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-[#D4B08C] text-[#2A2A2A] rounded px-4 py-2 hover:bg-[b2946f]"
+        >
+          New Project
+        </button>
+      </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
         {projects.map((project) => (
           <div
@@ -121,7 +165,7 @@ export default function ProjectsSection({ projects: initialProjects }) {
     </section>
 
     {/* モーダル画面 */}
-    {isProjectModalOpen && editingProject && (
+    {isProjectModalOpen && (
       <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
         <div className="relative bg-[#1C1C1C] p-6 rounded-lg max-w-md w-full text-white border border-white shadow-2xl shadow-white/60">
           <h2 className="text-xl mb-4 text-[#D4B08C]">Editing Project</h2>
@@ -203,7 +247,7 @@ export default function ProjectsSection({ projects: initialProjects }) {
           </button>
           {/* 編集保存ボタン */}
           <button
-              onClick={handleUpdateProject}
+              onClick={handleSaveProject}
               className="mt-5 w-full bg-[#D4B08C] text-[#2A2A2A] rounded px-4 py-2 hover:bg-[#b2946f]"
             >
               Save
