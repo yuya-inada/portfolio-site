@@ -31,27 +31,33 @@ export default function ExperienceSection() {
       .catch(err => console.error('経験取得エラー:', err));
   }, []);
 
-  const handleUpdateExperience = async () => {
-    try {
-      if (!editingExperience) return;
-  
-      await axios.put(`/api/experiences/${editingExperience.id}`, {
+  const handleSaveExperience = async() => {
+    try{
+      const payload = {
         title: experienceFormData.title,
         company: experienceFormData.company,
         period: experienceFormData.period,
         description: experienceFormData.description,
         projects: experienceFormData.projects,
-      });
-      // 成功時：データを更新してモーダルを閉じる
+      };
+      if(editingExperience){
+        // 編集モード：PUTで更新
+        await axios.put(`/api/experiences/${editingExperience.id}`, payload);
+      }else{
+        // 新規モード：POSTで作成
+        await axios.post(`/api/experiences`, payload);
+      }
+
+      // 再取得して状態更新
       const res = await axios.get('/api/experiences');
       setExperiences(res.data.data || res.data);
       setIsExperienceModalOpen(false);
       setEditingExperience(null);
-    } catch (err) {
-      console.error('更新エラー:', err);
-      alert('更新に失敗しました');
+    }catch(err){
+      console.error('保存エラー:', err);
+      alert('保存に失敗しました。');
     }
-  };
+  }
 
   const [allProjects, setAllProjects] = useState([]);
 
@@ -67,8 +73,28 @@ export default function ExperienceSection() {
   return (
     <>
     <section className="py-20" id="experience">
-      <h2 className="text-4xl font-playfair-display text-[#D4B08C] mb-12 text-center">Experience</h2>
-      <div className="space-y-12 max-w-4xl mx-auto px-4">
+      <div className="relative max-w-4xl mx-auto mb-12 px-4">
+        <h2 className="text-4xl font-playfair-display text-[#D4B08C] text-center">
+          Experience
+        </h2>
+        <button
+          onClick={() => {
+            setFormData({
+              title: '',
+              company: '',
+              period: '',
+              description: '',
+              projects: [],
+            });
+            setEditingExperience(null); // 新規作成なのでnull
+            setIsExperienceModalOpen(true);
+          }}
+          className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-[#D4B08C] text-[#2A2A2A] px-4 py-2 rounded hover:bg-[#b2946f]"
+        >
+          New Experience
+        </button>
+      </div>
+        <div className="space-y-12 max-w-4xl mx-auto px-4">
         {experiences.map(exp => (
           <div key={exp.id} className=" relative bg-[#2A2A2A] p-8 rounded-lg border border-[#3D3D3D] transform transition-all duration-300 hover:scale-105 hover:bg-[#4A4A4A] hover:border-[#D4B08C] hover:shadow-[0_0_15px_rgba(212,176,140,0.3)]">
             {/* 編集ボタン */}
@@ -190,10 +216,12 @@ export default function ExperienceSection() {
       </div>
     </section>
     {/* モーダル */}
-    {isExperienceModalOpen && editingExperience && (
+    {isExperienceModalOpen && (
       <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
         <div className="relative bg-[#1C1C1C] p-6 rounded-lg max-w-md w-full text-white border border-white shadow-2xl shadow-white/60">
-          <h2 className="text-xl mb-4 text-[#D4B08C]">Edit Experience</h2>
+          <h2 className="text-xl mb-4 text-[#D4B08C]">
+            {editingExperience ? 'Editing Experience' : 'Create Experinece'}
+          </h2>
 
           {/* フォーム */}
           {/* Title */}
@@ -259,10 +287,10 @@ export default function ExperienceSection() {
           {/* Button */}
             {/* Save button */}
             <button
-              onClick={handleUpdateExperience}
+              onClick={handleSaveExperience}
               className="mt-5 w-full bg-[#D4B08C] text-[#2A2A2A] rounded px-4 py-2 hover:bg-[#b2946f]"
             >
-              Save
+              {editingExperience ? 'Save' : 'Create'}
             </button>
             {/* Close button */}
             <button

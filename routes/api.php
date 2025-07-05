@@ -18,6 +18,7 @@ Route::middleware('auth:sanctum')->prefix('admin')->group(function (){
     Route::put('/experiences/{id}', [ExperienceController::class, 'update']);
     // Route::middleware('auth:sanctum')->post('/projects', [ProjectController::class, 'store']);
     Route::post('/projects', [ProjectController::class, 'store']);
+    Route::post('/experiences', [ExperienceController::class, 'store']);
 
 // 一般公開用（誰でもアクセス可）
 // Projects
@@ -32,5 +33,4 @@ Route::get('/skills/used', [SkillController::class, 'useInProjects']);
 
 // Experience
 Route::get('/experiences', [ExperienceController::class, 'index']);
-Route::post('/experiences', [ExperienceController::class, 'store']);
 

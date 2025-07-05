@@ -21,13 +21,19 @@ class ExperienceController extends Controller
             'company' => 'required|string|max:255',
             'period' => 'required|string|max:255',
             'description' => 'nullable|string',
+            'projects' => 'array',
         ]);
 
         $experience = Experience::create($validated);
 
+        // プロジェクトとの関連付け
+        if($request->has('projects')){
+            $experience->projects()->sync($request->input('projects'));
+        }
+
         return response()->json([
             'message' => 'Experience created successfully.',
-            'data' => $experience,
+            'data' => new ExperienceResource($experience->load('projects.skills')),
         ], 201);
     }
 

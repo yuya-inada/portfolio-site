@@ -146,7 +146,9 @@ export default function ProjectsSection({ projects: initialProjects, setSkills})
     {isProjectModalOpen && (
       <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
         <div className="relative bg-[#1C1C1C] p-6 rounded-lg max-w-md w-full text-white border border-white shadow-2xl shadow-white/60">
-          <h2 className="text-xl mb-4 text-[#D4B08C]">Editing Project</h2>
+          <h2 className="text-xl mb-4 text-[#D4B08C]">
+            {editingProject ? 'Editing Project' : 'Create Project'}
+            </h2>
 
           {/* Title */}
           <label className="block mb-2 text-sm text-gray-300">Title</label>
@@ -238,7 +240,7 @@ export default function ProjectsSection({ projects: initialProjects, setSkills})
               onClick={handleSaveProject}
               className="mt-5 w-full bg-[#D4B08C] text-[#2A2A2A] rounded px-4 py-2 hover:bg-[#b2946f]"
             >
-              Save
+              {editingProject ? 'Save' : 'Create'}
           </button>
         </div>
         
