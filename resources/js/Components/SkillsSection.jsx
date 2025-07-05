@@ -8,7 +8,7 @@ export default function SkillsSection({ skills }) {
       </h2>
 
       <div className="px-4">
-        <div className="mx-auto max-w-5xl flex flex-wrap justify-start md:justify-center gap-6">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6 mx-auto max-w-5xl">
           {Array.isArray(skills) && skills.length > 0 ? (
             skills.map(skill => (
               <div
