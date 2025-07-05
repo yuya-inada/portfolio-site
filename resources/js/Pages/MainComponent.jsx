@@ -30,7 +30,7 @@ export default function MainComponent({ projects }) {
         <TopIntroSection copyEmail={copyEmail} />
         <SkillsSection skills={usedSkills} />
         <ExperienceSection />
-        <ProjectsSection projects={projects} />
+        <ProjectsSection projects={projects} setSkills={setSkills} />
         <HobbiesSection />
         <ContactSection />
       </div>

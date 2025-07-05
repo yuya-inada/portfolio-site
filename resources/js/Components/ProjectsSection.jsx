@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-export default function ProjectsSection({ projects: initialProjects }) {
+export default function ProjectsSection({ projects: initialProjects, setSkills}) {
   const [projects, setProjects] = useState(initialProjects || []);
   const [editingProject, setEditingProject] = useState(null);
   const [isProjectModalOpen, setIsProjectModalOpen] = useState(false);
@@ -42,29 +42,6 @@ export default function ProjectsSection({ projects: initialProjects }) {
     }));
   }
 
-  // const handleUpdateProject = async () => {
-  //   try {
-  //     const resPut = await axios.put(`/api/projects/${editingProject.id}`, {
-  //       ...formData,
-  //       skill_ids: selectedSkillIds,
-  //     });
-  
-  //     console.log("PUT成功:", resPut);
-  
-  //     const resGet = await axios.get('/api/projects');
-  //     console.log("GET成功:", resGet);
-  
-  //     const updatedList = resGet.data.data || resGet.data;
-  
-  //     setProjects(updatedList);
-  //     setIsProjectModalOpen(false);
-  //     setEditingProject(null);
-  //   } catch (error) {
-  //     console.error("本当に失敗？:", error);
-  //     alert("更新に失敗しました。");
-  //   }
-  // };
-
   const handleSaveProject = async() => {
     try{
       if(editingProject){
@@ -79,10 +56,11 @@ export default function ProjectsSection({ projects: initialProjects }) {
           skill_ids: selectedSkillIds,
         });
       }
-
       // 共通処理：最新取得してリスト更新
-      const res = await axios.get('/api/projects');
-      setProjects(res.data.data || res.data);
+      const resProject = await axios.get('/api/projects');
+      setProjects(resProject.data.data || res.data);
+      const resSkills = await axios.get('/api/skills/used');
+      setSkills(resSkills.data);
       setIsProjectModalOpen(false);
       setEditingProject(null);
     }catch(error){
@@ -208,6 +186,16 @@ export default function ProjectsSection({ projects: initialProjects }) {
             value={formData.github_url}
             onChange={handleChange}
             className="w-full mb-4 px-3 py-2 bg-[#333] border border-[#555] rounded text-white"
+          />
+
+          {/* Image URL */}
+          <label className="block mb-2 text-sm text-gray-300">Image URL</label>
+          <input 
+            type="url"
+            name="image_url"
+            value={formData.image_url}
+            onChange={handleChange}
+            className="w-full mb-4 px-3 py-2 bg-[#333] border border-[#555] rounded tex-white"
           />
 
           {/* Used Skills */}
