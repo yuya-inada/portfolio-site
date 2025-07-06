@@ -1,7 +1,13 @@
+import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 
-export default function ProjectsSection({ projects: initialProjects, setSkills}) {
+export default function ProjectsSection(props) {
+  console.log('ProjectsSection props:', props);
+  const { projects: initialProjects, setSkills, onProjectsUpdated } = props;
   const [projects, setProjects] = useState(initialProjects || []);
+  useEffect(() => {
+    setProjects(initialProjects || []);
+  }, [initialProjects]);
   const [editingProject, setEditingProject] = useState(null);
   const [isProjectModalOpen, setIsProjectModalOpen] = useState(false);
   const [formData, setFormData] = useState({
@@ -9,6 +15,7 @@ export default function ProjectsSection({ projects: initialProjects, setSkills})
     description: '',
     url: '',
     github_url: '',
+    image_url: '',
   });
 
   // useStateにスキル一覧と選択中のスキルIDを追加
@@ -30,6 +37,7 @@ export default function ProjectsSection({ projects: initialProjects, setSkills})
         description: editingProject.description || '',
         url: editingProject.url || '',
         github_url: editingProject.github_url || '',
+        image_url: editingProject.image_url || '',
       });
       setSelectedSkillIds(editingProject.skills?.map(skill => skill.id) || []);
     }
@@ -42,31 +50,66 @@ export default function ProjectsSection({ projects: initialProjects, setSkills})
     }));
   }
 
-  const handleSaveProject = async() => {
-    try{
-      if(editingProject){
+  const handleSaveProject = async () => {
+    console.log('handleSaveProject onProjectsUpdated:', onProjectsUpdated);
+    try {
+      if (editingProject) {
         // 更新処理
-        await axios.put(`/api/projects/${editingProject.id}`,{
+        await axios.put(`/api/projects/${editingProject.id}`, {
           ...formData,
           skill_ids: selectedSkillIds,
+        }, {
+          validateStatus: status => status >= 200 && status < 300
         });
-      }else{
+      } else {
+        // 新規作成処理
         await axios.post(`/api/projects`, {
           ...formData,
           skill_ids: selectedSkillIds,
+        }, {
+          validateStatus: status => status >= 200 && status < 300
         });
       }
-      // 共通処理：最新取得してリスト更新
+  
+      // プロジェクト再取得
       const resProject = await axios.get('/api/projects');
-      setProjects(resProject.data.data || res.data);
+      setProjects(resProject.data.data || resProject.data);
+  
+      // 使用スキル再取得（setSkillsが渡されているときだけ呼ぶ）
       const resSkills = await axios.get('/api/skills/used');
-      setSkills(resSkills.data);
+      if (typeof setSkills === 'function') {
+        setSkills(resSkills.data);
+      } else {
+        console.warn('setSkills is not a function, skipped updating skills.');
+      }
+  
+      // コールバックがある場合は呼ぶ
+      if (typeof onProjectsUpdated === 'function') {
+        await onProjectsUpdated();
+      }
+  
       setIsProjectModalOpen(false);
       setEditingProject(null);
-    }catch(error){
-      console.error("保存失敗:", error);
-      alert("保存に失敗しました。");
+    } catch (error) {
+      console.error('保存失敗:', error);
+      console.error('レスポンス:', error.response?.data);
+      alert('保存に失敗しました。');
     }
+  };
+
+  const groupedSkills = allSkills.reduce((acc, skill) => {
+    const category = skill.category || 'Uncategorized';
+    if(!acc[category]) acc[category] = [];
+    acc[category].push(skill);
+    return acc;
+  }, {});
+
+  const [openCategories, setOpenCategories] = useState({});
+  const toggleCategory = (category) => {
+    setOpenCategories(prev => ({
+      ...prev,
+      [category]: !prev[category],
+    }));
   };
   return (
     <>
@@ -145,7 +188,7 @@ export default function ProjectsSection({ projects: initialProjects, setSkills})
     {/* モーダル画面 */}
     {isProjectModalOpen && (
       <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-        <div className="relative bg-[#1C1C1C] p-6 rounded-lg max-w-md w-full text-white border border-white shadow-2xl shadow-white/60">
+        <div className="relative bg-[#1C1C1C] p-6 rounded-lg w-full max-w-3xl max-h-[90vh] overflow-y-auto text-white border border-white shadow-2xl shadow-white/60 sm:max-w-lg sm:p-4 sm:rounded-md sm:text-sm">
           <h2 className="text-xl mb-4 text-[#D4B08C]">
             {editingProject ? 'Editing Project' : 'Create Project'}
             </h2>
@@ -197,33 +240,60 @@ export default function ProjectsSection({ projects: initialProjects, setSkills})
             name="image_url"
             value={formData.image_url}
             onChange={handleChange}
-            className="w-full mb-4 px-3 py-2 bg-[#333] border border-[#555] rounded tex-white"
+            className="w-full mb-4 px-3 py-2 bg-[#333] border border-[#555] rounded text-white"
           />
 
-          {/* Used Skills */}
+          {/* Used Skills or Select Skills (Accordion view) */}
           <div className="mb-4">
             <label className="block mb-2 text-sm text-gray-300">Skills</label>
-            <div className="flex flex-wrap gap-2">
-              {allSkills.map(skill => (
-                <label
-                  key={skill.id}
-                  className="flex items-center space-x-2 text-sm text-white"
-                >
-                    <input 
-                      type="checkbox"
-                      style={{ accentColor: '#D4B08C' }}
-                      className="text-[#D4B08C] w-4 h-4"
-                      checked={selectedSkillIds.includes(skill.id)}
-                      onChange={() => {
-                        setSelectedSkillIds(prev => 
-                          prev.includes(skill.id)
-                            ? prev.filter(id => id !== skill.id)
-                            : [...prev,skill.id]
-                        );
-                      }}
-                    />
-                  <span>{skill.name}</span>
-                </label>
+            <div className="space-y-2">
+            {Object.entries(groupedSkills).map(([category, skills]) => (
+                <div key={category}>
+                  {/* トグルボタン */}
+                  <button
+                    type="button"
+                    onClick={() => toggleCategory(category)}
+                    className="w-1/2 flex justify-between items-center px-4 py-2 bg-[#2A2A2A] text-[#D4B08C] font-semibold"
+                  >
+                    <span className="text-left">{category}</span>
+                    <span 
+                      className={`ml-auto transform transition-transform duration-300 ${openCategories[category] ? 'rotate-180' : ''}`}
+                    >
+                      ▼
+                    </span>
+                  </button>
+
+                  {/* アコーディオン本体 */}
+                  <div
+                    className={`transition-all duration-700 ease-in-out overflow-hidden px-3 bg-[#1C1C1C] flex flex-wrap gap-2 ${
+                      openCategories[category]
+                        ? 'max-h-[500px] opacity-100 py-3'
+                        : 'max-h-0 opacity-0 py-0'
+                    }`}
+                  >
+                    {skills.map(skill => (
+                      <label
+                        key={skill.id}
+                        className="flex items-center space-x-2 text-sm text-white"
+                      >
+                        <input
+                          type="checkbox"
+                          style={{ accentColor: '#D4B08C' }}
+                          className="w-4 h-4 text-[#D4B08C]"
+                          checked={selectedSkillIds.includes(skill.id)}
+                          onChange={() => {
+                            setSelectedSkillIds(prev =>
+                              prev.includes(skill.id)
+                                ? prev.filter(id => id !== skill.id)
+                                : [...prev, skill.id]
+                            );
+                          }}
+                        />
+                        <span>{skill.name}</span>
+                      </label>
+                    ))}
+                  </div>
+                </div>
               ))}
             </div>
           </div>
@@ -231,7 +301,7 @@ export default function ProjectsSection({ projects: initialProjects, setSkills})
           {/* Close Button */}
           <button
             onClick={() => setIsProjectModalOpen(false)}
-            className="absolute top-7 right-5 text-sm bg-[#D4B08C] text-[#2A2A2A] rounded px-2 py-1 hover:bg-[#b2946f]"
+            className="absolute top-5 right-5 text-sm bg-[#D4B08C] text-[#2A2A2A] rounded px-2 py-1 hover:bg-[#b2946f]"
           >
             Close
           </button>

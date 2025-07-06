@@ -48,7 +48,6 @@ class ProjectController extends Controller
         // }
         // // 🔑 Sanctumで認証されたユーザーのIDを取得
         // $validated['user_id'] = user()->id;
-
         // 開発中の仮ユーザー：一時対応
         $validated['user_id'] = 1;
 
@@ -62,8 +61,8 @@ class ProjectController extends Controller
 
         return response()->json([
             'message' => 'Project created successfully.',
-            'data' => $project->load('skills'), // スキル情報も一緒に返す
-        ], 201);
+            'data' => new ProjectResource($project->load('skills')),// スキル情報も一緒に返す
+        ], 200);
     }
 
     /**

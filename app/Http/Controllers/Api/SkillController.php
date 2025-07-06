@@ -12,6 +12,8 @@ class SkillController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'icon' => 'nullable|string|max:255',
+            'description' => 'nullable|string|max:255',
+            'category' => 'nullable|string|max:255',
         ]);
         $skill = Skill::create($validated);
 

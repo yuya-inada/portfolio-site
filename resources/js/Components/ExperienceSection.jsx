@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 
-export default function ExperienceSection() {
-  const [experiences, setExperiences] = useState([]);
+export default function ExperienceSection({ projects = [], reloadProjects, experiences: initialExperiences }) {
+  const [experiences, setExperiences] = useState(initialExperiences || []);
   const [expandedProjectIds, setExpandedProjectIds] = useState([]);
   const contentRefs = useRef({});
 
@@ -23,6 +23,13 @@ export default function ExperienceSection() {
     description: '',
     projects: [],
   });
+  useEffect(() => {
+  if (isExperienceModalOpen) {
+    console.log('モーダルが開きました');
+    console.log('projects:', projects);
+    console.log('experienceFormData.projects:', experienceFormData.projects);
+  }
+}, [isExperienceModalOpen]);
   const [experienceSkillIds, setExperienceSkillIds] = useState([]);
 
   useEffect(() => {
@@ -59,16 +66,7 @@ export default function ExperienceSection() {
     }
   }
 
-  const [allProjects, setAllProjects] = useState([]);
-
-  useEffect(() => {
-    axios.get('/api/projects')
-    .then(res => {
-      setAllProjects(res.data.data || res.data);
-      console.log('全プロジェクト:', res.data.data || res.data);
-    })
-    .catch(err => console.error('プロジェクト取得エラー:', err));
-  }, []);
+ 
 
   return (
     <>
@@ -124,11 +122,7 @@ export default function ExperienceSection() {
                 <ul className="space-y-2">
                   {exp.projects.map(project => {
                     const isOpen = expandedProjectIds.includes(project.id);
-
-                    // 各projectにrefをセット（初回のみ）
-                    if (!contentRefs.current[project.id]) {
-                      contentRefs.current[project.id] = React.createRef();
-                    }
+                    const latestProject = Array.isArray(projects) ? projects.find(p => p.id === project.id) || project : project;
 
                     return (
                       <React.Fragment key={project.id}>
@@ -138,12 +132,12 @@ export default function ExperienceSection() {
                             onClick={() => toggleProject(project.id)}
                             className="cursor-pointer hover:text-[#D4B08C]"
                           >
-                            ・{project.title}
+                            ・{latestProject.title}
                           </span>
 
                           <div className="flex gap-2 flex-wrap">
-                            {project.skills?.length > 0 ? (
-                              project.skills.map(skill => (
+                            {latestProject.skills?.length > 0 ? (
+                              latestProject.skills.map(skill => (
                                 <span key={skill.id} className="text-xs bg-[#1C1C1C] text-[#D4B08C] rounded-full px-2 py-1">
                                   {skill.name}
                                 </span>
@@ -171,16 +165,16 @@ export default function ExperienceSection() {
                             ✕
                           </button>
                           {/* 説明 */}
-                          {project.description ? (
-                            <p className="mb-2">{project.description}</p>
+                          {latestProject.description ? (
+                            <p className="mb-2">{latestProject.description}</p>
                           ) : (
                             <p className="mb-2 text-gray-400">説明がありません。</p>
                           )}
 
                           {/* URLリンク */}
-                          {project.url && project.url.trim() !== '' ? (
+                          {latestProject.url && latestProject.url.trim() !== '' ? (
                             <a
-                              href={project.url}
+                              href={latestProject.url}
                               target="_blank"
                               rel="noopener noreferrer"
                               className="text-[#D4B08C] underline mr-4 block"
@@ -192,9 +186,9 @@ export default function ExperienceSection() {
                           )}
 
                           {/* GitHubリンク */}
-                          {typeof project.github_url === 'string' && project.github_url.trim() !== '' ? (
+                          {typeof latestProject.github_url === 'string' && latestProject.github_url.trim() !== '' ? (
                             <a
-                              href={project.github_url}
+                              href={latestProject.github_url}
                               target="_blank"
                               rel="noopener noreferrer"
                               className="text-[#D4B08C] underline block mt-1"
@@ -258,32 +252,34 @@ export default function ExperienceSection() {
           />
           {/* Select Projects */}
           <label className="block mb-2 text-sm text-gray-300 mt-4">Related Projects</label>
-          <div className="max-h-40 overflow-y-auto bg-[#1C1C1C] p-2 rounded border border-[#444]">
-            {allProjects.map(project => (
-              <label key={project.id} className="flex items-center mb-1 text-sm text-white">
-                <input 
-                  type="checkbox"
-                  checked={experienceFormData.projects?.includes(project.id) ?? falase}
-                  onChange={e => {
-                    if(e.target.checked){
-                      setFormData(prev => ({
-                        ...prev,
-                        projects: [...prev.projects,project.id]
-                      }));
-                    }else{
-                      setFormData(prev => ({
-                        ...prev,
-                        projects: prev.projects.filter(id => id !== project.id)
-                      }));
-                    }
-                  }}
-                  className="mr-2 text-[#D4B08C]"
-                />
-                {project.title}
-              </label>
-            ))}
+          <div className="max-h-40 overflow-y-auto bg-[#1C1C1C] p-2 rounded border border-[#444] space-y-1">
+            {projects.map(project => {
+              const isChecked = experienceFormData.projects.includes(project.id);
+              return (
+                <label key={project.id} className="block text-sm text-white">
+                  <input
+                    type="checkbox"
+                    checked={isChecked}
+                    onChange={e => {
+                      if (e.target.checked) {
+                        setFormData(prev => ({
+                          ...prev,
+                          projects: [...prev.projects, project.id],
+                        }));
+                      } else {
+                        setFormData(prev => ({
+                          ...prev,
+                          projects: prev.projects.filter(id => id !== project.id),
+                        }));
+                      }
+                    }}
+                    className="mr-2 text-[#D4B08C]"
+                  />
+                  {project.title}
+                </label>
+              );
+            })}
           </div>
-
           {/* Button */}
             {/* Save button */}
             <button
