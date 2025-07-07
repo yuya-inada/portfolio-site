@@ -112,4 +112,4 @@ MIT
 ## 👤 作者 / Author
 
 - 稲田 雄也 / Yuya Inada  
-- GitHub: [inadayuuya](https://github.com/inadayuuya)
+- GitHub: [inadayuuya] https://github.com/yuya-inada
