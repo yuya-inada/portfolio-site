@@ -1,61 +1,115 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# ポートフォリオサイト / Portfolio Website
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+このプロジェクトは、Laravel（バックエンド）とReact（フロントエンド）を統合した開発スタックで構築した、開発者自身のスキル・経験・プロジェクトを紹介するためのポートフォリオサイトです。
 
-## About Laravel
+This project is a portfolio website built with an integrated stack of Laravel (backend) and React (frontend), designed to showcase the developer's skills, experience, and projects.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## ✅ 主な機能 / Main Features
+```
+- プロジェクト・スキル・経験の管理（CRUD機能）
+　 Manage projects, skills, and experiences (CRUD)
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- 経歴とプロジェクトの紐づけ（多対多リレーション）
+　 Link projects to experiences (many-to-many relation)
 
-## Learning Laravel
+- アコーディオン式の詳細表示機能
+　 Accordion UI for project details
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- 管理画面を使ったデータ編集
+　 Admin panel for editing content
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+- GitHubリンクや外部URL表示対応
+　 GitHub and external link support
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- ダークテーマUI対応
+　 Dark-theme compatible UI
+```
+---
 
-## Laravel Sponsors
+## 🛠 技術スタック / Tech Stack
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+- **Frontend:** React, Tailwind CSS
+- **Backend:** Laravel 10, RESTful API
+- **Routing:** Inertia.js
+- **Database:** MySQL
+- **Others:** Axios, Postman (API testing), Vite
 
-### Premium Partners
+---
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+## 📁 ディレクトリ構成 / Directory Structure
+```
+resources/
+├── js/
+│   ├── Pages/          # ページ単位のコンポーネント
+│   └── Components/     # 再利用可能なUI部品
+routes/
+├── web.php             # フロント用ルーティング
+└── api.php             # API用ルーティング
+app/
+├── Models/             # Eloquentモデル
+└── Http/
+    ├── Controllers/    # Laravelコントローラー
+    └── Resources/      # APIリソース定義
+```
 
-## Contributing
+## 🧪 開発・テストツール / Development & Testing Tools
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### 🛠️ 使用ツール / Tools Used
 
-## Code of Conduct
+- **Postman:**  
+　APIエンドポイントのテスト・検証に使用  
+　*Used for testing and verifying API endpoints*
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+- **Laravel Tinker:**  
+　開発時のデータ操作に活用  
+　*Utilized for manipulating data during development*
 
-## Security Vulnerabilities
+- **Browser DevTools:**  
+　UI検証とレスポンシブ対応の調整に利用  
+　*Used for UI inspection and responsive design adjustments*
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+---
 
-## License
+## 🚀 セットアップ手順 / Setup Instructions
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```bash
+# クローン & 移動
+git clone https://github.com/yuya-inada/your-portfolio-site.git
+cd your-portfolio-site
+
+# バックエンドセットアップ / Backend setup
+composer install
+cp .env.example .env
+php artisan key:generate
+php artisan migrate --seed
+
+# フロントエンドセットアップ / Frontend setup
+npm install
+npm run dev
+
+# サーバー起動 / Server startup
+php artisan serve
+
+---
+
+## 📮 API確認済みエンドポイント例 / Sample Verified API Endpoints
+
+- `GET /api/projects`
+- `GET /api/skills/used`
+- `GET /api/experiences`
+- `POST /api/experiences`（Postman使用 / Postman usage）
+
+---
+
+## 📜 ライセンス / License
+
+MIT
+
+---
+
+## 👤 作者 / Author
+
+- 稲田 雄也 / Yuya Inada  
+- GitHub: [inadayuuya](https://github.com/inadayuuya)
