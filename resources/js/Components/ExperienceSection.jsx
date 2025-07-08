@@ -2,9 +2,16 @@ import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 import { Trash } from 'lucide-react';
 
-export default function ExperienceSection({ projects = [], reloadProjects, experiences: initialExperiences }) {
+export default function ExperienceSection({ 
+  projects = [],
+  experiences: initialExperiences
+ }){
   const [experiences, setExperiences] = useState(initialExperiences || []);
+  useEffect(() => {
+    setExperiences(initialExperiences || []);
+  },[initialExperiences]);
   const [expandedProjectIds, setExpandedProjectIds] = useState([]);
+
   const contentRefs = useRef({});
 
   const toggleProject = (projectId) => {
@@ -33,12 +40,6 @@ export default function ExperienceSection({ projects = [], reloadProjects, exper
 }, [isExperienceModalOpen]);
   const [experienceSkillIds, setExperienceSkillIds] = useState([]);
 
-  useEffect(() => {
-    axios.get('/api/experiences')
-      .then(res => setExperiences(res.data.data || res.data))
-      .catch(err => console.error('経験取得エラー:', err));
-  }, []);
-
   const handleSaveExperience = async() => {
     try{
       const payload = {
@@ -54,11 +55,13 @@ export default function ExperienceSection({ projects = [], reloadProjects, exper
       }else{
         // 新規モード：POSTで作成
         await axios.post(`/api/experiences`, payload);
+        await reloadExperiences();
       }
 
       // 再取得して状態更新
-      const res = await axios.get('/api/experiences');
-      setExperiences(res.data.data || res.data);
+      if(typeof reloadExperiences === 'function'){
+        await reloadExperiences();
+      }
       setIsExperienceModalOpen(false);
       setEditingExperience(null);
     }catch(err){

@@ -117,8 +117,13 @@ export default function ProjectsSection(props) {
     if(!confirmed) return;
     try{
       await axios.delete(`/api/projects/${id}`);
+      // 最新のプロジェクト取得
       const res = await axios.get('/api/projects');
       setProjects(res.data.data || res.data);
+      // onProjectsUpdated が渡されていたら実行
+      if(typeof onProjectsUpdated === 'function'){
+        await onProjectsUpdated();
+      }
       alert('プロジェクトを削除しました');
     }catch(err){
       console.error('削除失敗:', err);
