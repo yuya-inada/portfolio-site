@@ -6,6 +6,10 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Models\Project;
 
+Route::get('/admin-login', function(){
+    return Inertia::render('AdminLogin');
+});
+
 // // メインページ
 Route::get('/', function () {
     $projects = Project::with('skills')->get();
