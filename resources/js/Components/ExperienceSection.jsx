@@ -86,7 +86,7 @@ export default function ExperienceSection({
     }
   };
  
-
+  const isAuthenticated = !!localStorage.getItem('suth_token');
   return (
     <>
     <section className="py-20" id="experience">
@@ -94,51 +94,55 @@ export default function ExperienceSection({
         <h2 className="text-4xl font-playfair-display text-[#D4B08C] text-center">
           Experience
         </h2>
-        <button
-          onClick={() => {
-            setFormData({
-              title: '',
-              company: '',
-              period: '',
-              description: '',
-              projects: [],
-            });
-            setEditingExperience(null); // 新規作成なのでnull
-            setIsExperienceModalOpen(true);
-          }}
-          className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-[#D4B08C] text-[#2A2A2A] px-4 py-2 rounded hover:bg-[#b2946f]"
-        >
-          New Experience
-        </button>
+        {isAuthenticated && (
+          <button
+            onClick={() => {
+              setFormData({
+                title: '',
+                company: '',
+                period: '',
+                description: '',
+                projects: [],
+              });
+              setEditingExperience(null); // 新規作成なのでnull
+              setIsExperienceModalOpen(true);
+            }}
+            className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-[#D4B08C] text-[#2A2A2A] px-4 py-2 rounded hover:bg-[#b2946f]"
+          >
+            New Experience
+          </button>
+        )}
       </div>
         <div className="space-y-12 max-w-4xl mx-auto px-4">
         {experiences.map(exp => (
           <div key={exp.id} className=" relative bg-[#2A2A2A] p-8 rounded-lg border border-[#3D3D3D] transform transition-all duration-300 hover:scale-105 hover:bg-[#4A4A4A] hover:border-[#D4B08C] hover:shadow-[0_0_15px_rgba(212,176,140,0.3)]">
-            {/* 編集・削除ボタン */}
-            <div className="absolute top-7 right-4 flex gap-2">
-              <button
-                onClick={() => {
-                  setEditingExperience(exp);
-                  setFormData({
-                    title: exp.title,
-                    company: exp.company,
-                    period: exp.period,
-                    description: exp.description,
-                    projects: exp.projects?.map(p => p.id) || [],
-                  });
-                  setIsExperienceModalOpen(true);
-                }}
-                className="text-sm bg-[#D4B08C] text-[#2A2A2A] px-3 py-1 rounded hover:bg-[#b2946f]"
-              >
-                Edit
-              </button>
-              <button
-                onClick={() => handleDeleteExperience(exp.id)}
-                className="text-[#FF6B6B] border border-[#FF6B6B] px-3 py-1 rounded hover:bg-[#FF6B6B] hover:text-black transition"
-              >
-                <Trash className="w-4 h-4 mr-l" />
-              </button>
-            </div>
+            {isAuthenticated && (
+              //編集・削除ボタン
+              <div className="absolute top-7 right-4 flex gap-2">
+                <button
+                  onClick={() => {
+                    setEditingExperience(exp);
+                    setFormData({
+                      title: exp.title,
+                      company: exp.company,
+                      period: exp.period,
+                      description: exp.description,
+                      projects: exp.projects?.map(p => p.id) || [],
+                    });
+                    setIsExperienceModalOpen(true);
+                  }}
+                  className="text-sm bg-[#D4B08C] text-[#2A2A2A] px-3 py-1 rounded hover:bg-[#b2946f]"
+                >
+                  Edit
+                </button>
+                <button
+                  onClick={() => handleDeleteExperience(exp.id)}
+                  className="text-[#FF6B6B] border border-[#FF6B6B] px-3 py-1 rounded hover:bg-[#FF6B6B] hover:text-black transition"
+                >
+                  <Trash className="w-4 h-4 mr-l" />
+                </button>
+              </div>
+            )}
             <h3 className="text-2xl font-playfair-display text-[#D4B08C]">{exp.title}</h3>
             <p className="text-[#A8A8A8] italic mt-2 ml-5">{exp.company} • {exp.period}</p>
             <p className="mt-4 text-lg text-white ml-5">{exp.description}</p>
