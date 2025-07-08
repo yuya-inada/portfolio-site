@@ -55,4 +55,15 @@ class ExperienceController extends Controller
             'message' => 'Experinece updated successfully.'
         ]);
     }
+
+    public function destroy($id){
+        $experience = Experience::findOrFail($id);
+        // 中間テーブルの関連データを削除
+        $experience->projects()->detach();
+        // 本体を削除
+        $experience->delete();
+        return response()->json([
+            'message' => 'Experience deleted successfully.'
+        ]);
+    }
 }

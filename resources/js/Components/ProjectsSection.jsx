@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
+import { Trash } from 'lucide-react';
 
 export default function ProjectsSection(props) {
   console.log('ProjectsSection props:', props);
@@ -111,6 +112,21 @@ export default function ProjectsSection(props) {
       [category]: !prev[category],
     }));
   };
+
+  const handleDeleteProject = async(id) => {
+    const confirmed = window.confirm('このプロジェクトを本当に削除しますか？');
+    if(!confirmed) return;
+    try{
+      await axios.delete(`/api/projects/${id}`);
+      const res = await axios.get('/api/projects');
+      setProjects(res.data.data || res.data);
+      alert('プロジェクトを削除しました');
+    }catch(err){
+      console.error('削除失敗:', err);
+      alert('削除に失敗しました');
+    }
+  };
+
   return (
     <>
     <section className="py-20 mx-7" id="projects">
@@ -146,15 +162,23 @@ export default function ProjectsSection(props) {
               <h3 className="text-2xl font-playfair-display text-[#D4B08C]">
                 {project.title}
               </h3>
-              <button
-                onClick={() => {
-                  setEditingProject(project);
-                  setIsProjectModalOpen(true);
-                }}
-                className="text-md bg-[#D4B08C] text-[#2A2A2A] rounded px-2 py-1 hover:bg-[#b2946f]"
-              >
-                Edit
-              </button>
+              <div className="absolute top-7 right-4 flex gap-2">
+                <button
+                  onClick={() => {
+                    setEditingProject(project);
+                    setIsProjectModalOpen(true);
+                  }}
+                  className="text-md bg-[#D4B08C] text-[#2A2A2A] rounded px-2 py-1 hover:bg-[#b2946f]"
+                >
+                  Edit
+                </button>
+                <button
+                  onClick={() => handleDeleteProject(project.id)}
+                  className="text-[#FF6B6B] border border-[#FF6B6B] px-3 py-1 rounded hover:bg-[#FF6B6B] hover:text-black transition"
+                >
+                  <Trash className="w-4 h-4 mr-l" />
+                </button>
+              </div>
             </div>
             <p className="mt-4 text-lg text-white">{project.description}</p>
             {project.url && (

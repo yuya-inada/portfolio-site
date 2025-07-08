@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
+import { Trash } from 'lucide-react';
 
 export default function ExperienceSection({ projects = [], reloadProjects, experiences: initialExperiences }) {
   const [experiences, setExperiences] = useState(initialExperiences || []);
@@ -66,6 +67,20 @@ export default function ExperienceSection({ projects = [], reloadProjects, exper
     }
   }
 
+  // Experience 削除
+  const handleDeleteExperience = async(id) => {
+    const confirmed = window.confirm('本当にこの経歴を削除しますか？');
+    if(!confirmed) return;
+    try{
+      await axios.delete(`/api/experiences/${id}`);
+      const res = await axios.get('/api/experiences');
+      setExperiences(res.data.data || res.data);
+      alert('削除しました');
+    }catch(err){
+      console.error('削除失敗:', err);
+      alert('削除に失敗しました');
+    }
+  };
  
 
   return (
@@ -95,23 +110,31 @@ export default function ExperienceSection({ projects = [], reloadProjects, exper
         <div className="space-y-12 max-w-4xl mx-auto px-4">
         {experiences.map(exp => (
           <div key={exp.id} className=" relative bg-[#2A2A2A] p-8 rounded-lg border border-[#3D3D3D] transform transition-all duration-300 hover:scale-105 hover:bg-[#4A4A4A] hover:border-[#D4B08C] hover:shadow-[0_0_15px_rgba(212,176,140,0.3)]">
-            {/* 編集ボタン */}
-            <button
-              onClick={() => {
-                setEditingExperience(exp);
-                setFormData({
-                  title: exp.title,
-                  company: exp.company,
-                  period: exp.period,
-                  description: exp.description,
-                  projects: exp.projects?.map(p => p.id) || [],
-                });
-                setIsExperienceModalOpen(true);
-              }}
-              className="absolute top-7 right-4 text-sm bg-[#D4B08C] text-[#2A2A2A] px-3 py-1 rounded hover:bg-[#b2946f]"
-            >
-              Edit
-            </button>
+            {/* 編集・削除ボタン */}
+            <div className="absolute top-7 right-4 flex gap-2">
+              <button
+                onClick={() => {
+                  setEditingExperience(exp);
+                  setFormData({
+                    title: exp.title,
+                    company: exp.company,
+                    period: exp.period,
+                    description: exp.description,
+                    projects: exp.projects?.map(p => p.id) || [],
+                  });
+                  setIsExperienceModalOpen(true);
+                }}
+                className="text-sm bg-[#D4B08C] text-[#2A2A2A] px-3 py-1 rounded hover:bg-[#b2946f]"
+              >
+                Edit
+              </button>
+              <button
+                onClick={() => handleDeleteExperience(exp.id)}
+                className="text-[#FF6B6B] border border-[#FF6B6B] px-3 py-1 rounded hover:bg-[#FF6B6B] hover:text-black transition"
+              >
+                <Trash className="w-4 h-4 mr-l" />
+              </button>
+            </div>
             <h3 className="text-2xl font-playfair-display text-[#D4B08C]">{exp.title}</h3>
             <p className="text-[#A8A8A8] italic mt-2 ml-5">{exp.company} • {exp.period}</p>
             <p className="mt-4 text-lg text-white ml-5">{exp.description}</p>

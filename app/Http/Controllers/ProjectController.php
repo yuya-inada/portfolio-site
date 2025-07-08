@@ -109,8 +109,10 @@ class ProjectController extends Controller
     public function destroy(string $id)
     {
         $project = Project::findOrFail($id);
+        // 中間テーブルからの関連付けを先に削除
+        $project->experiences()->detach();
         $project->delete();
 
-        return response()->json(['message' => '削除しました']);
+        return response()->json(['message' => 'Project deleted successfully.']);
     }
 }

@@ -19,6 +19,8 @@ Route::middleware('auth:sanctum')->prefix('admin')->group(function (){
     // Route::middleware('auth:sanctum')->post('/projects', [ProjectController::class, 'store']);
     Route::post('/projects', [ProjectController::class, 'store']);
     Route::post('/experiences', [ExperienceController::class, 'store']);
+    Route::delete('/experiences/{id}', [ExperienceController::class, 'destroy']);
+    Route::delete('/projects/{id}', [ProjectController::class, 'destroy']);
 
 // 一般公開用（誰でもアクセス可）
 // Projects
