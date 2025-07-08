@@ -1,12 +1,27 @@
 import React, { useState } from 'react';
 import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Link, usePage } from '@inertiajs/react'; // <- Inertia.js 用
+import { Link, usePage } from '@inertiajs/react';
+import { useNavigate } from 'react-router-dom';
+import axios from '../axiosSetup';
+import { router } from '@inertiajs/react';
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const toggleMenu = () => setMenuOpen(!menuOpen);
   const closeMenu = () => setMenuOpen(false);
+  // const navigate = useNavigate();
+  const isAuthenticated = !!localStorage.getItem('auth_token');
+
+  const handleLogout = async () => {
+    try{
+      await axios.post('/admin/logout');
+      localStorage.removeItem('auth_token');
+      window.location.reload();
+    }catch(err){
+      console.error('ログアウト失敗:', err);
+    }
+  };
 
   return (
     <header className="fixed top-0 left-0 right-0 bg-[#2A2A2A] border-b border-[#3D3D3D] z-50 text-white">
@@ -22,6 +37,22 @@ export default function Header() {
           <nav className="hidden lg:flex space-x-6">
             <NavLinks />
           </nav>
+          {/* ログイン・ログアウト表示 */}
+          {isAuthenticated ? (
+            <button
+              onClick={handleLogout}
+              className="text-sm text-white hover:underline"
+            >
+              Logout
+            </button>
+          ) : (
+            <button
+              onClick={() => router.visit('/admin-login')}
+              className="text-sm text-white hover:underline"
+            >
+              Admin Login
+            </button>
+          )}
           {/* モバイル用メニューアイコン */}
           <button onClick={toggleMenu} className="lg:hidden z-50 text-[#D4B08C]">
             {menuOpen ? <X size={28} /> : <Menu size={28} />}

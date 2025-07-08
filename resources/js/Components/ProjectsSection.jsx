@@ -131,6 +131,8 @@ export default function ProjectsSection(props) {
     }
   };
 
+  const isAuthenticated = !!localStorage.getItem('auth_token');
+
   return (
     <>
     <section className="py-20 mx-7" id="projects">
@@ -138,23 +140,25 @@ export default function ProjectsSection(props) {
         <h2 className="text-4xl font-playfair-display text-[#D4B08C] mb-12 text-center">
           Projects
         </h2>
-        <button
-          onClick={() => {
-            setFormData({
-              title: '',
-              description: '',
-              image_url: '',
-              url: '',
-              github_url: '',
-            });
-            setSelectedSkillIds([]);
-            setEditingProject(null);
-            setIsProjectModalOpen(true);
-          }}
-          className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-[#D4B08C] text-[#2A2A2A] rounded px-4 py-2 hover:bg-[b2946f]"
-        >
-          New Project
-        </button>
+        {isAuthenticated && (
+            <button
+            onClick={() => {
+              setFormData({
+                title: '',
+                description: '',
+                image_url: '',
+                url: '',
+                github_url: '',
+              });
+              setSelectedSkillIds([]);
+              setEditingProject(null);
+              setIsProjectModalOpen(true);
+            }}
+            className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-[#D4B08C] text-[#2A2A2A] rounded px-4 py-2 hover:bg-[b2946f]"
+          >
+            New Project
+          </button>
+        )}
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
         {projects.map((project) => (
@@ -166,23 +170,25 @@ export default function ProjectsSection(props) {
               <h3 className="text-2xl font-playfair-display text-[#D4B08C]">
                 {project.title}
               </h3>
-              <div className="absolute top-7 right-4 flex gap-2">
-                <button
-                  onClick={() => {
-                    setEditingProject(project);
-                    setIsProjectModalOpen(true);
-                  }}
-                  className="text-md bg-[#D4B08C] text-[#2A2A2A] rounded px-2 py-1 hover:bg-[#b2946f]"
-                >
-                  Edit
-                </button>
-                <button
-                  onClick={() => handleDeleteProject(project.id)}
-                  className="text-[#FF6B6B] border border-[#FF6B6B] px-3 py-1 rounded hover:bg-[#FF6B6B] hover:text-black transition"
-                >
-                  <Trash className="w-4 h-4 mr-l" />
-                </button>
-              </div>
+              {isAuthenticated && (
+                <div className="absolute top-7 right-4 flex gap-2">
+                  <button
+                    onClick={() => {
+                      setEditingProject(project);
+                      setIsProjectModalOpen(true);
+                    }}
+                    className="text-md bg-[#D4B08C] text-[#2A2A2A] rounded px-2 py-1 hover:bg-[#b2946f]"
+                  >
+                    Edit
+                  </button>
+                  <button
+                    onClick={() => handleDeleteProject(project.id)}
+                    className="text-[#FF6B6B] border border-[#FF6B6B] px-3 py-1 rounded hover:bg-[#FF6B6B] hover:text-black transition"
+                  >
+                    <Trash className="w-4 h-4 mr-l" />
+                  </button>
+                </div>
+              )}
             </div>
             <p className="mt-4 text-lg text-white">{project.description}</p>
             {project.url && (
