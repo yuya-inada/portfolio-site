@@ -73,7 +73,7 @@ export default function MainComponent() {
         <ProjectsSection 
           projects={projects}
           setSkills={setSkills}
-          onProjectsUpdate={() => {
+          onProjectsUpdated={() => {
             reloadProjects();
             reloadExperiences();
           }}
