@@ -13,16 +13,22 @@ export default function MainComponent() {
   const [usedSkills, setSkills] = useState([]);
   const [experiences, setExperiences] = useState([]);
 
-  const reloadProjects = () =>{
-    axios.get('/api/projects')
-    .then((res) => setProjects(res.data.data || res.data))
-    .catch((err) => console.error('API取得失敗:', err));
+  const reloadProjects = async () => {
+    try {
+      const res = await axios.get('/api/projects');
+      setProjects(res.data.data || res.data);
+    } catch (err) {
+      console.error('API取得失敗:', err);
+    }
   };
-
-  const reloadExperiences = () => {
-    axios.get('/api/experiences')
-    .then((res) => setExperiences(res.data.data || res.data))
-    .catch((err) => console.error('経歴取得失敗:', err));
+  
+  const reloadExperiences = async () => {
+    try {
+      const res = await axios.get('/api/experiences');
+      setExperiences(res.data.data || res.data);
+    } catch (err) {
+      console.error('経歴取得失敗:', err);
+    }
   };
 
   useEffect(() => {
@@ -33,26 +39,6 @@ export default function MainComponent() {
     .then((res) => setSkills(res.data))
     .catch((err) => console.error('スキル取得失敗:', err));
   }, []);
-
-  // useEffect(() => {
-  //   // プロジェクト取得
-  //   axios.get('/api/projects')
-  //     .then((res) => {
-  //       setProjects(res.data.data || res.data);
-  //     })
-  //     .catch((err) => {
-  //       console.error('API取得失敗:', err);
-  //     });
-
-  //   // 使用中のスキル取得
-  //   axios.get('/api/skills/used')
-  //     .then((res) => {
-  //       setSkills(res.data);
-  //     })
-  //     .catch((err) => {
-  //       console.error('スキル取得失敗: ', err);
-  //     });
-  // }, []);
 
   function copyEmail(){
     navigator.clipboard.writeText('youreMail@sample.com')

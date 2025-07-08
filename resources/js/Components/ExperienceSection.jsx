@@ -4,7 +4,8 @@ import { Trash } from 'lucide-react';
 
 export default function ExperienceSection({ 
   projects = [],
-  experiences: initialExperiences
+  experiences: initialExperiences,
+  reloadExperiences,
  }){
   const [experiences, setExperiences] = useState(initialExperiences || []);
   useEffect(() => {
