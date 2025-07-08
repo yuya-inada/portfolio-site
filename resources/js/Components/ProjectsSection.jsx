@@ -52,7 +52,6 @@ export default function ProjectsSection(props) {
   }
 
   const handleSaveProject = async () => {
-    console.log('handleSaveProject onProjectsUpdated:', onProjectsUpdated);
     try {
       if (editingProject) {
         // 更新処理

@@ -11,26 +11,48 @@ import ContactSection from '@/Components/ContactSection';
 export default function MainComponent() {
   const [projects, setProjects] = useState([]);
   const [usedSkills, setSkills] = useState([]);
+  const [experiences, setExperiences] = useState([]);
+
+  const reloadProjects = () =>{
+    axios.get('/api/projects')
+    .then((res) => setProjects(res.data.data || res.data))
+    .catch((err) => console.error('API取得失敗:', err));
+  };
+
+  const reloadExperiences = () => {
+    axios.get('/api/experiences')
+    .then((res) => setExperiences(res.data.data || res.data))
+    .catch((err) => console.error('経歴取得失敗:', err));
+  };
 
   useEffect(() => {
-    // プロジェクト取得
-    axios.get('/api/projects')
-      .then((res) => {
-        setProjects(res.data.data || res.data);
-      })
-      .catch((err) => {
-        console.error('API取得失敗:', err);
-      });
+    reloadProjects();
+    reloadExperiences();
 
-    // 使用中のスキル取得
     axios.get('/api/skills/used')
-      .then((res) => {
-        setSkills(res.data);
-      })
-      .catch((err) => {
-        console.error('スキル取得失敗: ', err);
-      });
+    .then((res) => setSkills(res.data))
+    .catch((err) => console.error('スキル取得失敗:', err));
   }, []);
+
+  // useEffect(() => {
+  //   // プロジェクト取得
+  //   axios.get('/api/projects')
+  //     .then((res) => {
+  //       setProjects(res.data.data || res.data);
+  //     })
+  //     .catch((err) => {
+  //       console.error('API取得失敗:', err);
+  //     });
+
+  //   // 使用中のスキル取得
+  //   axios.get('/api/skills/used')
+  //     .then((res) => {
+  //       setSkills(res.data);
+  //     })
+  //     .catch((err) => {
+  //       console.error('スキル取得失敗: ', err);
+  //     });
+  // }, []);
 
   function copyEmail(){
     navigator.clipboard.writeText('youreMail@sample.com')
@@ -43,8 +65,19 @@ export default function MainComponent() {
       <div className="bg-[#1C1C1C] min-h-screen">
         <TopIntroSection copyEmail={copyEmail} />
         <SkillsSection skills={usedSkills} />
-        <ExperienceSection projects={projects} />
-        <ProjectsSection projects={projects} />
+        <ExperienceSection 
+          projects={projects}
+          experiences={experiences}
+          reloadExperiences={reloadExperiences}
+        />
+        <ProjectsSection 
+          projects={projects}
+          setSkills={setSkills}
+          onProjectsUpdate={() => {
+            reloadProjects();
+            reloadExperiences();
+          }}
+        />
         <HobbiesSection />
         <ContactSection />
       </div>
