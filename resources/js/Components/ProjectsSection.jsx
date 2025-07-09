@@ -191,15 +191,29 @@ export default function ProjectsSection(props) {
               )}
             </div>
             <p className="mt-4 text-lg text-white">{project.description}</p>
-            {project.url && (
+            {project.url &&  project.url.trim() !== '' ?(
               <a
                 href={project.url}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-block mt-4 text-[#D4B08C] hover:underline"
+                className="block mt-4 text-[#D4B08C] hover:underline"
               >
-                Visit site
+                ・Visit site
               </a>
+            ) : (
+              <p className="text-gray-500 mt-4">URLなし</p>
+            )}
+            {project.github_url && project.github_url.trim() !== '' ? (
+              <a
+                href={project.github_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block mt-2 text-[#D4B08C] hover:underline"
+              >
+                ・Visit GitHub
+              </a>
+            ) : (
+              <span className="block text-gray-500 block mt-2">GitHubなし</span>
             )}
             {/* スキルアイコン表示部分 */}
             {project.skills?.length > 0 &&(
