@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link, usePage } from '@inertiajs/react';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import axios from '../axiosSetup';
 import { router } from '@inertiajs/react';
 
@@ -36,23 +36,23 @@ export default function Header() {
           {/* PCナビゲーション */}
           <nav className="hidden lg:flex space-x-6">
             <NavLinks />
+            {/* ログイン・ログアウト表示 */}
+            {isAuthenticated ? (
+              <button
+                onClick={handleLogout}
+                className="text-sm text-white hover:underline text-left"
+              >
+                Logout
+              </button>
+            ) : (
+              <button
+                onClick={() => router.visit('/admin-login')}
+                className="text-sm text-white hover:underline"
+              >
+                Admin Login
+              </button>
+            )}
           </nav>
-          {/* ログイン・ログアウト表示 */}
-          {isAuthenticated ? (
-            <button
-              onClick={handleLogout}
-              className="text-sm text-white hover:underline"
-            >
-              Logout
-            </button>
-          ) : (
-            <button
-              onClick={() => router.visit('/admin-login')}
-              className="text-sm text-white hover:underline"
-            >
-              Admin Login
-            </button>
-          )}
           {/* モバイル用メニューアイコン */}
           <button onClick={toggleMenu} className="lg:hidden z-50 text-[#D4B08C]">
             {menuOpen ? <X size={28} /> : <Menu size={28} />}
@@ -75,7 +75,7 @@ export default function Header() {
 
             {/* 右からスライドするパネル */}
             <motion.div
-              className="fixed top-0 right-0 h-full w-1/5 sm:w-1/5 bg-[#1C1C1C] text-white p-6 z-50"
+              className="fixed top-0 right-0 h-full w-[200px] bg-[#1C1C1C] text-white p-6 z-50"
               initial={{ x: '100%' }}
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
@@ -84,8 +84,24 @@ export default function Header() {
               <button onClick={closeMenu} className="mb-6">
                 <X size={24} />
               </button>
-              <nav className="flex flex-col space-y-4">
+              <nav className="flex flex-col space-y-4 items-start">
                 <NavLinks onClick={closeMenu} />
+                {/* ログイン・ログアウト表示 */}
+                {isAuthenticated ? (
+                  <button
+                    onClick={handleLogout}
+                    className="text-sm text-white hover:underline"
+                  >
+                    Logout
+                  </button>
+                ) : (
+                  <button
+                    onClick={() => router.visit('/admin-login')}
+                    className="text-sm text-white hover:underline"
+                  >
+                    Admin Login
+                  </button>
+                )}
               </nav>
             </motion.div>
           </>
