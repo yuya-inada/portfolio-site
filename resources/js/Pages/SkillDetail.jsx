@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from '@inertiajs/react';
-// import { motion } from "framer-motion";
+import renderSkillExplanation from '../SkillExplanations';
 
 export default function SkillDetail({ skill }){
   return (
@@ -16,15 +16,6 @@ export default function SkillDetail({ skill }){
           </div>
           <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-10">
             <div>
-              {skill.description && skill.description.trim() !== '' ? (
-                <p className="mb-6 text-lg leading-relaxed">
-                  {skill.description}
-                </p>
-              ) : (
-                <p className="text-gray-400">説明が登録されていません。</p>
-              )}
-            </div>
-            <div>
                 <h3 className="text-xl font-semibold mb-2 text-[#D4B08C]">
                   使用されているプロジェクト：
                 </h3>
@@ -37,6 +28,18 @@ export default function SkillDetail({ skill }){
                 ) : (
                   <p className="text-gray-400">このスキルはまだプロジェクトに使用されていません。</p>
                 )}
+            </div>
+            <div>
+              {skill.description && skill.description.trim() !== '' ? (
+                <p className="mb-6 text-lg leading-relaxed">
+                  {skill.description}
+                </p>
+              ) : (
+                <p className="text-gray-400">説明が登録されていません。</p>
+              )}
+              <div className="mt-10">
+                {renderSkillExplanation(skill.id)}
+              </div>
             </div>
           </div>
         </div>
