@@ -89,16 +89,25 @@ This project is a portfolio website built with an integrated stack of Laravel (b
 ```
 resources/
 ├── js/
-│   ├── Pages/          # ページ単位のコンポーネント
-│   └── Components/     # 再利用可能なUI部品
+│   ├── Pages/              # ルーティング単位のページコンポーネント
+│   │   └── AdminLogin.jsx  # 管理者ログインページ
+│   ├── Components/         # 再利用可能なUI部品
+│   └── axiosSetup.js       # Axiosインスタンス設定（Sanctum対応）
+
 routes/
-├── web.php             # フロント用ルーティング
-└── api.php             # API用ルーティング
+├── web.php                 # フロントエンド用ルーティング（Inertia.js経由）
+└── api.php                 # バックエンドAPIルート（RESTful + 認証付き）
+
 app/
-├── Models/             # Eloquentモデル
+├── Models/                 # Eloquentモデル（User, Project, Skill など）
 └── Http/
-    ├── Controllers/    # Laravelコントローラー
-    └── Resources/      # APIリソース定義
+    ├── Controllers/        
+    │   ├── Api/            # API専用コントローラー（ExperienceControllerなど）
+    │   └── ProjectController.php
+    └── Resources/          # APIレスポンス整形用リソースクラス
+
+public/
+└── index.php               # エントリーポイント（Laravelフレームワーク起動）
 ```
 
 ## 🧪 開発・テストツール / Development & Testing Tools
