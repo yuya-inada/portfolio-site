@@ -55,7 +55,7 @@ export default function ProjectsSection(props) {
     try {
       if (editingProject) {
         // 更新処理
-        await axios.put(`/api/projects/${editingProject.id}`, {
+        await axios.put(`/api/admin/projects/${editingProject.id}`, {
           ...formData,
           skill_ids: selectedSkillIds,
         }, {
@@ -63,7 +63,7 @@ export default function ProjectsSection(props) {
         });
       } else {
         // 新規作成処理
-        await axios.post(`/api/projects`, {
+        await axios.post(`/api/admin/projects`, {
           ...formData,
           skill_ids: selectedSkillIds,
         }, {
@@ -116,7 +116,7 @@ export default function ProjectsSection(props) {
     const confirmed = window.confirm('このプロジェクトを本当に削除しますか？');
     if(!confirmed) return;
     try{
-      await axios.delete(`/api/projects/${id}`);
+      await axios.delete(`/api/admin/projects/${id}`);
       // 最新のプロジェクト取得
       const res = await axios.get('/api/projects');
       setProjects(res.data.data || res.data);

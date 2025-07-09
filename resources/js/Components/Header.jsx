@@ -15,7 +15,7 @@ export default function Header() {
 
   const handleLogout = async () => {
     try{
-      await axios.post('/admin/logout');
+      await axios.post('/api/admin/logout');
       localStorage.removeItem('auth_token');
       window.location.reload();
     }catch(err){

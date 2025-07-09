@@ -46,6 +46,8 @@ export default function MainComponent() {
       .catch((err) => console.error('コピーに失敗', err));
   }
 
+  const isAuthenticated = !!localStorage.getItem('auth_token');
+
   return (
     <AppLayout>
       <div className="bg-[#1C1C1C] min-h-screen">
@@ -55,6 +57,7 @@ export default function MainComponent() {
           projects={projects}
           experiences={experiences}
           reloadExperiences={reloadExperiences}
+          isAuthenticated={isAuthenticated}
         />
         <ProjectsSection 
           projects={projects}

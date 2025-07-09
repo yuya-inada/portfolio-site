@@ -52,10 +52,10 @@ export default function ExperienceSection({
       };
       if(editingExperience){
         // 編集モード：PUTで更新
-        await axios.put(`/api/experiences/${editingExperience.id}`, payload);
+        await axios.put(`/api/admin/experiences/${editingExperience.id}`, payload);
       }else{
         // 新規モード：POSTで作成
-        await axios.post(`/api/experiences`, payload);
+        await axios.post(`/api/admin/experiences`, payload);
         await reloadExperiences();
       }
 
@@ -76,7 +76,7 @@ export default function ExperienceSection({
     const confirmed = window.confirm('本当にこの経歴を削除しますか？');
     if(!confirmed) return;
     try{
-      await axios.delete(`/api/experiences/${id}`);
+      await axios.delete(`/api/admin/experiences/${id}`);
       const res = await axios.get('/api/experiences');
       setExperiences(res.data.data || res.data);
       alert('削除しました');
@@ -86,7 +86,8 @@ export default function ExperienceSection({
     }
   };
  
-  const isAuthenticated = !!localStorage.getItem('suth_token');
+  const isAuthenticated = !!localStorage.getItem('auth_token');
+
   return (
     <>
     <section className="py-20" id="experience">

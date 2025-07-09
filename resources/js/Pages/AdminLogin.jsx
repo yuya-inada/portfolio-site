@@ -7,10 +7,16 @@ export default function AdminLogin({ onLogin }){
 
   const handleLogin = async(e) => {
     e.preventDefault();
+    console.log('送信データ', { email, password });
     try{
       const res = await axios.post('/api/login', { email, password });
       localStorage.setItem('auth_token', res.data.token);
-      onLogin();
+      if(typeof onLogin === 'function'){
+        onLogin();
+      }else{
+        console.warn('onLoginが未定義なのでリダイレクトします');
+        window.location.href = '/';
+      }
     }catch(err){
       alert('ログイン失敗');
       console.error(err);
