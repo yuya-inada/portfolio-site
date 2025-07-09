@@ -5,6 +5,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Models\Project;
+use App\Models\Skill;
 
 Route::get('/admin-login', function(){
     return Inertia::render('AdminLogin');
@@ -40,6 +41,12 @@ Route::get('/about', function(){
 // スキル紹介ページ追加
 Route::get('/skills', function(){
     return Inertia::render('Skills');
+});
+Route::get('/skills/{id}', function ($id){
+    $skill = Skill::with('projects')->findOrFail($id);
+    return Inertia::render('SkillDetail', [
+        'skill' => $skill,
+    ]);
 });
 
 // 経歴ページ追加

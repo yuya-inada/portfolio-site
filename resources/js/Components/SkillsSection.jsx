@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from '@inertiajs/react';
 
 export default function SkillsSection({ skills }) {
   return (
@@ -11,7 +12,8 @@ export default function SkillsSection({ skills }) {
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6 mx-auto max-w-5xl">
           {Array.isArray(skills) && skills.length > 0 ? (
             skills.map(skill => (
-              <div
+              <Link
+              href={`/skills/${skill.id}`}
                 key={skill.id}
                 className="flex flex-col items-center justify-center bg-[#2A2A2A] p-8 rounded-lg border border-[#3D3D3D] 
                           transform transition-all duration-300 hover:scale-105 hover:bg-[#4A4A4A] 
@@ -20,7 +22,8 @@ export default function SkillsSection({ skills }) {
               >
                 <i className={`${skill.icon} text-3xl text-[#D4B08C]`}></i>
                 <p className="mt-4 text-lg text-center">{skill.name}</p>
-              </div>
+                <p className="text-sm text-[#aaa] mt-2">詳しく見る</p>
+              </Link>
             ))
           ) : (
             <p className="text-center text-gray-400">使用スキルはまだ登録されていません。</p>

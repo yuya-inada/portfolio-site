@@ -36,9 +36,6 @@ Route::middleware('auth:sanctum')->prefix('admin')->group(function (){
     });
     // プロジェクト　登録・編集・削除
     Route::apiResource('projects', ProjectController::class)->except(['index', 'show']);
-    // Route::post('/projects', [ProjectController::class, 'store']);
-    // Route::put('/projects/{id}', [ProjectController::class, 'update']);
-    // Route::delete('/projects/{id}', [ProjectController::class, 'destroy']);
 
     // 経歴
     Route::post('/experiences', [ExperienceController::class, 'store']);
@@ -56,6 +53,7 @@ Route::get('/projects/{id}', [ProjectController::class, 'show']);
 // Skills
 Route::get('/skills', [SkillController::class, 'index']);
 Route::get('/skills/used', [SkillController::class, 'useInProjects']);
+Route::get('/skills/{id}', [SkillController::class, 'show']);
 // Experience
 Route::get('/experiences', [ExperienceController::class, 'index']);
 

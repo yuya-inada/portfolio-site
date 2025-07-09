@@ -31,4 +31,9 @@ class SkillController extends Controller
         $skills = Skill::whereHas('projects')->get();
         return response()->json($skills);
     }
+
+    public function show($id){
+        $skill = Skill::with('projects')->findOrFail($id);
+        return response()->json($skill);
+    }
 }
