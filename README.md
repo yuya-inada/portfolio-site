@@ -27,6 +27,53 @@ This project is a portfolio website built with an integrated stack of Laravel (b
 　 Dark-theme compatible UI
 ```
 ---
+## 🔐 管理者ログイン機能 / Admin Authentication Feature
+```
+- 管理者ログインによる認証付き操作（Sanctum使用）
+  Authenticated admin-only actions via Laravel Sanctum
+
+- 認証後に「編集」「削除」ボタンが表示される制御
+  Conditional rendering of "Edit" and "Delete" buttons after login
+
+- トークンをlocalStorageに保存し、axiosで自動送信
+  Auth token stored in localStorage, sent via Axios automatically
+
+- ログアウトでトークン削除＋画面更新
+  Logout clears token and updates the UI
+
+- `/admin-login` ページでログインフォームを提供
+  Login form available at `/admin-login`
+```
+---
+## 💻 ログイン用UIの補足 / Login UI Details
+```
+- ログイン画面のデザインは全体のUIと統一（ダークテーマ対応）
+  The design of the login screen is unified with the overall UI (supports dark theme).
+
+- ログインに成功すると、管理者専用ボタンが各所に表示される
+  When login is successful, admin-only buttons will be displayed in various places.
+
+- ログイン状態は localStorage のトークンの有無で判定
+  The login status is determined by the presence or absence of a token in localStorage.
+```
+---
+## 🔐 管理者用APIルート例 / Admin API Endpoints
+```
+- POST   /api/login          # 管理者ログイン / Admin login
+- POST   /api/admin/logout   # 管理者ログアウト / Admin logout
+
+- POST   /api/admin/projects         # プロジェクト登録
+- PUT    /api/admin/projects/{id}    # プロジェクト更新
+- DELETE /api/admin/projects/{id}   # プロジェクト削除
+
+- POST   /api/admin/experiences      # 経歴登録
+- PUT    /api/admin/experiences/{id} # 経歴更新
+- DELETE /api/admin/experiences/{id} # 経歴削除
+
+＊スキルは事前に登録済み（新規登録or更新時に選択ボックスとして表示するため）
+＊Skills are pre-registered (to be displayed as a selection box for new registration or updates)
+```
+---
 
 ## 🛠 技術スタック / Tech Stack
 
