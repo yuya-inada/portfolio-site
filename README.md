@@ -89,25 +89,25 @@ This project is a portfolio website built with an integrated stack of Laravel (b
 ```
 resources/
 ├── js/
-│   ├── Pages/              # ルーティング単位のページコンポーネント
-│   │   └── AdminLogin.jsx  # 管理者ログインページ
-│   ├── Components/         # 再利用可能なUI部品
-│   └── axiosSetup.js       # Axiosインスタンス設定（Sanctum対応）
+│   ├── Pages/              # ルーティング単位のページコンポーネント / Routing unit page component
+│   │   └── AdminLogin.jsx  # 管理者ログインページ / Administrator login page
+│   ├── Components/         # 再利用可能なUI部品 / Reusable UI components
+│   └── axiosSetup.js       # Axiosインスタンス設定（Sanctum対応）/ Axios instance configuration (with Sanctum support)
 
 routes/
-├── web.php                 # フロントエンド用ルーティング（Inertia.js経由）
-└── api.php                 # バックエンドAPIルート（RESTful + 認証付き）
+├── web.php                 # フロントエンド用ルーティング（Inertia.js経由）/ Frontend routing (via Inertia.js)
+└── api.php                 # バックエンドAPIルート（RESTful + 認証付き）/ Backend API routes (RESTful + authenticated)
 
 app/
-├── Models/                 # Eloquentモデル（User, Project, Skill など）
+├── Models/                 # Eloquentモデル（User, Project, Skill など）/ Eloquent models (User, Project, Skills, etc)
 └── Http/
     ├── Controllers/        
-    │   ├── Api/            # API専用コントローラー（ExperienceControllerなど）
+    │   ├── Api/            # API専用コントローラー（ExperienceControllerなど）/ API-specific controllers (e.g., ExperineceController)
     │   └── ProjectController.php
-    └── Resources/          # APIレスポンス整形用リソースクラス
+    └── Resources/          # APIレスポンス整形用リソースクラス / Resource classes for API response formatting
 
 public/
-└── index.php               # エントリーポイント（Laravelフレームワーク起動）
+└── index.php               # エントリーポイント（Laravelフレームワーク起動）/ Entry point (Laravel fremework boot)
 ```
 
 ## 🧪 開発・テストツール / Development & Testing Tools
