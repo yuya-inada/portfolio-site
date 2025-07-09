@@ -1,6 +1,6 @@
 # ポートフォリオサイト / Portfolio Website
 
-このプロジェクトは、Laravel（バックエンド）とReact（フロントエンド）を統合した開発スタックで構築した、開発者自身のスキル・経験・プロジェクト・趣味/興味を紹介するためのポートフォリオサイトです。
+このプロジェクトは、Laravel（バックエンド）とReact（フロントエンド）を統合した開発スタックで構築した、開発者自身のスキル・経験・プロジェクト・趣味・興味を紹介するためのポートフォリオサイトです。
 
 This project is a portfolio website built with an integrated stack of Laravel (backend) and React (frontend), designed to showcase the developer's skills, experience, projects, hobby, and interest.
 
