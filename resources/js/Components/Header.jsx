@@ -40,7 +40,7 @@ export default function Header() {
             {isAuthenticated ? (
               <button
                 onClick={handleLogout}
-                className="text-sm text-white hover:underline text-left"
+                className="text-sm text-red-500 hover:text-red-400 underline text-left"
               >
                 Logout
               </button>
@@ -90,7 +90,7 @@ export default function Header() {
                 {isAuthenticated ? (
                   <button
                     onClick={handleLogout}
-                    className="text-sm text-white hover:underline"
+                    className="text-sm text-red-500 hover:text-red-400 underline"
                   >
                     Logout
                   </button>
