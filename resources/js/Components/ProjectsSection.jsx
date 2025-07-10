@@ -217,7 +217,7 @@ export default function ProjectsSection(props) {
             )}
             {/* スキルアイコン表示部分 */}
             {project.skills?.length > 0 &&(
-              <div className="mt-6 flex gap-3">
+              <div className="mt-6 flex flex-wrap gap-3">
                   {project.skills?.map((skill) =>(
                     <span
                       key={skill.id}
