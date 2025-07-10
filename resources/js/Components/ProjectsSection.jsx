@@ -133,51 +133,69 @@ export default function ProjectsSection(props) {
 
   const isAuthenticated = !!localStorage.getItem('auth_token');
 
+  function useIsMobile(){
+    const [isMobile, setIsMobile] = useState(false);
+    useEffect(() => {
+      const checkMobile = () => setIsMobile(window.innerWidth < 640);
+      checkMobile();
+      window.addEventListener('resize', checkMobile);
+      return () => window.removeEventListener('resize', checkMobile);
+    }, []);
+    return isMobile;
+  }
+  const isMobile = useIsMobile();
+
   return (
     <>
-    <section className="py-20 mx-7" id="projects">
-      <div className="relative max-w-6xl max-auto mb-6">
-        <h2 className="text-4xl font-playfair-display text-[#D4B08C] mb-12 text-center">
-          Projects
-        </h2>
-        {isAuthenticated && (
-            <button
-            onClick={() => {
-              setFormData({
-                title: '',
-                description: '',
-                image_url: '',
-                url: '',
-                github_url: '',
-              });
-              setSelectedSkillIds([]);
-              setEditingProject(null);
-              setIsProjectModalOpen(true);
-            }}
-            className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-[#D4B08C] text-[#2A2A2A] rounded px-4 py-2 hover:bg-[b2946f]"
-          >
-            New Project
-          </button>
+    <section className="py-20" id="projects">
+      <div className="max-w-6xl max-auto mb-7 px-4">
+        {isAuthenticated ? (
+          <div className="flex justify-between items-center flex-wrap gap-2">
+            <h2 className="text-4xl font-playfair-display text-[#D4B08C] leading-none">
+              Projects
+            </h2>
+                <button
+                onClick={() => {
+                  setFormData({
+                    title: '',
+                    description: '',
+                    image_url: '',
+                    url: '',
+                    github_url: '',
+                  });
+                  setSelectedSkillIds([]);
+                  setEditingProject(null);
+                  setIsProjectModalOpen(true);
+                }}
+                className="bg-[#D4B08C] text-[#2A2A2A] rounded px-4 py-2 hover:bg-[b2946f] text-sm"
+              >
+                New Project
+              </button>
+          </div>
+        ) : (
+          <h2 className="text-4xl font-playfair-display text-[#D4B08C] text-center leading-none">
+            Projects
+          </h2>
         )}
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-1">
         {projects.map((project) => (
           <div
             key={project.id}
             className="bg-[#2A2A2A] p-8 rounded-lg border border-[#3D3D3D] transform transition-all duration-300 hover:scale-105 hover:bg-[#4A4A4A] hover:border-[#D4B08C] hover:shadow-[0_0_15px_rgba(212,176,140,0.3)]"
           >
             <div className="flex justify-between items-start">
-              <h3 className="text-2xl font-playfair-display text-[#D4B08C]">
+              <h3 className={`text-xl sm:text-3xl font-playfair-display text-[#D4B08C] ${isAuthenticated ? 'truncate max-w-[70%]' : ''}`}>
                 {project.title}
               </h3>
               {isAuthenticated && (
-                <div className="absolute top-7 right-4 flex gap-2">
+                <div className="flex gap-2 sm:mt-0 sm:ml-auto sm:self-center ml-auto">
                   <button
                     onClick={() => {
                       setEditingProject(project);
                       setIsProjectModalOpen(true);
                     }}
-                    className="text-md bg-[#D4B08C] text-[#2A2A2A] rounded px-2 py-1 hover:bg-[#b2946f]"
+                    className="text-sm bg-[#D4B08C] text-[#2A2A2A] px-3 py-1 rounded hover:bg-[#b2946f]"
                   >
                     Edit
                   </button>

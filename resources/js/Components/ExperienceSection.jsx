@@ -88,69 +88,100 @@ export default function ExperienceSection({
  
   const isAuthenticated = !!localStorage.getItem('auth_token');
 
+  function useIsMobile() {
+    const [isMobile, setIsMobile] = useState(false);
+
+    useEffect(() => {
+      const checkMobile = () => setIsMobile(window.innerWidth < 640);
+      checkMobile();
+      window.addEventListener('resize', checkMobile);
+      return () => window.removeEventListener('resize', checkMobile);
+    }, []);
+    return isMobile;
+  }
+  const isMobile = useIsMobile();
+
   return (
     <>
     <section className="py-20" id="experience">
-      <div className="relative max-w-4xl mx-auto mb-12 px-4">
-        <h2 className="text-4xl font-playfair-display text-[#D4B08C] text-center">
-          Experience
-        </h2>
-        {isAuthenticated && (
-          <button
-            onClick={() => {
-              setFormData({
-                title: '',
-                company: '',
-                period: '',
-                description: '',
-                projects: [],
-              });
-              setEditingExperience(null); // 新規作成なのでnull
-              setIsExperienceModalOpen(true);
-            }}
-            className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-[#D4B08C] text-[#2A2A2A] px-4 py-2 rounded hover:bg-[#b2946f]"
-          >
-            New Experience
-          </button>
+      <div className="max-w-4xl w-full mx-auto mb-7 px-4">
+        {isAuthenticated ? (
+          <div className="flex flex-wrap justify-between items-center gap-2">
+            <h2 className="text-3xl font-playfair-display text-[#D4B08C] leading-none">
+              Experiences
+            </h2>
+            <button
+              onClick={() => {
+                setFormData({
+                  title: '',
+                  company: '',
+                  period: '',
+                  description: '',
+                  projects: [],
+                });
+                setEditingExperience(null);
+                setIsExperienceModalOpen(true);
+              }}
+              className="bg-[#D4B08C] text-[#2A2A2A] px-4 py-2 rounded hover:bg-[#b2946f] text-sm self-center"
+            >
+              New Experience
+            </button>
+          </div>
+        ) : (
+          <h2 className="text-4xl font-playfair-display text-[#D4B08C] text-center leading-none">
+            Experiences
+          </h2>
         )}
       </div>
-        <div className="space-y-12 max-w-4xl mx-auto px-4">
+      <div className="space-y-12 max-w-4xl mx-auto px-1">
         {experiences.map(exp => (
-          <div key={exp.id} className=" relative bg-[#2A2A2A] p-8 rounded-lg border border-[#3D3D3D] transform transition-all duration-300 hover:scale-105 hover:bg-[#4A4A4A] hover:border-[#D4B08C] hover:shadow-[0_0_15px_rgba(212,176,140,0.3)]">
-            {isAuthenticated && (
-              //編集・削除ボタン
-              <div className="absolute top-7 right-4 flex gap-2">
-                <button
-                  onClick={() => {
-                    setEditingExperience(exp);
-                    setFormData({
-                      title: exp.title,
-                      company: exp.company,
-                      period: exp.period,
-                      description: exp.description,
-                      projects: exp.projects?.map(p => p.id) || [],
-                    });
-                    setIsExperienceModalOpen(true);
-                  }}
-                  className="text-sm bg-[#D4B08C] text-[#2A2A2A] px-3 py-1 rounded hover:bg-[#b2946f]"
-                >
-                  Edit
-                </button>
-                <button
-                  onClick={() => handleDeleteExperience(exp.id)}
-                  className="text-[#FF6B6B] border border-[#FF6B6B] px-3 py-1 rounded hover:bg-[#FF6B6B] hover:text-black transition"
-                >
-                  <Trash className="w-4 h-4 mr-l" />
-                </button>
-              </div>
-            )}
-            <h3 className="text-2xl font-playfair-display text-[#D4B08C]">{exp.title}</h3>
-            <p className="text-[#A8A8A8] italic mt-2 ml-5">{exp.company} • {exp.period}</p>
-            <p className="mt-4 text-lg text-white ml-5">{exp.description}</p>
+          <div key={exp.id} className="bg-[#2A2A2A] p-8 rounded-lg border border-[#3D3D3D] transform transition-all duration-300 hover:scale-105 hover:bg-[#4A4A4A] hover:border-[#D4B08C] hover:shadow-[0_0_15px_rgba(212,176,140,0.3)]">
+            <div className="flex flex-row justify-between items-center w-full">
+              <h3
+                className={`text-xl sm:text-3xl font-playfair-display text-[#D4B08C] ${
+                  isAuthenticated && isMobile ? 'truncate max-w-[50%]' : ''
+                }`}
+              >
+                {exp.title}
+              </h3>
+              {isAuthenticated && (
+                //編集・削除ボタン
+                <div className="flex gap-2 sm:mt-0 sm:ml-auto sm:self-center ml-auto">
+                  <button
+                    onClick={() => {
+                      setEditingExperience(exp);
+                      setFormData({
+                        title: exp.title,
+                        company: exp.company,
+                        period: exp.period,
+                        description: exp.description,
+                        projects: exp.projects?.map(p => p.id) || [],
+                      });
+                      setIsExperienceModalOpen(true);
+                    }}
+                    className="text-sm bg-[#D4B08C] text-[#2A2A2A] px-3 py-1 rounded hover:bg-[#b2946f]"
+                  >
+                    Edit
+                  </button>
+                  <button
+                    onClick={() => handleDeleteExperience(exp.id)}
+                    className="text-[#FF6B6B] border border-[#FF6B6B] px-3 py-1 rounded hover:bg-[#FF6B6B] hover:text-black transition"
+                  >
+                    <Trash className="w-4 h-4" />
+                  </button>
+                </div>
+              )}
+            </div>
+            <p className="text-[#A8A8A8] italic mt-4">
+              {exp.company} • {exp.period}
+            </p>
+            <p className="mt-4 text-lg text-white">
+              {exp.description}
+            </p>
 
             {exp.projects && exp.projects.length > 0 && (
               <div className="mt-6">
-                <h4 className="text-lg text-[#D4B08C] font-semibold mb-4 ml-5">Project during this period</h4>
+                <h4 className="text-lg text-[#D4B08C] font-semibold mb-4">Project during this period</h4>
                 <ul className="space-y-2">
                   {exp.projects.map(project => {
                     const isOpen = expandedProjectIds.includes(project.id);
@@ -159,7 +190,7 @@ export default function ExperienceSection({
                     return (
                       <React.Fragment key={project.id}>
                         {console.log('project:', project)}
-                        <div className="mb-2 flex items-start ml-5 gap-4">
+                        <div className="mb-2 flex items-start gap-4">
                           <span
                             onClick={() => toggleProject(project.id)}
                             className="cursor-pointer hover:text-[#D4B08C]"
@@ -198,9 +229,9 @@ export default function ExperienceSection({
                           </button>
                           {/* 説明 */}
                           {latestProject.description ? (
-                            <p className="mb-2">{latestProject.description}</p>
+                            <p className="mb-2 pr-7">{latestProject.description}</p>
                           ) : (
-                            <p className="mb-2 text-gray-400">説明がありません。</p>
+                            <p className="mb-2 pr-7 text-gray-400">説明がありません。</p>
                           )}
 
                           {/* URLリンク */}
