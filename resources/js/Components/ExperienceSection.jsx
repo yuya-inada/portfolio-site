@@ -197,18 +197,6 @@ export default function ExperienceSection({
                           >
                             ・{latestProject.title}
                           </span>
-
-                          <div className="flex gap-2 flex-wrap">
-                            {latestProject.skills?.length > 0 ? (
-                              latestProject.skills.map(skill => (
-                                <span key={skill.id} className="text-xs bg-[#1C1C1C] text-[#D4B08C] rounded-full px-2 py-1">
-                                  {skill.name}
-                                </span>
-                              ))
-                            ) : (
-                              <span className="text-xs text-gray-400 ml-3">スキル情報なし</span>
-                            )}
-                          </div>
                         </div>
 
                         {/* アコーディオン展開部分 */}
@@ -227,6 +215,18 @@ export default function ExperienceSection({
                           >
                             ✕
                           </button>
+                          {/* スキルバッジ表示 */}
+                          <div className="flex gap-2 flex-wrap mb-4">
+                            {latestProject.skills?.length > 0 ? (
+                              latestProject.skills.map(skill => (
+                                <span key={skill.id} className="text-xs bg-[#1C1C1C] text-[#D4B08C] rounded-full px-2 py-1">
+                                  {skill.name}
+                                </span>
+                              ))
+                            ) : (
+                              <span className="text-xs text-gray-400 ml-3">スキル情報なし</span>
+                            )}
+                          </div>
                           {/* 説明 */}
                           {latestProject.description ? (
                             <p className="mb-2 pr-7">{latestProject.description}</p>

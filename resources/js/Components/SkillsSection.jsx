@@ -8,7 +8,7 @@ export default function SkillsSection({ skills }) {
         Used skills
       </h2>
       <div className="px-1">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 lg:max-w-7xl gap-4 sm:gap-6 mx-auto max-w-7xl">
+        <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-4 lg:max-w-7xl gap-4 sm:gap-6 mx-auto max-w-7xl">
           {Array.isArray(skills) && skills.length > 0 ? (
             skills.map(skill => (
               // <Link
@@ -39,14 +39,14 @@ export default function SkillsSection({ skills }) {
                     className="w-16 h-16 object-contain filter invert sepia saturate-100 hue-rotate-[30deg] brightness-[1.2] contrast-[1.1]"
                   />
                 ) : (
-                  <i className={`${skill.icon} text-6xl text-[#D4B08C]`}></i>
+                  <i className={`${skill.icon} text-4xl text-[#D4B08C]`}></i>
                 )}
-                <p className="mt-4 text-xl text-center">{skill.name}</p>
+                <p className="mt-4 text-sm text-center">{skill.name}</p>
                 {/* // 詳しく見る（リリース後に再開） */}
                 {/* // <p className="text-sm text-[#aaa] mt-2">詳しく見る</p> */}
                 {/* // </Link> */}
 
-                {/* 使用プロジェクト名表示 */}
+                {/* 使用プロジェクト名表示
                 {skill.projects && skill.projects.length > 0 && (
                   <div className="w-full mt-4">
                     <p className="text-md text-center text-gray-400 mb-1">[ Related projects ]</p>
@@ -71,7 +71,7 @@ export default function SkillsSection({ skills }) {
                       ))}
                     </ul>
                   </div>
-                )}
+                )} */}
               </div>
             ))
           ) : (
