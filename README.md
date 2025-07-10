@@ -86,14 +86,16 @@ This project is a portfolio website built with an integrated stack of Laravel (b
 ---
 
 ## 📁 ディレクトリ構成 / Directory Structure
+以下は主要ディレクトリとその役割の概要です：  
+Below is an overview of the main directories and their roles:
 ```
 resources/
 ├── js/
 │   ├── Pages/              # ルーティング単位のページコンポーネント / Routing unit page component
 │   │   └── AdminLogin.jsx  # 管理者ログインページ / Administrator login page
 │   ├── Components/         # 再利用可能なUI部品 / Reusable UI components
-│   ├── SkillExplanation.js # スキル詳細の静的コンテンツ定義 / Static content definitions for skill detail
-│   └── axiosSetup.js       # Axiosインスタンス設定（Sanctum対応）/ Axios instance configuration (with Sanctum support)
+│   ├── SkillExplanation.jsx # スキル詳細の静的コンテンツ定義 / Static content definitions for skill detail
+│   └── axiosSetup.jsx       # Axiosインスタンス設定（Sanctum対応）/ Axios instance configuration (with Sanctum support)
 
 routes/
 ├── web.php                 # フロントエンド用ルーティング（Inertia.js経由）/ Frontend routing (via Inertia.js)
