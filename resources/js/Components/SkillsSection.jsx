@@ -25,7 +25,22 @@ export default function SkillsSection({ skills }) {
                           // transform transition-all duration-300 hover:scale-105 hover:bg-[#4A4A4A]
                           // hover:border-[#D4B08C] hover:shadow-[0_0_15px_rgba(212,176,140,0.3)]"
               >
-                <i className={`${skill.icon} text-6xl text-[#D4B08C]`}></i>
+                {skill.name === 'Next.js' ? (
+                  <img
+                    src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg"
+                    alt="Next.js"
+                    className="w-16 h-16 bg-[#D4B08C] rounded p-3 shadow-md"
+                    style={{ filter: 'none' }}
+                  />
+                ) : skill.name === 'Nginx' ? (
+                  <img
+                    src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nginx/nginx-original.svg"
+                    alt="Nginx"
+                    className="w-16 h-16 object-contain filter invert sepia saturate-100 hue-rotate-[30deg] brightness-[1.2] contrast-[1.1]"
+                  />
+                ) : (
+                  <i className={`${skill.icon} text-6xl text-[#D4B08C]`}></i>
+                )}
                 <p className="mt-4 text-xl text-center">{skill.name}</p>
                 {/* // 詳しく見る（リリース後に再開） */}
                 {/* // <p className="text-sm text-[#aaa] mt-2">詳しく見る</p> */}
