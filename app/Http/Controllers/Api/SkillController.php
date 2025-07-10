@@ -23,12 +23,14 @@ class SkillController extends Controller
         ], 201);
     }
     public function index(){
-        return response()->json(Skill::all());
+        return response()->json(Skill::with('projects')->get());
     }
 
     // プロジェクトで使用されているスキルだけを返す
     public function useInProjects(){
-        $skills = Skill::whereHas('projects')->get();
+        $skills = Skill::with('projects')
+                        ->whereHas('projects')
+                        ->get();
         return response()->json($skills);
     }
 

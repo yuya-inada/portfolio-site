@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Models\Project;
 use App\Models\Skill;
+use Illuminate\Database\Eloquent\Builder;
 
 Route::get('/admin-login', function(){
     return Inertia::render('AdminLogin');
@@ -40,7 +41,10 @@ Route::get('/about', function(){
 
 // スキル紹介ページ追加
 Route::get('/skills', function(){
-    return Inertia::render('Skills');
+    $skills = Skill::with(['projects' => function ($query){
+        $query->latest();
+    }])->get();
+    return Inertia::render('Skills', ['skills' => $skills]);
 });
 Route::get('/skills/{id}', function ($id){
     $skill = Skill::with('projects')->findOrFail($id);
