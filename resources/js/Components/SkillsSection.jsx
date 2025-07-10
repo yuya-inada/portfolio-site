@@ -8,7 +8,7 @@ export default function SkillsSection({ skills }) {
         Used skills
       </h2>
       <div className="px-4">
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6 mx-auto max-w-5xl">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6 mx-auto max-w-7xl">
           {Array.isArray(skills) && skills.length > 0 ? (
             skills.map(skill => (
               // <Link
@@ -35,9 +35,24 @@ export default function SkillsSection({ skills }) {
                 {skill.projects && skill.projects.length > 0 && (
                   <div className="w-full mt-4">
                     <p className="text-md text-center text-gray-400 mb-1">[ Related projects ]</p>
-                    <ul className="text-sm text-gray-300 list-disc text-left pl-10">
+                    <ul className="text-sm text-gray-300 list-disc text-left pl-3">
                       {skill.projects.map(project => (
-                        <li key={project.id}>{project.title}</li>
+                        <li 
+                          key={project.id}
+                          className="flex items-center splace-x-2"  
+                        >
+                          <span>{project.title}</span>
+                          {project.github_url && (
+                            <a
+                              href={project.github_url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-[#D4B08C] hover:underline text-sm pl-3"
+                            >
+                              [GitHub]
+                            </a>
+                          )}
+                        </li>
                       ))}
                     </ul>
                   </div>
