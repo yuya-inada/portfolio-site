@@ -2,6 +2,7 @@
 import React from 'react';
 import AppLayout from '@/Layouts/AppLayout';
 import TopIntroSection from '@/Components/TopIntroSection';
+import HobbiesSection from '@/Components/HobbiesSection';
 
 export default function About() {
   function copyEmail() {
@@ -14,6 +15,7 @@ export default function About() {
     <AppLayout>
       <div className="bg-[#1C1C1C] min-h-screen">
         <TopIntroSection copyEmail={copyEmail} />
+        <HobbiesSection />
       </div>
     </AppLayout>
   );

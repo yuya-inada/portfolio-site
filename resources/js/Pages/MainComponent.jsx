@@ -41,7 +41,7 @@ export default function MainComponent() {
   }, []);
 
   function copyEmail(){
-    navigator.clipboard.writeText('youreMail@sample.com')
+    navigator.clipboard.writeText('obelu1001@gmail.com')
       .then(() => alert('Copied!'))
       .catch((err) => console.error('コピーに失敗', err));
   }
@@ -67,8 +67,8 @@ export default function MainComponent() {
             reloadExperiences();
           }}
         />
-        <HobbiesSection />
-        <ContactSection />
+        {/* <HobbiesSection />
+        <ContactSection /> */}
       </div>
     </AppLayout>
   );
