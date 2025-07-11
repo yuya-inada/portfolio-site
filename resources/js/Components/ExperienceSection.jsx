@@ -193,9 +193,9 @@ export default function ExperienceSection({
                         <div className="mb-2 flex items-start gap-4">
                           <span
                             onClick={() => toggleProject(project.id)}
-                            className="cursor-pointer hover:text-[#D4B08C]"
+                            className="cursor-pointer flex items-center gap-1 text-gray-300 hover:text-[#D4B08C] hover:underline group"
                           >
-                            ・{latestProject.title}
+                            <span className="group-hover:text-inherit">{isOpen ? '▼' : '▶︎'} {latestProject.title}</span>
                           </span>
                         </div>
 
@@ -216,7 +216,7 @@ export default function ExperienceSection({
                             ✕
                           </button>
                           {/* スキルバッジ表示 */}
-                          <div className="flex gap-2 flex-wrap mb-4">
+                          <div className="flex gap-2 flex-wrap mb-4 mr-5">
                             {latestProject.skills?.length > 0 ? (
                               latestProject.skills.map(skill => (
                                 <span key={skill.id} className="text-xs bg-[#1C1C1C] text-[#D4B08C] rounded-full px-2 py-1">
@@ -229,9 +229,9 @@ export default function ExperienceSection({
                           </div>
                           {/* 説明 */}
                           {latestProject.description ? (
-                            <p className="mb-2 pr-7">{latestProject.description}</p>
+                            <p className="mb-2">{latestProject.description}</p>
                           ) : (
-                            <p className="mb-2 pr-7 text-gray-400">説明がありません。</p>
+                            <p className="mb-2 text-gray-400">説明がありません。</p>
                           )}
 
                           {/* URLリンク */}
