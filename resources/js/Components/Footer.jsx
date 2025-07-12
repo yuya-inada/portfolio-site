@@ -20,9 +20,14 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
           <div>
             <h3 className="text-2xl font-playfair-display text-[#D4B08C] mb-6">
-              John Doe
+              Bell
             </h3>
-            <p className="text-[#A8A8A8]">Senior Software Engineer</p>
+            <div className="text-xl md:text-2xl text-[#A8A8A8] font-crimson-text italic mb-4">
+              Cavalier King Charles Spaniel
+            </div>
+            {/* <div className="text-xl md:text-2xl text-[#A8A8A8] font-crimson-text italic mb-4">
+              Backend-oriented Full Stack Engineer
+            </div> */}
             <p className="text-[#A8A8A8] mt-4 italic">
               Building the future, one line of code at a time.
             </p>
@@ -31,32 +36,32 @@ export default function Footer() {
             <h3 className="text-2xl font-playfair-display text-[#D4B08C] mb-6">
               Quick Links
             </h3>
-            <ul className="space-y-4">
-              <li>
-                <a
-                  href="#about"
-                  className="hover:text-[#D4B08C] transition-colors duration-300"
-                >
-                  About
+            <div className="text-md text-[#A8A8A8] space-y-3 text-center">
+              {/* 1行目 */}
+              <div className="flex justify-start gap-x-6">
+                <a href="/" className="hover:text-[#D4B08C] transition-colors duration-300">
+                  Top
                 </a>
-              </li>
-              <li>
-                <a
-                  href="#projects"
-                  className="hover:text-[#D4B08C] transition-colors duration-300"
-                >
+                <a href="/about" className="hover:text-[#D4B08C] transition-colors duration-300">
+                  About Me
+                </a>
+                <a href="/skills" className="hover:text-[#D4B08C] transition-colors duration-300">
+                  Skills
+                </a>
+              </div>
+              {/* 2行目 */}
+              <div className="flex justify-start gap-x-6">
+                <a href="/experience" className="hover:text-[#D4B08C] transition-colors duration-300">
+                  Experiences
+                </a>
+                <a href="/projects" className="hover:text-[#D4B08C] transition-colors duration-300">
                   Projects
                 </a>
-              </li>
-              <li>
-                <a
-                  href="#contact"
-                  className="hover:text-[#D4B08C] transition-colors duration-300"
-                >
-                  Contact
+                <a href="/admin-login" className="hover:text-[#D4B08C] transition-colors duration-300">
+                  Admin Login
                 </a>
-              </li>
-            </ul>
+              </div>
+            </div>
           </div>
           <div>
             <h3 className="text-2xl font-playfair-display text-[#D4B08C] mb-6">
@@ -70,14 +75,6 @@ export default function Footer() {
                 className="text-[#E0E0E0] hover:text-[#D4B08C] transition-colors duration-300"
               >
                 <i className="fab fa-instagram text-2xl"></i>
-              </a>
-              <a
-                href="https://x.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-[#E0E0E0] hover:text-[#D4B08C] transition-colors duration-300"
-              >
-                <i className="fab fa-twitter text-2xl"></i>
               </a>
               <a
                 href="https://github.com"
@@ -95,7 +92,7 @@ export default function Footer() {
               </button>
             </div>
             <p className="mt-8 text-[#A8A8A8] italic">
-              © 2025 John Doe. All rights reserved.
+              © 2025 bell. All rights reserved.
             </p>
           </div>
         </div>

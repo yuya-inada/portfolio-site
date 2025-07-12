@@ -10,7 +10,6 @@ export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const toggleMenu = () => setMenuOpen(!menuOpen);
   const closeMenu = () => setMenuOpen(false);
-  // const navigate = useNavigate();
   const isAuthenticated = !!localStorage.getItem('auth_token');
 
   const handleLogout = async () => {
@@ -117,12 +116,10 @@ function NavLinks({ onClick = () => {} }) {
 
   const links = [
     { label: 'Top', href: '/'},
-    { label: 'About', href: '/about' },
+    { label: 'About Me', href: '/about' },
     { label: 'Skills', href: '/skills' },
     { label: 'Experience', href: '/experience' },
     { label: 'Projects', href: '/projects' },
-    { label: 'Hobbies', href: '/hobbies' },
-    { label: 'Contact', href: '/contact' },
   ];
 
   return (

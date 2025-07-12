@@ -67,11 +67,11 @@ export default function ProjectsPage(){
           setSkills={setSkills}  // 👈 これが抜けていた
           onProjectsUpdated={fetchProjectsAndSkills}
         />
-        <ExperienceSection
+        {/* <ExperienceSection
           projects={projects}
           experiences={experiences}
           reloadProjects={fetchProjectsAndSkills}
-        />
+        /> */}
       </div>
     </AppLayout>
   );

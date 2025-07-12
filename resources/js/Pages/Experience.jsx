@@ -27,7 +27,9 @@ export default function Experience() {
   return (
     <AppLayout>
       <div className="bg-[#1C1C1C] min-h-screen">
-        <ExperienceSection projects={projects} experiences={experiences} />
+        <ExperienceSection
+          projects={projects}
+          experiences={experiences} />
       </div>
     </AppLayout>
   );
