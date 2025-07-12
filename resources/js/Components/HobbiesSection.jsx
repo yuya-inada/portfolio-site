@@ -7,12 +7,12 @@ export default function HobbiesSection() {
       description: '- 歴代いっぬ紹介🐶 -',
       images: [
         {src: 'images/bell_1.jpeg', name: 'ベル(キャバリア)'},
-        // {src: '', name: 'カホ(トイプードル)'},
-        // {src: '', name: 'ペロ(パピヨン)'},
-        // {src: '', name: 'ミキ(チワワ)'},
-        // {src: '', name: 'スティッチ(M・ダックス)'},
-        // {src: '', name: 'ナツ(ヨークシャーテリア)'},
-        // {src: '', name: 'リロ(M・ダックス)'}
+        {src: 'images/kaho.jpeg', name: 'カホ(トイプードル)'},
+        {src: 'images/pero.jpeg', name: 'ペロ(パピヨン)'},
+        {src: 'images/miki.jpeg', name: 'ミキ(チワワ)'},
+        {src: 'images/stitch.jpeg', name: 'スティッチ(M・ダックス)'},
+        {src: 'images/natsu.jpeg', name: 'ナツ(ヨークシャーテリア)'},
+        {src: 'images/rilo.jpeg', name: 'リロ(M・ダックス)'}
       ]
     },
     { id: 2, name: 'Reading', icon: 'fas fa-book',
@@ -89,23 +89,23 @@ export default function HobbiesSection() {
   
       {/* ✅ モーダルを外に出して、全体の最前面に固定描画 */}
       {selectedHobby && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-[9999] flex justify-center items-center">
-          <div className="bg-[#2A2A2A] w-full max-w-sm mx-4 md:px-4 p-6 rounded-xl relative text-white shadow-2xl border border-[#D4B08C]">
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-[9999] flex justify-center items-center px-4">
+          <div className="bg-[#2A2A2A] w-full max-w-sm mx-4 max-h-[90vh] overflow-y-auto md:px-4 p-6 rounded-xl relative text-white shadow-2xl border border-[#D4B08C]">
             <button
               onClick={() => setSelectedHobby(null)}
-              className="absolute top-2 right-3 text-white text-3xl hover:text-[#D4B08C] transition-colors duration-300"
+              className="absolute top-5 right-5 text-white text-3xl hover:text-[#D4B08C] transition-colors duration-300"
             >
               ×
             </button>
             <h3 className="text-2xl mb-3 text-[#D4B08C]">{selectedHobby.name}</h3>
             <p className="mb-4 text-2xl">{selectedHobby.description}</p>
             {selectedHobby.images?.map((img, idx) => (
-              <div key={idx} className="mb-3">
+              <div key={idx} className="mb-10">
                 <p className="text-[#D4B08C] text-xl mb-2">・{img.name}</p>
                 <img
                   src={img.src}
                   alt={img.name}
-                  className="rounded-md max-h-48 object-contain mx-auto"
+                  className="rounded-md h-70 w-70 object-contain mx-auto"
                 />
               </div>
             ))}
