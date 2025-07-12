@@ -68,28 +68,52 @@ export default function Footer() {
               Connect
             </h3>
             <div className="flex space-x-6">
-              <a
-                href="https://instagram.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-[#E0E0E0] hover:text-[#D4B08C] transition-colors duration-300"
-              >
-                <i className="fab fa-instagram text-2xl"></i>
-              </a>
-              <a
-                href="https://github.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-[#E0E0E0] hover:text-[#D4B08C] transition-colors duration-300"
-              >
-                <i className="fab fa-github text-2xl"></i>
-              </a>
-              <button
-                onClick={copyEmail}
-                className="text-[#E0E0E0] hover:text-[#D4B08C] transition-colors duration-300"
-              >
-                <i className="fas fa-envelope text-2xl"></i>
-              </button>
+              <div className="relative group inline-block">
+                <a
+                  href="https://www.instagram.com/owlione_with_obell/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[#E0E0E0] hover:text-[#D4B08C] transition-colors duration-300"
+                >
+                  <i className="fab fa-instagram text-2xl"></i>
+                </a>
+                <div
+                  className="absolute -top-6 left-1/2 -translate-x-1/2 bg-[#333] text-white text-xs px-3 py-1 rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none whitespace-nowrap z-10"
+                  style={{boxShadow: '1px 1px 1px rgba(212, 176, 140, 0.5'}}
+                >
+                  Instagramへ
+                </div>
+              </div>
+              <div className="relative group inline-block">
+                <a
+                  href="https://github.com/yuya-inada"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[#E0E0E0] hover:text-[#D4B08C] transition-colors duration-300"
+                >
+                  <i className="fab fa-github text-2xl"></i>
+                </a>
+                <div 
+                  className="absolute -top-6 left-1/2 -translate-x-1/2 bg-[#333] text-white text-xs px-3 py-1 rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none whitespace-nowrap z-10"
+                  style={{boxShadow: '1px 1px 1px rgba(212, 176, 140, 0.5'}}
+                >
+                  GitHubへ
+                </div>
+              </div>
+              <div className="relative group inline-block">
+                <a
+                  href="mailto:obelu1001@gmail.com"
+                  className="text-[#E0E0E0] hover:text-[#D4B08C] transition-colors duration-300"
+                >
+                  <i className="fas fa-envelope text-2xl"></i>
+                </a>
+                <div
+                  className="absolute -top-6 left-1/2 -tanslate-x-1/2 bg-[#333] text-white text-xs px-3 py-1 rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none whitespace-nowrap z-10"
+                  style={{boxShadow: '1px 1px 1px rgba(212, 176, 140, 0.5'}}
+                >
+                  メールアプリを開く
+                </div>
+              </div>
             </div>
             <p className="mt-8 text-[#A8A8A8] italic">
               © 2025 bell. All rights reserved.
