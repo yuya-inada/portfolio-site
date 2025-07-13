@@ -118,7 +118,7 @@ export default function TopIntroSection({ copyEmail }) {
               href="/about"
               className="text-gray-400 hover:underline hover:text-[#b2946f] text-md transition-colors duration-200"  
             >
-              ▶︎ See more about my interests & hobbies 
+              ▶︎ See more about my hobbies & interests
             </a>
           </div>
           )}
