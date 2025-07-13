@@ -16,51 +16,69 @@ export default function HobbiesSection() {
       ]
     },
     { id: 2, name: 'Reading', icon: 'fas fa-book',
-      description: '',
-      images: [
-        {src: ''}
+      description: [
+        '小説（島田荘司、コナン・ドイル、池井戸潤など）を中心に、金融・経済といった知識系の実用書も好んで拝読。',
+        '20代中盤までは「ユダヤ人大富豪の教え」や「理想は現実化する」などの自己啓発書に触れ、考え方や価値観を磨くきっかけに。',
+        'また、少年期にはハリーポッターのようなSFや、ワンピースなどの漫画を通して物語の世界観に没入し、空想力を育む。'
       ]
     },
     { id: 3, name: 'Movies', icon: 'fas fa-film',
-      description: '',
-      images: [
-        {src: ''}
+      description: [
+        {text: '- Top 3 -', className: 'text-2xl'},
+        {text: '1位：インターステラー', className: 'text-xl'},
+        {text: '2位：インセプション', className: 'text-xl'},
+        {text: '3位：ショーシャンクの空に', className: 'text-xl'}
       ]
     },
     { id: 4, name: 'Sports', icon: 'fas fa-baseball-ball',
-      description: '',
-      images: [
-        {src: ''}
+      description: [
+        {text: '・野球', className: 'text-xl'},
+        {text: '・フットサル', className: 'text-xl'},
+        {text: '・バドミントン', className: 'text-xl'},
+        {text: '・ランニング',className: 'text-xl'}
+      ],
+    },
+    { id: 5, name: 'Weight Training', icon: 'fas fa-dumbbell',
+      description: [
+        { text: '筋トレは「自分との戦い」…という名の自己満です。', className: 'text-2xl' },
+        { text: '分割して鍛えてます💪', className: 'text-xl mt-4' },
+        { text: '・脚（ふくらはぎ＆太もも）＊現在怪我中', className: 'text-base ml-6' },
+        { text: '・背中（広背筋など）', className: 'text-base ml-6' },
+        { text: '・胸（ダンベルプレスが定番）', className: 'text-base ml-6' },
+        { text: '・腕（二頭＆三頭）', className: 'text-base ml-6' },
+        { text: '・肩（ショルダープレスなど）', className: 'text-base ml-6' },
+        { text: '追い込んだ後のプロテインは、もちろん飽きてます。', className: 'text-xl mt-4' }
       ]
     },
-    { id: 5, name: 'Papercraft', icon: 'fas fa-scissors',
-      description: '',
+    { id: 6, name: 'Papercraft', icon: 'fas fa-scissors',
+      description: '- ジブリ系 -',
       images: [
-        {src: ''}
+        {src: 'images/totoro.jpeg', name: 'トトロ’s'},
+        {src: 'images/mononoke.jpeg', name: 'もののけ姫'},
+        {src: 'images/ziburi_1.jpeg', name: '千と千尋の神隠し'}
       ]
     },
-    { id: 6, name: 'Hip-hop', icon: 'fas fa-headphones',
-      description: '',
-      images: [
-        {src: ''}
-      ]
-    },
-    { id: 7, name: 'Programming', icon: 'fas fa-code',
-      description: '',
-      images: [
-        {src: ''}
-      ]
+    { id: 7, name: 'Hip-hop / Rappers', icon: 'fas fa-headphones',
+      description: [
+        {text: 'よく聞くRapper一覧', className: 'text-2xl mb-4 text-[#D4B08C]'},
+        {text: '🇯🇵Japanease Hip-Hop', className: 'text-2xl ml-4'},
+        {text: '・Basi', className: 'text-xl ml-8'},
+        {text: '・Gadoro', className: 'text-xl ml-8'},
+        {text: '・Zoon', className: 'text-xl ml-8'},
+        {text: '・舐達磨etc', className: 'text-xl ml-8'},
+        {text: '🇺🇸US Hip-Hop', className: 'text-2xl ml-4'},
+        {text: '・Eminem', className: 'text-xl ml-8'},
+        {text: '・Snoop Dogg', className: 'text-xl ml-8'},
+        {text: '・Dax etc', className: 'text-xl ml-8'},
+      ],
     },
     { id: 8, name: 'Wine', icon: 'fas fa-wine-glass',
       description: '',
       images: [
-        {src: ''}
-      ]
-    },
-    { id: 9, name: 'Weight Training', icon: 'fas fa-dumbbell',
-      description: '',
-      images: [
-        {src: ''}
+        {src: 'images/stack_house.jpeg', name: 'Stack House (USA)'},
+        {src: 'images/montelena.jpeg', name: 'Chateau Montelena (USA)'},
+        {src: 'images/puligny.jpeg', name: 'Puligny-Montrachet (FRA)'},
+        {src: 'images/meursault.jpeg', name: 'Meursault Genevrieres Premier Cru (FRA)'}
       ]
     },
   ];
@@ -74,14 +92,20 @@ export default function HobbiesSection() {
       {/* 趣味カード */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-6xl mx-auto px-1">
         {hobbies.map((hobby) => (
-          <div key={hobby.id} className="flex flex-col items-center ...">
+          <div key={hobby.id} 
+          className="flex flex-col items-center justify-center 
+                     bg-[#2A2A2A] p-8 rounded-lg border border-[#3D3D3D]
+                     text-center transition-all duration-300 
+                     hover:scale-105 hover:bg-[#4A4A4A] hover:border-[#D4B08C]
+                     hover:shadow-[0_0_15px_rgba(212,176,140,0.3)] cursor-pointer"
+          >
             <i className={`${hobby.icon} text-3xl text-[#D4B08C]`}></i>
-            <p className="mt-4 text-lg text-white">{hobby.name}</p>
+            <p className="mt-4 text-xl text-white">{hobby.name}</p>
             <button
               className="mt-2 text-sm text-gray-400 hover:text-[#D4B08C] underline transition-colors duration-300"
               onClick={() => setSelectedHobby(hobby)}
             >
-              See more
+              ▶︎ See more
             </button>
           </div>
         ))}
@@ -90,25 +114,51 @@ export default function HobbiesSection() {
       {/* ✅ モーダルを外に出して、全体の最前面に固定描画 */}
       {selectedHobby && (
         <div className="fixed inset-0 bg-black bg-opacity-50 z-[9999] flex justify-center items-center px-4">
-          <div className="bg-[#2A2A2A] w-full max-w-sm mx-4 max-h-[90vh] overflow-y-auto md:px-4 p-6 rounded-xl relative text-white shadow-2xl border border-[#D4B08C]">
-            <button
-              onClick={() => setSelectedHobby(null)}
-              className="absolute top-5 right-5 text-white text-3xl hover:text-[#D4B08C] transition-colors duration-300"
-            >
-              ×
-            </button>
-            <h3 className="text-2xl mb-3 text-[#D4B08C]">{selectedHobby.name}</h3>
-            <p className="mb-4 text-2xl">{selectedHobby.description}</p>
-            {selectedHobby.images?.map((img, idx) => (
-              <div key={idx} className="mb-10">
-                <p className="text-[#D4B08C] text-xl mb-2">・{img.name}</p>
-                <img
-                  src={img.src}
-                  alt={img.name}
-                  className="rounded-md h-70 w-70 object-contain mx-auto"
-                />
-              </div>
-            ))}
+          <div className="bg-[#2A2A2A] w-full max-w-sm mx-4 max-h-[90vh] overflow-y-auto md:px-4 pt-0 pb-6 px-6 rounded-xl relative text-white shadow-2xl border border-[#D4B08C]">
+            
+            {/* ヘッダー部分 */}
+            <div className="sticky top-0 bg-[#2A2A2A] z-10 px-6 py-4 pb-1 mb-5 border-b border-[#D4B08C] flex justify-between items-start">
+              <h3 className="text-2xl text-[#D4B08C] mb-3">{selectedHobby.name}</h3>
+              <button
+                onClick={() => setSelectedHobby(null)}
+                className="text-white text-3xl hover:text-[#D4B08C] transition-colors duration-300"
+              >
+                ×
+              </button>
+            </div>
+
+            {/* 内容部分（画像あり／なしで切り替え） */}
+            {selectedHobby.images?.length > 0 && selectedHobby.images.some(img => img.src) ? (
+              <>
+                <p className="mb-8 text-xl">{selectedHobby.description}</p>
+                {selectedHobby.images.map((img, idx) => (
+                  <div key={idx} className="mb-10">
+                    <p className="text-[#D4B08C] text-xl mb-2">・{img.name}</p>
+                    <img
+                      src={img.src}
+                      alt={img.name}
+                      className="rounded-md h-70 w-70 object-contain mx-auto"
+                    />
+                  </div>
+                ))}
+              </>
+            ) : Array.isArray(selectedHobby.description) ? (
+              selectedHobby.description.map((para, idx) => (
+                <p
+                  key={idx}
+                  // className="mb-4 text-2xl leading-relaxed text-white whitespace-pre-line"
+                  className={`mb-4 ${
+                    typeof para === 'object' && para.className ? para.className : 'text-white'
+                  }`}
+                >
+                  {typeof para === 'object' ? para.text : para}
+                </p>
+              ))
+            ) : (
+              <p className="text-white text-2xl leading-relaxed">
+                {selectedHobby.description}
+              </p>
+            )}
           </div>
         </div>
       )}
