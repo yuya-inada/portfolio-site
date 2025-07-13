@@ -17,9 +17,9 @@ export default function HobbiesSection() {
     },
     { id: 2, name: 'Reading', icon: 'fas fa-book',
       description: [
-        '小説（島田荘司、コナン・ドイル、池井戸潤など）を中心に、金融・経済といった知識系の実用書も好んで拝読。',
-        '20代中盤までは「ユダヤ人大富豪の教え」や「理想は現実化する」などの自己啓発書に触れ、考え方や価値観を磨くきっかけに。',
-        'また、少年期にはハリーポッターのようなSFや、ワンピースなどの漫画を通して物語の世界観に没入し、空想力を育む。'
+        { text: '小説（島田荘司、コナン・ドイル、池井戸潤など）を中心に、金融・経済といった知識系の実用書も好んで拝読。', className: 'text-xl'},
+        { text: '20代中盤までは「ユダヤ人大富豪の教え」や「理想は現実化する」などの自己啓発書に触れ、考え方や価値観を磨くきっかけに。', className: 'text-xl'},
+        { text: 'また、少年期にはハリーポッターのようなSFや、ワンピースなどの漫画を通して物語の世界観に没入し、空想力を育む。', className: 'text-xl'}
       ]
     },
     { id: 3, name: 'Movies', icon: 'fas fa-film',
@@ -55,7 +55,7 @@ export default function HobbiesSection() {
       images: [
         {src: 'images/totoro.jpeg', name: 'トトロ’s'},
         {src: 'images/mononoke.jpeg', name: 'もののけ姫'},
-        {src: 'images/ziburi_1.jpeg', name: '千と千尋の神隠し'}
+        {src: 'images/ziburi_1.jpeg', name: '千と千尋の神隠し with トトロ'}
       ]
     },
     { id: 7, name: 'Hip-hop / Rappers', icon: 'fas fa-headphones',
@@ -155,7 +155,7 @@ export default function HobbiesSection() {
                 </p>
               ))
             ) : (
-              <p className="text-white text-2xl leading-relaxed">
+              <p className="text-white text-4xl leading-relaxed">
                 {selectedHobby.description}
               </p>
             )}

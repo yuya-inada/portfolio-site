@@ -83,6 +83,8 @@ export default function TopIntroSection({ copyEmail }) {
           {/* モデル：べるちゃんです */}
           <p className="mb-4 text-xl">
             キャバリア・キング・チャールズ・スパニエルの女の子、ベルちゃんです。
+          </p>
+          <p className="mb-4 text-xl">
             2017年10月1日生まれの8歳。
           </p>
           <p className="mb-4 text-xl">
