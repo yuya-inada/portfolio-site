@@ -78,7 +78,7 @@ export default function Footer() {
                   <i className="fab fa-instagram text-2xl"></i>
                 </a>
                 <div
-                  className="absolute -top-6 left-1/2 -translate-x-1/2 bg-[#333] text-white text-xs px-3 py-1 rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none whitespace-nowrap z-10"
+                  className="absolute -top-6 left-1/2 -translate-x-1/2 bg-[#333] text-white text-md px-3 py-1 rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none whitespace-nowrap z-10"
                   style={{boxShadow: '1px 1px 1px rgba(212, 176, 140, 0.5'}}
                 >
                   Instagramへ
@@ -94,7 +94,7 @@ export default function Footer() {
                   <i className="fab fa-github text-2xl"></i>
                 </a>
                 <div 
-                  className="absolute -top-6 left-1/2 -translate-x-1/2 bg-[#333] text-white text-xs px-3 py-1 rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none whitespace-nowrap z-10"
+                  className="absolute -top-6 left-1/2 -translate-x-1/2 bg-[#333] text-white text-md px-3 py-1 rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none whitespace-nowrap z-10"
                   style={{boxShadow: '1px 1px 1px rgba(212, 176, 140, 0.5'}}
                 >
                   GitHubへ
@@ -108,7 +108,7 @@ export default function Footer() {
                   <i className="fas fa-envelope text-2xl"></i>
                 </a>
                 <div
-                  className="absolute -top-6 left-1/2 -tanslate-x-1/2 bg-[#333] text-white text-xs px-3 py-1 rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none whitespace-nowrap z-10"
+                  className="absolute -top-6 left-1/2 -tanslate-x-1/2 bg-[#333] text-white text-md px-3 py-1 rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none whitespace-nowrap z-10"
                   style={{boxShadow: '1px 1px 1px rgba(212, 176, 140, 0.5'}}
                 >
                   メールアプリを開く

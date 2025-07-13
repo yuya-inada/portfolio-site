@@ -34,7 +34,7 @@ export default function TopIntroSection({ copyEmail }) {
                   <i className="fab fa-instagram text-2xl"></i>
                 </a>
               <div 
-                className="absolute -top-6 left-1/2 -translate-x-1/2 bg-[#333] text-white text-xs px-3 py-1 rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none whitespace-nowrap z-10"
+                className="absolute -top-6 left-1/2 -translate-x-1/2 bg-[#333] text-white text-md px-3 py-1 rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none whitespace-nowrap z-10"
                 style={{boxShadow: '1px 1px 1px rgba(212, 176, 140, 0.5)'}}
               >
                 Instagramへ
@@ -50,7 +50,7 @@ export default function TopIntroSection({ copyEmail }) {
                 <i className="fab fa-github text-2xl"></i>
               </a>
               <div
-                className="absolute -top-6 left-1/2 -translate-x-1/2 bg-[#333] text-white text-xs px-3 py-1 rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none whitespace-nowrap z-10"
+                className="absolute -top-6 left-1/2 -translate-x-1/2 bg-[#333] text-white text-md px-3 py-1 rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none whitespace-nowrap z-10"
                 style={{boxShadow: '1px 1px 1px rgba(212, 176, 140, 0.5)'}}
               >
                 GitHubへ
@@ -66,7 +66,7 @@ export default function TopIntroSection({ copyEmail }) {
                 <i className="fas fa-envelope text-2xl"></i>
               </a>
               <div
-                className="absolute -top-6 left-1/2 -translate-x-1/2 bg-[#333] text-white text-xs px-3 py-1 rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none whitespace-nowrap z-10"
+                className="absolute -top-6 left-1/2 -translate-x-1/2 bg-[#333] text-white text-md px-3 py-1 rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none whitespace-nowrap z-10"
                 style={{boxShadow: '1px 1px 1px rgba(212, 176, 140, 0.5)'}}
               >
                 メールアプリを開く
@@ -81,19 +81,19 @@ export default function TopIntroSection({ copyEmail }) {
             About Me
           </h2>
           {/* モデル：べるちゃんです */}
-          <p className="mb-4">
+          <p className="mb-4 text-xl">
             キャバリア・キング・チャールズ・スパニエルの女の子、ベルちゃんです。
             2017年10月1日生まれの8歳。
           </p>
-          <p className="mb-4">
+          <p className="mb-4 text-xl">
             おっとり穏やかで、これまで一度も人を噛んだことのない優しい性格。
             でも実はちょっぴり食いしん坊で、おやつは「もうちょっと…！」と満足するまでおねだりします。
           </p>
-          <p className="mb-4">
+          <p className="mb-4 text-xl">
             寝るのが大好きで、好きな場所でゴロゴロするのが至福の時間。
             お散歩も好きだけど、気分が乗らない日は「今日はいいや」とその場から動かなくなることも。
           </p>
-          <p>
+          <p className="mb-4 text-xl">
             そんなマイペースな性格も含めて、もうたまりません🐶
           </p>
           {/* てめーのAbout Me */}
