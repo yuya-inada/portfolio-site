@@ -147,7 +147,7 @@ export default function ProjectsSection(props) {
 
   return (
     <>
-    <section className="py-20" id="projects">
+    <section className="py-20 overflow-x-hidden" id="projects">
       <div className="max-w-6xl max-auto mb-7 px-4">
         {isAuthenticated ? (
           <div className="flex justify-between items-center flex-wrap gap-2">

@@ -50,7 +50,7 @@ export default function MainComponent() {
 
   return (
     <AppLayout>
-      <div className="bg-[#1C1C1C] min-h-screen">
+      <div className="bg-[#1C1C1C] min-h-screen overflow-x-hidden">
         <TopIntroSection copyEmail={copyEmail} />
         <SkillsSection skills={usedSkills} />
         <ExperienceSection 

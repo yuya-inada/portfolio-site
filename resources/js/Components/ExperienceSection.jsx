@@ -133,15 +133,15 @@ export default function ExperienceSection({
           </h2>
         )}
       </div>
-      <div className="space-y-12 max-w-4xl mx-auto px-1">
+      <div className="space-y-12 max-w-2xl mx-auto px-1">
         {[...experiences]
         .sort((a,b) => new Date(b.created_at) - new Date(a.created_at))
         .map(exp => (
-          <div key={exp.id} className="bg-[#2A2A2A] p-8 rounded-lg border border-[#3D3D3D] transform transition-all duration-300 hover:scale-105 hover:bg-[#4A4A4A] hover:border-[#D4B08C] hover:shadow-[0_0_15px_rgba(212,176,140,0.3)]">
+          <div key={exp.id} className="bg-[#2A2A2A] p-6 rounded-lg border border-[#3D3D3D] transform transition-all duration-300 hover:scale-100 hover:bg-[#4A4A4A] hover:border-[#D4B08C] hover:shadow-[0_0_15px_rgba(212,176,140,0.3)]">
             <div className="flex flex-row justify-between items-center w-full">
               <h3
                 className={`text-xl sm:text-3xl font-playfair-display text-[#D4B08C] ${
-                  isAuthenticated && isMobile ? 'truncate max-w-[50%]' : ''
+                  isAuthenticated && isMobile ? 'truncate max-w-[100%-120%]' : ''
                 }`}
               >
                 {exp.title}

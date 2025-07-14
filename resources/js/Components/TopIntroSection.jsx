@@ -5,13 +5,13 @@ export default function TopIntroSection({ copyEmail }) {
   const isAboutPage = window.location.pathname === ('/about');
   return (
     <section className="pt-32 pb-20 px-6 bg-[#1C1C1C]" id="about">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center text-center">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-12 items-center text-center">
         {/* Left side - Name and Social Links */}
         <div className="text-center">
           <img 
             src="/images/bell_1.jpeg"
             alt="Bell chandesu"
-            className="w-60 h-60 rounded-full mx-auto mb-4 object-cover shadow-[8px_8px_12px_rgba(212,176,140,0.3)]"
+            className="w-48 h-48 sm:w-60 sm:h-60 rounded-full mx-auto mb-4 object-cover shadow-[8px_8px_12px_rgba(212,176,140,0.3)]"
           />
           <h1 className="text-2xl md:text-4xl font-playfair-display text-[#D4B08C] mb-3">
             Bell
@@ -23,8 +23,8 @@ export default function TopIntroSection({ copyEmail }) {
             Backend-oriented Full Stack Engineer
           </div> */}
           <p className="mb-2 text-center">Contact</p>
-          <div className="space-x-8 mb-6">
-            <div className="relative group inline-block">
+          <div className="flex flex-wrap justify-center gap-x-4 pag-y-4 mb-6">
+            <div className="relative group inline-block overflow-x-hidden">
                 <a
                   href="https://www.instagram.com/owlione_with_obell/"
                   target="_blank"

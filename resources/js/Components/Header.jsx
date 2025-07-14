@@ -24,7 +24,7 @@ export default function Header() {
 
   return (
     <header className="fixed top-0 left-0 right-0 bg-[#2A2A2A] border-b border-[#3D3D3D] z-50 text-white">
-      <div className="mx-w-6xl mx-auto px-6 flex justify-between items-center py-4">
+      <div className="max-w-6xl mx-auto px-6 flex justify-between items-center py-4">
         {/* 左側：ロゴ */}
         <div>
           <h1 className="text-3xl font-crimson-text text-[#D4B08C]" >My Portfolio</h1>
