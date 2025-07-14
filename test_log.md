@@ -62,7 +62,7 @@ Postman・ブラウザ等で確認した動作と結果を記載しています�
 {
     "message": "Experinece updated successfully."
 }
-
+```
 - 備考：画面一覧にも即時反映されること確認
 
 #### DELETE /api/admin/experiences/{id}
