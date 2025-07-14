@@ -11,6 +11,7 @@ function copyEmail(){
 }
 
 export default function Footer() {
+  const isAuthenticated = !!localStorage.getItem('auth_token');
   return (
     // <footer className="bg-[#2A2A2A] border-t border-[#3D3D3D] py-16 text-center">
     //   <p>&copy; 2025 Yuya Inada. All rights reserved.</p>
@@ -39,27 +40,39 @@ export default function Footer() {
             <div className="text-md text-[#A8A8A8] space-y-3 text-center">
               {/* 1行目 */}
               <div className="flex justify-start gap-x-6">
-                <a href="/" className="hover:text-[#D4B08C] transition-colors duration-300">
+                <a href="/" className="hover:text-[#D4B08C] transition-colors duration-300 hover:underline">
                   Top
                 </a>
-                <a href="/about" className="hover:text-[#D4B08C] transition-colors duration-300">
+                <a href="/about" className="hover:text-[#D4B08C] transition-colors duration-300 hover:underline">
                   About Me
                 </a>
-                <a href="/skills" className="hover:text-[#D4B08C] transition-colors duration-300">
+                <a href="/skills" className="hover:text-[#D4B08C] transition-colors duration-300 hover:underline">
                   Skills
                 </a>
               </div>
               {/* 2行目 */}
               <div className="flex justify-start gap-x-6">
-                <a href="/experience" className="hover:text-[#D4B08C] transition-colors duration-300">
+                <a href="/experiences" className="hover:text-[#D4B08C] transition-colors duration-300 hover:underline">
                   Experiences
                 </a>
-                <a href="/projects" className="hover:text-[#D4B08C] transition-colors duration-300">
+                <a href="/projects" className="hover:text-[#D4B08C] transition-colors duration-300 hover:underline">
                   Projects
                 </a>
-                <a href="/admin-login" className="hover:text-[#D4B08C] transition-colors duration-300">
-                  Admin Login
-                </a>
+                {isAuthenticated ? (
+                  <button
+                    onClick={() => {
+                      localStorage.removeItem('auth_token');
+                      window.location.reload();
+                    }}
+                    className="text-red-400 hover:text-red-500 underline"
+                  >
+                    Logout
+                  </button>
+                ) : (
+                  <a href="/admin-login" className="hover:text-[#D4B08C] transition-colors duration-300">
+                    Admin Login
+                  </a>
+                )}
               </div>
             </div>
           </div>
@@ -82,6 +95,22 @@ export default function Footer() {
                   style={{boxShadow: '1px 1px 1px rgba(212, 176, 140, 0.5'}}
                 >
                   Instagramへ
+                </div>
+              </div>
+              <div className="relative group inline-block">
+                <a
+                  href="https://note.com/inashi_bel"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[#E0E0E0] hover:text-[#D4B08C] transition-colors duration-300"
+                >
+                  <i className="fas fa-sticky-note text-2xl"></i>
+                </a>
+                <div
+                  className="absolute -top-6 left-1/2 -translate-x-1/2 bg-[#333] text-white text-md px-3 py-1 rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none whitespace-nowrap z-10"
+                  style={{boxShadow: '1px 1px 1px rgba(212, 176, 140, 0.5'}}
+                >
+                  note(アプリ)へ
                 </div>
               </div>
               <div className="relative group inline-block">

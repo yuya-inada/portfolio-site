@@ -54,7 +54,7 @@ Route::get('/skills/{id}', function ($id){
 });
 
 // 経歴ページ追加
-Route::get('/experience', function(){
+Route::get('/experiences', function(){
     return Inertia::render('Experience');
 });
 

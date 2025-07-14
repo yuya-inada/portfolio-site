@@ -65,7 +65,7 @@ export default function HobbiesSection() {
         {text: '・Basi', className: 'text-xl ml-8'},
         {text: '・Gadoro', className: 'text-xl ml-8'},
         {text: '・Zoon', className: 'text-xl ml-8'},
-        {text: '・舐達磨etc', className: 'text-xl ml-8'},
+        {text: '・舐達磨 etc', className: 'text-xl ml-8'},
         {text: '🇺🇸US Hip-Hop', className: 'text-2xl ml-4'},
         {text: '・Eminem', className: 'text-xl ml-8'},
         {text: '・Snoop Dogg', className: 'text-xl ml-8'},
@@ -73,7 +73,7 @@ export default function HobbiesSection() {
       ],
     },
     { id: 8, name: 'Wine', icon: 'fas fa-wine-glass',
-      description: '',
+      description: '元々、ワインバーでバーテンダーをやっていたため、必然的にワイン好きに。',
       images: [
         {src: 'images/stack_house.jpeg', name: 'Stack House (USA)'},
         {src: 'images/montelena.jpeg', name: 'Chateau Montelena (USA)'},

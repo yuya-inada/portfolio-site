@@ -179,7 +179,9 @@ export default function ProjectsSection(props) {
         )}
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-1">
-        {projects.map((project) => (
+        {[...projects]
+        .sort((a,b) => new Date(b.created_at) - new Date(a.created_at))
+        .map((project) => (
           <div
             key={project.id}
             className="bg-[#2A2A2A] p-8 rounded-lg border border-[#3D3D3D] transform transition-all duration-300 hover:scale-105 hover:bg-[#4A4A4A] hover:border-[#D4B08C] hover:shadow-[0_0_15px_rgba(212,176,140,0.3)]"

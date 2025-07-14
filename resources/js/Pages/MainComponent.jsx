@@ -5,8 +5,8 @@ import TopIntroSection from '@/Components/TopIntroSection';
 import SkillsSection from '@/Components/SkillsSection';
 import ExperienceSection from '@/Components/ExperienceSection';
 import ProjectsSection from '@/Components/ProjectsSection';
-import HobbiesSection from '@/Components/HobbiesSection';
-import ContactSection from '@/Components/ContactSection';
+// import HobbiesSection from '@/Components/HobbiesSection';
+// import ContactSection from '@/Components/ContactSection';
 
 export default function MainComponent() {
   const [projects, setProjects] = useState([]);

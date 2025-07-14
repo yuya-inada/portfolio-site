@@ -39,7 +39,7 @@ export default function Header() {
             {isAuthenticated ? (
               <button
                 onClick={handleLogout}
-                className="text-sm text-red-500 hover:text-red-400 underline text-left"
+                className="text-sm text-red-400 hover:text-red-500 underline text-left"
               >
                 Logout
               </button>
@@ -118,7 +118,7 @@ function NavLinks({ onClick = () => {} }) {
     { label: 'Top', href: '/'},
     { label: 'About Me', href: '/about' },
     { label: 'Skills', href: '/skills' },
-    { label: 'Experience', href: '/experience' },
+    { label: 'Experiences', href: '/experiences' },
     { label: 'Projects', href: '/projects' },
   ];
 

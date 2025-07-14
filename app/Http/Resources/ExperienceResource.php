@@ -14,6 +14,7 @@ class ExperienceResource extends JsonResource
             'company'     => $this->company,
             'period'      => $this->period,
             'description' => $this->description,
+            'created_at'  => $this->created_at,
             'projects'    => $this->projects->map(function ($project) {
                 return [
                     'id'          => $project->id,

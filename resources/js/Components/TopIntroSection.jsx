@@ -41,6 +41,22 @@ export default function TopIntroSection({ copyEmail }) {
               </div>
             </div>
             <div className="relative group inline-block">
+                <a
+                  href="https://note.com/inashi_bel"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[#E0E0E0] hover:text-[#D4B08C] transition-colors duration-300"
+                >
+                  <i className="fas fa-sticky-note text-2xl"></i>
+                </a>
+              <div 
+                className="absolute -top-6 left-1/2 -translate-x-1/2 bg-[#333] text-white text-md px-3 py-1 rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none whitespace-nowrap z-10"
+                style={{boxShadow: '1px 1px 1px rgba(212, 176, 140, 0.5)'}}
+              >
+                note(アプリ)へ
+              </div>
+            </div>
+            <div className="relative group inline-block">
               <a
                 href="https://github.com/yuya-inada"
                 target="_blank"

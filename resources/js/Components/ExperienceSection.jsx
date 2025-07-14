@@ -134,7 +134,9 @@ export default function ExperienceSection({
         )}
       </div>
       <div className="space-y-12 max-w-4xl mx-auto px-1">
-        {experiences.map(exp => (
+        {[...experiences]
+        .sort((a,b) => new Date(b.created_at) - new Date(a.created_at))
+        .map(exp => (
           <div key={exp.id} className="bg-[#2A2A2A] p-8 rounded-lg border border-[#3D3D3D] transform transition-all duration-300 hover:scale-105 hover:bg-[#4A4A4A] hover:border-[#D4B08C] hover:shadow-[0_0_15px_rgba(212,176,140,0.3)]">
             <div className="flex flex-row justify-between items-center w-full">
               <h3
