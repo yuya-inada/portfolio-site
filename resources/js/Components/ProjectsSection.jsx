@@ -147,7 +147,7 @@ export default function ProjectsSection(props) {
 
   return (
     <>
-    <section className="py-20 overflow-x-hidden" id="projects">
+    <section className="py-20 overflow-visible" id="projects">
       <div className="max-w-6xl max-auto mb-7 px-4">
         {isAuthenticated ? (
           <div className="flex justify-between items-center flex-wrap gap-2">
@@ -178,13 +178,13 @@ export default function ProjectsSection(props) {
           </h2>
         )}
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-1">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-1 overflow-visible">
         {[...projects]
         .sort((a,b) => new Date(b.created_at) - new Date(a.created_at))
         .map((project) => (
           <div
             key={project.id}
-            className="bg-[#2A2A2A] p-8 rounded-lg border border-[#3D3D3D] transform transition-all duration-300 hover:scale-105 hover:bg-[#4A4A4A] hover:border-[#D4B08C] hover:shadow-[0_0_15px_rgba(212,176,140,0.3)]"
+            className="bg-[#2A2A2A] p-8 rounded-lg border border-[#3D3D3D] transform transition-all duration-300 hover:scale-[1.01] hover:bg-[#4A4A4A] hover:border-[#D4B08C] hover:shadow-[0_0_15px_rgba(212,176,140,0.3)]"
           >
             <div className="flex justify-between items-start">
               <h3 className={`text-xl sm:text-3xl font-playfair-display text-[#D4B08C] ${isAuthenticated ? 'truncate max-w-[70%]' : ''}`}>

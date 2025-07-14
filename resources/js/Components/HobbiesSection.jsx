@@ -30,7 +30,7 @@ export default function HobbiesSection() {
         {text: '2位：インセプション', className: 'text-xl ml-4'},
         {text: '夢の中の夢の中のまた夢の中。', className: 'text-base ml-16'},
         {text: '3位：ショーシャンクの空に', className: 'text-xl ml-4'},
-        {text: '自由であることの実感。', className: 'text-base ml-16'},
+        {text: '自由であることを実感。', className: 'text-base ml-16'},
         {text: 'SF、実話、ミステリー、アクションなど幅広く見ていますが、ホラーだけは苦手👻', className: 'text-lg'}
       ]
     },

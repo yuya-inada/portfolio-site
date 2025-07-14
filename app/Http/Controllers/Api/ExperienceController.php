@@ -53,7 +53,7 @@ class ExperienceController extends Controller
 
         return response()->json([
             'message' => 'Experinece updated successfully.'
-        ]);
+        ], 201);
     }
 
     public function destroy($id){
@@ -64,6 +64,6 @@ class ExperienceController extends Controller
         $experience->delete();
         return response()->json([
             'message' => 'Experience deleted successfully.'
-        ]);
+        ], 201);
     }
 }

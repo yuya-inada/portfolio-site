@@ -137,7 +137,7 @@ export default function ExperienceSection({
         {[...experiences]
         .sort((a,b) => new Date(b.created_at) - new Date(a.created_at))
         .map(exp => (
-          <div key={exp.id} className="bg-[#2A2A2A] p-6 rounded-lg border border-[#3D3D3D] transform transition-all duration-300 hover:scale-100 hover:bg-[#4A4A4A] hover:border-[#D4B08C] hover:shadow-[0_0_15px_rgba(212,176,140,0.3)]">
+          <div key={exp.id} className="bg-[#2A2A2A] p-6 rounded-lg border border-[#3D3D3D] transform transition-all duration-300 hover:scale-[1.01] hover:bg-[#4A4A4A] hover:border-[#D4B08C] hover:shadow-[0_0_15px_rgba(212,176,140,0.3)]">
             <div className="flex flex-row justify-between items-center w-full">
               <h3
                 className={`text-xl sm:text-3xl font-playfair-display text-[#D4B08C] ${

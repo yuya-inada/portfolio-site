@@ -62,7 +62,7 @@ class ProjectController extends Controller
         return response()->json([
             'message' => 'Project created successfully.',
             'data' => new ProjectResource($project->load('skills')),// スキル情報も一緒に返す
-        ], 200);
+        ], 201);
     }
 
     /**
@@ -99,7 +99,7 @@ class ProjectController extends Controller
         return response()->json([
             'message' => 'Project updated successfully.',
             'data' => new ProjectResource($project->load('skills')),
-        ]);
+        ], 201);
     }
 
     /**
@@ -113,6 +113,8 @@ class ProjectController extends Controller
         $project->experiences()->detach();
         $project->delete();
 
-        return response()->json(['message' => 'Project deleted successfully.']);
+        return response()->json([
+            'message' => 'Project deleted successfully.'
+        ], 201);
     }
 }
