@@ -103,7 +103,7 @@ export default function ExperienceSection({
 
   return (
     <>
-    <section className="py-20" id="experience">
+    <section className="py-20 mb-8" id="experience">
       <div className="max-w-4xl w-full mx-auto mb-7 px-4">
         {isAuthenticated ? (
           <div className="flex flex-wrap justify-between items-center gap-2">

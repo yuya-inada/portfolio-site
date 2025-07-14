@@ -24,30 +24,38 @@ export default function HobbiesSection() {
     },
     { id: 3, name: 'Movies', icon: 'fas fa-film',
       description: [
-        {text: '- Top 3 -', className: 'text-2xl'},
-        {text: '1位：インターステラー', className: 'text-xl'},
-        {text: '2位：インセプション', className: 'text-xl'},
-        {text: '3位：ショーシャンクの空に', className: 'text-xl'}
+        {text: '- マイベスト 3 -', className: 'text-2xl text-[#D4B08C]'},
+        {text: '1位：インターステラー', className: 'text-xl ml-4'},
+        {text: '宇宙 × 愛 × 時間の哲学', className: 'text-base ml-16'},
+        {text: '2位：インセプション', className: 'text-xl ml-4'},
+        {text: '夢の中の夢の中のまた夢の中。', className: 'text-base ml-16'},
+        {text: '3位：ショーシャンクの空に', className: 'text-xl ml-4'},
+        {text: '自由であることの実感。', className: 'text-base ml-16'},
+        {text: 'SF、実話、ミステリー、アクションなど幅広く見ていますが、ホラーだけは苦手👻', className: 'text-lg'}
       ]
     },
     { id: 4, name: 'Sports', icon: 'fas fa-baseball-ball',
       description: [
         {text: '・野球', className: 'text-xl'},
+        {text: '大学まで野球部所属（現在は草野球）', className: 'text-base ml-6'},
         {text: '・フットサル', className: 'text-xl'},
+        {text: '社会人から友人達とラモスフィールドで。', className: 'text-base ml-6'},
         {text: '・バドミントン', className: 'text-xl'},
-        {text: '・ランニング',className: 'text-xl'}
+        {text: '両親の影響で趣味程度。', className: 'text-base ml-6'},
+        {text: '・ランニング',className: 'text-xl'},
+        {text: '気分転換と健康意識。', className: 'text-base ml-6'},
       ],
     },
     { id: 5, name: 'Weight Training', icon: 'fas fa-dumbbell',
       description: [
-        { text: '筋トレは「自分との戦い」…という名の自己満です。', className: 'text-2xl' },
-        { text: '分割して鍛えてます💪', className: 'text-xl mt-4' },
+        { text: '筋トレは「自分との戦い」…という名の自己満です。', className: 'text-xl text-[#D4B08C]' },
+        { text: '分割して鍛えてます💪'},
         { text: '・脚（ふくらはぎ＆太もも）＊現在怪我中', className: 'text-base ml-6' },
         { text: '・背中（広背筋など）', className: 'text-base ml-6' },
         { text: '・胸（ダンベルプレスが定番）', className: 'text-base ml-6' },
         { text: '・腕（二頭＆三頭）', className: 'text-base ml-6' },
         { text: '・肩（ショルダープレスなど）', className: 'text-base ml-6' },
-        { text: '追い込んだ後のプロテインは、もちろん飽きてます。', className: 'text-xl mt-4' }
+        { text: '追い込んだ後のプロテインは、もちろん飽きてます。', className: 'text-base mt-4' }
       ]
     },
     { id: 6, name: 'Papercraft', icon: 'fas fa-scissors',
@@ -55,7 +63,7 @@ export default function HobbiesSection() {
       images: [
         {src: 'images/totoro.jpeg', name: 'トトロ’s'},
         {src: 'images/mononoke.jpeg', name: 'もののけ姫'},
-        {src: 'images/ziburi_1.jpeg', name: '千と千尋の神隠し with トトロ'}
+        {src: 'images/ziburi_1.jpeg', name: '千と千尋の神隠し with トトロ’s'}
       ]
     },
     { id: 7, name: 'Hip-hop / Rappers', icon: 'fas fa-headphones',
@@ -130,10 +138,10 @@ export default function HobbiesSection() {
             {/* 内容部分（画像あり／なしで切り替え） */}
             {selectedHobby.images?.length > 0 && selectedHobby.images.some(img => img.src) ? (
               <>
-                <p className="mb-8 text-xl">{selectedHobby.description}</p>
+                <p className="mb-8 text-xl text-[#D4B08C]">{selectedHobby.description}</p>
                 {selectedHobby.images.map((img, idx) => (
                   <div key={idx} className="mb-10">
-                    <p className="text-[#D4B08C] text-xl mb-2">・{img.name}</p>
+                    <p className="text-white text-xl mb-2">・{img.name}</p>
                     <img
                       src={img.src}
                       alt={img.name}

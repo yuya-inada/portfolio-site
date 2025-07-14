@@ -40,7 +40,7 @@ export default function SkillsSection({ skills }) {
                       className="w-16 h-16 object-contain filter invert sepia saturate-100 hue-rotate-[30deg] brightness-[1.2] contrast-[1.1]"
                     />
                   ) : (
-                    <i className={`${skill.icon} text-3xl text-[#D4B08C]`}></i>
+                    <i className={`${skill.icon} text-5xl text-[#D4B08C]`}></i>
                   )}
                   <p className="mt-4 text-lg text-center">{skill.name}</p>
                 </div>
