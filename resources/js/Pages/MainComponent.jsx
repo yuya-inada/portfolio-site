@@ -65,6 +65,9 @@ export default function MainComponent() {
           onProjectsUpdated={() => {
             reloadProjects();
             reloadExperiences();
+            axios.get('/api/skills/used')
+            .then((res) => setSkills(res.data))
+            .catch((err) => console.error('スキル再取得失敗:', err));
           }}
         />
         {/* <HobbiesSection />
