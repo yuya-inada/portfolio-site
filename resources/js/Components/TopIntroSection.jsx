@@ -24,7 +24,7 @@ export default function TopIntroSection({ copyEmail }) {
           </div> */}
           <p className="mb-2 text-center">Contact</p>
           <div className="flex flex-wrap justify-center gap-x-4 pag-y-4 mb-6">
-            <div className="relative group inline-block overflow-x-hidden">
+            <div className="relative group inline-block">
                 <a
                   href="https://www.instagram.com/owlione_with_obell/"
                   target="_blank"
@@ -98,21 +98,20 @@ export default function TopIntroSection({ copyEmail }) {
           </h2>
           {/* モデル：べるちゃんです */}
           <p className="mb-4 text-xl">
-            キャバリア・キング・チャールズ・スパニエルの女の子、ベルちゃんです。
+            キャバリア8歳女の子、ベルちゃんです🐶
           </p>
           <p className="mb-4 text-xl">
-            2017年10月1日生まれの8歳。
+            （2016年10月1日生）
           </p>
           <p className="mb-4 text-xl">
-            おっとり穏やかで、これまで一度も人を噛んだことのない優しい性格。
-            でも実はちょっぴり食いしん坊で、おやつは「もうちょっと…！」と満足するまでおねだりします。
+            おっとり穏やかで、これまで一度も人を噛んだことのない心優しい子。
+            でもおやつに関しては「おい、もっとくれよ！」と主張はできます。
           </p>
           <p className="mb-4 text-xl">
-            寝るのが大好きで、好きな場所でゴロゴロするのが至福の時間。
-            お散歩も好きだけど、気分が乗らない日は「今日はいいや」とその場から動かなくなることも。
+            「おすわり、お手、おかわり、待て」は教えてません。
           </p>
           <p className="mb-4 text-xl">
-            そんなマイペースな性格も含めて、もうたまりません🐶
+            だって、ぶちゃかわいいだけでいいんです🐶
           </p>
           {/* てめーのAbout Me */}
           {/* <div className="text-lg leading-relaxed text-[#A8A8A8]">

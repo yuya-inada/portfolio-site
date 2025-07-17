@@ -204,7 +204,7 @@ export default function ExperienceSection({
                         {/* アコーディオン展開部分 */}
                         <div
                           ref={contentRefs.current[project.id]}
-                          className={`relative transition-all duration-500 ease-in-out overflow-hidden bg-[#2A2A2A] mt-2 ml-8 text-sm text-white rounded-md border border-[#3D3D3D] ${
+                          className={`relative transition-all duration-500 ease-in-out overflow-hidden bg-[#2A2A2A] mt-2 ml-0 text-sm text-white rounded-md border border-[#3D3D3D] ${
                             isOpen ? 'max-h-[300px] opacity-100 p-4' : 'max-h-0 opacity-0 p-0'
                           }`}
                           >
