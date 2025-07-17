@@ -178,79 +178,85 @@ export default function ProjectsSection(props) {
           </h2>
         )}
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-1 overflow-visible">
-        {[...projects]
-        .sort((a,b) => new Date(b.created_at) - new Date(a.created_at))
-        .map((project) => (
-          <div
-            key={project.id}
-            className="bg-[#2A2A2A] p-8 rounded-lg border border-[#3D3D3D] transform transition-all duration-300 hover:scale-[1.01] hover:bg-[#4A4A4A] hover:border-[#D4B08C] hover:shadow-[0_0_15px_rgba(212,176,140,0.3)]"
-          >
-            <div className="flex justify-between items-start">
-              <h3 className={`text-xl sm:text-3xl font-playfair-display text-[#D4B08C] ${isAuthenticated ? 'truncate max-w-[70%]' : ''}`}>
-                {project.title}
-              </h3>
-              {isAuthenticated && (
-                <div className="flex gap-2 sm:mt-0 sm:ml-auto sm:self-center ml-auto">
-                  <button
-                    onClick={() => {
-                      setEditingProject(project);
-                      setIsProjectModalOpen(true);
-                    }}
-                    className="text-sm bg-[#D4B08C] text-[#2A2A2A] px-3 py-1 rounded hover:bg-[#b2946f]"
-                  >
-                    Edit
-                  </button>
-                  <button
-                    onClick={() => handleDeleteProject(project.id)}
-                    className="text-[#FF6B6B] border border-[#FF6B6B] px-3 py-1 rounded hover:bg-[#FF6B6B] hover:text-black transition"
-                  >
-                    <Trash className="w-4 h-4 mr-l" />
-                  </button>
+      {projects.length === 0 ? (
+          <p className="w-full text-center text-gray-400 text-xl mt-10">
+            プロジェクトの登録はありません。
+          </p>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-1">
+          {[...projects]
+            .sort((a,b) => new Date(b.created_at) - new Date(a.created_at))
+            .map((project) => (
+            <div
+              key={project.id}
+              className="bg-[#2A2A2A] p-8 rounded-lg border border-[#3D3D3D] transform transition-all duration-300 hover:scale-[1.01] hover:bg-[#4A4A4A] hover:border-[#D4B08C] hover:shadow-[0_0_15px_rgba(212,176,140,0.3)]"
+            >
+              <div className="flex justify-between items-start">
+                <h3 className={`text-xl sm:text-3xl font-playfair-display text-[#D4B08C] ${isAuthenticated ? 'truncate max-w-[70%]' : ''}`}>
+                  {project.title}
+                </h3>
+                {isAuthenticated && (
+                  <div className="flex gap-2 sm:mt-0 sm:ml-auto sm:self-center ml-auto">
+                    <button
+                      onClick={() => {
+                        setEditingProject(project);
+                        setIsProjectModalOpen(true);
+                      }}
+                      className="text-sm bg-[#D4B08C] text-[#2A2A2A] px-3 py-1 rounded hover:bg-[#b2946f]"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      onClick={() => handleDeleteProject(project.id)}
+                      className="text-[#FF6B6B] border border-[#FF6B6B] px-3 py-1 rounded hover:bg-[#FF6B6B] hover:text-black transition"
+                    >
+                      <Trash className="w-4 h-4 mr-l" />
+                    </button>
+                  </div>
+                )}
+              </div>
+              <p className="mt-4 text-lg text-white">{project.description}</p>
+              {project.url &&  project.url.trim() !== '' ?(
+                <a
+                  href={project.url}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="block mt-4 text-[#D4B08C] hover:underline"
+                >
+                  ・Visit site
+                </a>
+              ) : (
+                <p className="text-gray-500 mt-4">URLなし</p>
+              )}
+              {project.github_url && project.github_url.trim() !== '' ? (
+                <a
+                  href={project.github_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block mt-2 text-[#D4B08C] hover:underline"
+                >
+                  ・Visit GitHub
+                </a>
+              ) : (
+                <span className="block text-gray-500 block mt-2">GitHubなし</span>
+              )}
+              {/* スキルアイコン表示部分 */}
+              {project.skills?.length > 0 &&(
+                <div className="mt-6 flex flex-wrap gap-3">
+                    {project.skills?.map((skill) =>(
+                      <span
+                        key={skill.id}
+                        className="px-4 py-2 bg-[#1C1C1C] text-[#D4B08C] rounded-full text-sm"
+                      >
+                        {skill.name}
+                      </span>
+                    ))}
                 </div>
               )}
             </div>
-            <p className="mt-4 text-lg text-white">{project.description}</p>
-            {project.url &&  project.url.trim() !== '' ?(
-              <a
-                href={project.url}
-                target="_blank"
-                rel="noreferrer"
-                className="block mt-4 text-[#D4B08C] hover:underline"
-              >
-                ・Visit site
-              </a>
-            ) : (
-              <p className="text-gray-500 mt-4">URLなし</p>
-            )}
-            {project.github_url && project.github_url.trim() !== '' ? (
-              <a
-                href={project.github_url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block mt-2 text-[#D4B08C] hover:underline"
-              >
-                ・Visit GitHub
-              </a>
-            ) : (
-              <span className="block text-gray-500 block mt-2">GitHubなし</span>
-            )}
-            {/* スキルアイコン表示部分 */}
-            {project.skills?.length > 0 &&(
-              <div className="mt-6 flex flex-wrap gap-3">
-                  {project.skills?.map((skill) =>(
-                    <span
-                      key={skill.id}
-                      className="px-4 py-2 bg-[#1C1C1C] text-[#D4B08C] rounded-full text-sm"
-                    >
-                      {skill.name}
-                    </span>
-                  ))}
-              </div>
-            )}
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
     </section>
 
     {/* モーダル画面 */}

@@ -134,6 +134,11 @@ export default function ExperienceSection({
         )}
       </div>
       <div className="space-y-12 max-w-2xl mx-auto px-1">
+        {experiences.length === 0 && (
+          <p className="text-center text-gray-400  text-xl mt-10">
+            経歴の登録はありません。
+          </p>
+        )}
         {[...experiences]
         .sort((a,b) => new Date(b.created_at) - new Date(a.created_at))
         .map(exp => (

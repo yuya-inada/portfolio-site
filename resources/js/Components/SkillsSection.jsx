@@ -14,41 +14,47 @@ export default function SkillsSection({ skills }) {
       <h2 className="text-4xl font-playfair-display text-[#D4B08C] mb-7 text-center">
         Used skills
       </h2>
-      <div className="w-full max-w-7xl px-4 mx-auto overflow-hidden">
-        {Object.entries(groupedSkills).map(([category, skillsInCategory]) => (
-          <div key={category} className="mb-12">
-            <h3 className="text-2xl text-[#D4B08C] mb-4 border-b border-[#3D3D3D] pb-2">
-              {category}
-            </h3>
-            <div className="grid grid-cols-2 gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-4">
-              {skillsInCategory.map(skill => (
-                <div
-                  key={skill.id}
-                  className="w-full flex flex-col items-center justify-center bg-[#2A2A2A] p-6 rounded-lg border border-[#3D3D3D]"
-                >
-                  {skill.name === 'Next.js' ? (
-                    <img
-                      src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg"
-                      alt="Next.js"
-                      className="w-16 h-16 bg-[#D4B08C] rounded p-3 shadow-md"
-                      style={{filter: 'none'}}
-                    />
-                  ) : skill.name === 'Nginx' ? (
-                    <img 
-                      src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nginx/nginx-original.svg"
-                      alt="Nginx"
-                      className="w-16 h-16 object-contain filter invert sepia saturate-100 hue-rotate-[30deg] brightness-[1.2] contrast-[1.1]"
-                    />
-                  ) : (
-                    <i className={`${skill.icon} text-5xl text-[#D4B08C]`}></i>
-                  )}
-                  <p className="mt-4 text-lg text-center">{skill.name}</p>
-                </div>
-              ))}
+      {Object.keys(groupedSkills).length === 0 ?(
+        <p className="w-full text-center text-gray-400 text-xl">
+          使用したスキルはありません。
+        </p>
+      ) : (
+        <div className="w-full max-w-7xl px-4 mx-auto overflow-hidden">
+          {Object.entries(groupedSkills).map(([category, skillsInCategory]) => (
+            <div key={category} className="mb-12">
+              <h3 className="text-2xl text-[#D4B08C] mb-4 border-b border-[#3D3D3D] pb-2">
+                {category}
+              </h3>
+              <div className="grid grid-cols-2 gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-4">
+                {skillsInCategory.map(skill => (
+                  <div
+                    key={skill.id}
+                    className="w-full flex flex-col items-center justify-center bg-[#2A2A2A] p-6 rounded-lg border border-[#3D3D3D]"
+                  >
+                    {skill.name === 'Next.js' ? (
+                      <img
+                        src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg"
+                        alt="Next.js"
+                        className="w-16 h-16 bg-[#D4B08C] rounded p-3 shadow-md"
+                        style={{filter: 'none'}}
+                      />
+                    ) : skill.name === 'Nginx' ? (
+                      <img 
+                        src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nginx/nginx-original.svg"
+                        alt="Nginx"
+                        className="w-16 h-16 object-contain filter invert sepia saturate-100 hue-rotate-[30deg] brightness-[1.2] contrast-[1.1]"
+                      />
+                    ) : (
+                      <i className={`${skill.icon} text-5xl text-[#D4B08C]`}></i>
+                    )}
+                    <p className="mt-4 text-lg text-center">{skill.name}</p>
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
     </section>
   );
 }
