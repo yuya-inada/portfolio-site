@@ -1,10 +1,23 @@
-// resources/js/Components/TopIntroSection.jsx
-import React from 'react';
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 export default function TopIntroSection({ copyEmail }) {
   const isAboutPage = window.location.pathname === ('/about');
   const [showYuya, setShowYuya] = useState(false);
+
+  useEffect(() => {
+    const savedProfile = localStorage.getItem('profile');
+    if(savedProfile === 'Yuya'){
+      setShowYuya(true);
+    }else{
+      setShowYuya(false);
+    }
+  }, []);
+
+  const toggleProfile = () => {
+    const newValue = !showYuya;
+    setShowYuya(newValue);
+    localStorage.setItem('profile', newValue ? 'Yuya' : 'Bell');
+  }
   return (
     <section className="pt-32 pb-20 px-6 bg-[#1C1C1C]" id="about">
       
@@ -12,10 +25,10 @@ export default function TopIntroSection({ copyEmail }) {
         {/* Left side - Name and Social Links */}
         <div className="text-center">
           <div className="text-center mb-3">
-            <button
-              onClick={() => setShowYuya(!showYuya)}
-              classNmae="px-4 py-2 bg-[#D4B08C] text-white rounded-full shadow-md hover:bg-[#b98f6b] transition"
-            >
+          <button
+            onClick={toggleProfile}
+            className="px-5 py-2.5 rounded-full bg-[#2F2F2F] text-[#D4B08C] border border-[#5C5C5C] shadow-[0_2px_6px_rgba(212,176,140,0.25)] hover:bg-[#3c3c3c] hover:text-[#e0c7a6] transition-colors duration-300"
+          >
               {showYuya ? 'Switch to Yuya Inada' : 'Switch to Bell'}
             </button>
           </div>
