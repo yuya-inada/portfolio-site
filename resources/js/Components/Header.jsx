@@ -117,7 +117,7 @@ function NavLinks({ onClick = () => {} }) {
   const links = [
     { label: 'Top', href: '/'},
     { label: 'About Me', href: '/about' },
-    { label: 'Skills', href: '/skills' },
+    // { label: 'Skills', href: '/skills' },
     { label: 'Experiences', href: '/experiences' },
     { label: 'Projects', href: '/projects' },
   ];
