@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { Trash } from 'lucide-react';
+import { useRef } from "react";
 
 export default function ProjectsSection(props) {
   console.log('ProjectsSection props:', props);
@@ -16,7 +17,7 @@ export default function ProjectsSection(props) {
     description: '',
     url: '',
     github_url: '',
-    image_url: '',
+    image_urls: [''],
   });
 
   // useStateにスキル一覧と選択中のスキルIDを追加
@@ -38,7 +39,7 @@ export default function ProjectsSection(props) {
         description: editingProject.description || '',
         url: editingProject.url || '',
         github_url: editingProject.github_url || '',
-        image_url: editingProject.image_url || '',
+        image_urls: editingProject.image_urls?.length > 0 ? editingProject.image_urls : [''],
       });
       setSelectedSkillIds(editingProject.skills?.map(skill => skill.id) || []);
     }
@@ -145,6 +146,39 @@ export default function ProjectsSection(props) {
   }
   const isMobile = useIsMobile();
 
+  const [currentIndexMap, setCurrentIndexMap] = useState({});
+  const imageContainerRefs = useRef({});
+
+  const scrollToIndex = (projectId,index) => {
+    const container = imageContainerRefs.current[projectId];
+    if(!container) return;
+
+    const image = container.children[index];
+    if(!image) return;
+    container.scrollTo({
+      left: image.offsetLeft,
+      behavior: 'smooth'
+    });
+    // const scrollAmount = container.clientWidth * index;
+    // container.scrollTo({ left: scrollAmount, behavior: "smooth"});
+
+    setCurrentIndexMap(prev => ({
+      ...prev,
+      [projectId]: index
+    }));
+  };
+  const scrollNext = (projectId, maxIndex) => {
+    const currentIndex = currentIndexMap[projectId] || 0;
+    if(currentIndex < maxIndex){
+      scrollToIndex(projectId, currentIndex + 1);
+    }
+  };
+  const scrollPrev = (projectId) => {
+    const currentIndex = currentIndexMap[projectId] || 0;
+    if(currentIndex > 0){
+      scrollToIndex(projectId, currentIndex - 1);
+    }
+  };
   return (
     <>
     <section className="py-20 overflow-visible" id="projects">
@@ -159,7 +193,7 @@ export default function ProjectsSection(props) {
                   setFormData({
                     title: '',
                     description: '',
-                    image_url: '',
+                    image_urls: [''],
                     url: '',
                     github_url: '',
                   });
@@ -183,7 +217,7 @@ export default function ProjectsSection(props) {
             プロジェクトの登録はありません。
           </p>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-1">
+        <div className="flex flex-col gap-8 max-w-3xl mx-auto">
           {[...projects]
             .sort((a,b) => new Date(b.created_at) - new Date(a.created_at))
             .map((project) => (
@@ -210,11 +244,60 @@ export default function ProjectsSection(props) {
                       onClick={() => handleDeleteProject(project.id)}
                       className="text-[#FF6B6B] border border-[#FF6B6B] px-3 py-1 rounded hover:bg-[#FF6B6B] hover:text-black transition"
                     >
-                      <Trash className="w-4 h-4 mr-l" />
+                      <Trash className="w-4 h-4 mr-1" />
                     </button>
                   </div>
                 )}
               </div>
+              {Array.isArray(project.image_urls) && project.image_urls.length > 0 && (                
+                <div className="relative mt-4 overflow-x-auto pb-2">
+                  {/* 左に矢印 */}
+                  {(currentIndexMap[project.id] ?? 0) > 0 && (
+                    <button
+                        onClick={() => scrollPrev(project.id)}
+                        className="absolute left-0 top-1/2 -translate-y-1/2 pr-2 z-10 bg-gray-600 hover:bg-[#1C1C1C]/90 px-2 py-1 rounded"
+                      >
+                        <span className="text-xl">＜</span>
+                      </button> 
+                    )}
+                  {/* 右に矢印 */}
+                  {(currentIndexMap[project.id] ?? 0) < project.image_urls.length - 1 && (
+                    <button
+                      onClick={() => scrollNext(project.id, project.image_urls.length - 1)}
+                      className="absolute right-0 top-1/2 -translate-y-1/2 pr-2 z-10 bg-gray-600 hover:bg-[#1C1C1C]/90 px-2 py-1 rounded"
+                    >
+                      <span className="text-xl">＞</span>
+                    </button>
+                  )}
+                  {/* 画像リスト */}
+                  <div 
+                    ref={e1 => imageContainerRefs.current[project.id] = e1}
+                    className="flex space-x-6 overflow-x-auto scroll-smooth"
+                  >
+                    {project.image_urls.map((url,idx) => (
+                      <img
+                      key={idx}
+                      src={url}
+                      alt={`${project.title} image ${idx + 1}`}
+                      className="h-auto w-auto rounded-lg border border-[#3D3D3D] object-contain"
+                    />
+                    ))}
+                  </div>
+                </div>
+              )}
+              {/* スキルアイコン表示部分 */}
+              {project.skills?.length > 0 &&(
+                <div className="mt-6 flex flex-wrap gap-3">
+                    {project.skills?.map((skill) =>(
+                      <span
+                        key={skill.id}
+                        className="px-4 py-2 bg-[#1C1C1C] text-[#D4B08C] rounded-full text-sm"
+                      >
+                        {skill.name}
+                      </span>
+                    ))}
+                </div>
+              )}
               <p className="mt-4 text-lg text-white">{project.description}</p>
               {project.url &&  project.url.trim() !== '' ?(
                 <a
@@ -240,19 +323,7 @@ export default function ProjectsSection(props) {
               ) : (
                 <span className="block text-gray-500 block mt-2">GitHubなし</span>
               )}
-              {/* スキルアイコン表示部分 */}
-              {project.skills?.length > 0 &&(
-                <div className="mt-6 flex flex-wrap gap-3">
-                    {project.skills?.map((skill) =>(
-                      <span
-                        key={skill.id}
-                        className="px-4 py-2 bg-[#1C1C1C] text-[#D4B08C] rounded-full text-sm"
-                      >
-                        {skill.name}
-                      </span>
-                    ))}
-                </div>
-              )}
+              
             </div>
           ))}
         </div>
@@ -262,13 +333,13 @@ export default function ProjectsSection(props) {
     {/* モーダル画面 */}
     {isProjectModalOpen && (
       <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-        <div className="relative bg-[#1C1C1C] p-6 rounded-lg w-full max-w-3xl max-h-[90vh] overflow-y-auto text-white border border-white shadow-2xl shadow-white/60 sm:max-w-lg sm:p-4 sm:rounded-md sm:text-sm">
+        <div className="relative bg-[#1C1C1C] p-6 rounded-lg w-full max-w-5xl max-h-[90vh] overflow-y-auto text-white border border-white shadow-2xl shadow-white/60 sm:max-w-lg sm:p-4 sm:rounded-md sm:text-sm">
           <h2 className="text-xl mb-4 text-[#D4B08C]">
             {editingProject ? 'Editing Project' : 'Create Project'}
             </h2>
 
           {/* Title */}
-          <label className="block mb-2 text-sm text-gray-300">Title</label>
+          <label className="block mb-2 text-base text-gray-300">Title</label>
           <input 
             type="text"
             name="title"
@@ -278,7 +349,7 @@ export default function ProjectsSection(props) {
           />
 
           {/* Description */}
-          <label className="block mb-2 text-sm text-gray-300">Description</label>
+          <label className="block mb-2 text-base text-gray-300">Description</label>
           <textarea 
             name="description"
             value={formData.description}
@@ -288,7 +359,7 @@ export default function ProjectsSection(props) {
           />
 
           {/* URL */}
-          <label className="block mb-2 text-sm text-gray-300">URL</label>
+          <label className="block mb-2 text-base text-gray-300">Site URL</label>
           <input 
             type="url"
             name="url"
@@ -298,7 +369,7 @@ export default function ProjectsSection(props) {
           />
 
           {/* GitHub URL */}
-          <label className="block mb-2 text-sm text-gray-300">GitHub URL</label>
+          <label className="block mb-2 text-base text-gray-300">GitHub URL</label>
           <input 
             type="url"
             name="github_url"
@@ -307,19 +378,50 @@ export default function ProjectsSection(props) {
             className="w-full mb-4 px-3 py-2 bg-[#333] border border-[#555] rounded text-white"
           />
 
-          {/* Image URL */}
-          <label className="block mb-2 text-sm text-gray-300">Image URL</label>
-          <input 
-            type="url"
-            name="image_url"
-            value={formData.image_url}
-            onChange={handleChange}
-            className="w-full mb-4 px-3 py-2 bg-[#333] border border-[#555] rounded text-white"
-          />
-
+          {/* Images URLs */}
+          <label className="block mb-2 text-base text-gray-300">Image urls</label>
+          {formData.image_urls.map((url, index) => (
+            <div key={index} className="flex items-center gap-2 mb-2 w-full">
+              <input 
+                type="url"
+                value={url}
+                onChange={(e) => {
+                  const newUrls = [...formData.image_urls];
+                  newUrls[index] = e.target.value;
+                  setFormData(prev => ({ ...prev, image_urls: newUrls}));
+                }}
+                className="w-[100%] mb-4 px-3 py-2 bg-[#333] border border-[#555] rounded text-white"
+              />
+              {formData.image_urls.length > 1 && (
+                <button
+                  onClick={() => {
+                    const newUrls = formData.image_urls.filter((_, i) => i !== index);
+                    setFormData(prev => ({ ...prev,image_urls: newUrls}));
+                  }}
+                  className="text-[#FF6B6B] mb-4 px-2 py-3 rounded border border-[#FF6B6B] hover:bg-[#FF6B6B] hover:text-black text-xs"
+                  style={{ minWidth: '4rem'}}
+                >
+                  削除
+                </button>
+              )}
+            </div>
+          ))}
+          <div className="flex justify-end mr-1">
+            <button
+                onClick={() => {
+                  setFormData(prev => ({
+                    ...prev,
+                    image_urls: [...prev.image_urls, '']
+                  }));
+                }}
+                className="text-sm bg-[#D4B08C] text-[#2A2A2A] rounded px-1 py-1 hover:bg-[#b2946f]"
+              >
+                + Adding images
+              </button>
+            </div>
           {/* Used Skills or Select Skills (Accordion view) */}
           <div className="mb-4">
-            <label className="block mb-2 text-sm text-gray-300">Skills</label>
+            <label className="block mb-2 text-base text-gray-300">Skills</label>
             <div className="space-y-2">
             {Object.entries(groupedSkills).map(([category, skills]) => (
                 <div key={category}>
@@ -327,9 +429,9 @@ export default function ProjectsSection(props) {
                   <button
                     type="button"
                     onClick={() => toggleCategory(category)}
-                    className="w-1/2 flex justify-between items-center px-4 py-2 bg-[#2A2A2A] text-[#D4B08C] font-semibold"
+                    className="w-full flex justify-between items-center px-4 py-2 bg-[#2A2A2A] text-[#D4B08C] font-semibold"
                   >
-                    <span className="text-left">{category}</span>
+                    <span className="text-left text-base">{category}</span>
                     <span 
                       className={`ml-auto transform transition-transform duration-300 ${openCategories[category] ? 'rotate-180' : ''}`}
                     >

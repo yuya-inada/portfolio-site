@@ -33,13 +33,14 @@ class ProjectController extends Controller
     // 新規追加（POST /api/admin/projects）
     public function store(Request $request){
         $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'url' => 'nullable|url',
-            'image_url' => 'nullable|url',
-            'github_url' => 'nullable|url',
-            'skill_ids' => 'array|nullable',
-            'skill_ids.*' => 'integer|exists:skills,id',
+            'title'        => 'required|string|max:255',
+            'description'  => 'nullable|string',
+            'url'          => 'nullable|url',
+            'image_urls'    => 'nullable|array',
+            'image_urls.*' => 'nullable|url',
+            'github_url'   => 'nullable|url',
+            'skill_ids'    => 'array|nullable',
+            'skill_ids.*'  => 'integer|exists:skills,id',
         ]);
 
         // $user = $request->user();
@@ -74,21 +75,22 @@ class ProjectController extends Controller
         $project = Project::findOrFail($id);
 
         $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'url' => 'nullable|url',
-            'image_url' => 'nullable|url',
-            'github_url' => 'nullable|url',
-            'skill_ids' => 'array|nullable',
-            'skill_ids.*' => 'integer|exists:skills,id',
+            'title'        => 'required|string|max:255',
+            'description'  => 'nullable|string',
+            'url'          => 'nullable|url',
+            'image_urls'   => 'nullable|array',
+            'image_urls.*' => 'nullable|url',
+            'github_url'   => 'nullable|url',
+            'skill_ids'    => 'array|nullable',
+            'skill_ids.*'  => 'integer|exists:skills,id',
         ]);
 
         $project->update([
-            'title' => $validated['title'],
+            'title'       => $validated['title'],
             'description' => $validated['description'] ?? null,
-            'url' => $validated['url'] ?? null,
-            'image_url' => $validated['image_url'] ?? null,
-            'github_url' => $validated['github_url'] ?? null,
+            'url'         => $validated['url'] ?? null,
+            'image_urls'  => $validated['image_urls'] ?? [],
+            'github_url'  => $validated['github_url'] ?? null,
         ]);
 
         // スキルの関連付け

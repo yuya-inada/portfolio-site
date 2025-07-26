@@ -53,12 +53,6 @@ export default function MainComponent() {
       <div className="bg-[#1C1C1C] min-h-screen overflow-x-hidden">
         <TopIntroSection copyEmail={copyEmail} />
         <SkillsSection skills={usedSkills} />
-        <ExperienceSection 
-          projects={projects}
-          experiences={experiences}
-          reloadExperiences={reloadExperiences}
-          isAuthenticated={isAuthenticated}
-        />
         <ProjectsSection 
           projects={projects}
           setSkills={setSkills}
@@ -70,8 +64,12 @@ export default function MainComponent() {
             .catch((err) => console.error('スキル再取得失敗:', err));
           }}
         />
-        {/* <HobbiesSection />
-        <ContactSection /> */}
+        <ExperienceSection 
+          projects={projects}
+          experiences={experiences}
+          reloadExperiences={reloadExperiences}
+          isAuthenticated={isAuthenticated}
+        />
       </div>
     </AppLayout>
   );

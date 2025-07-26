@@ -13,8 +13,13 @@ class Project extends Model
         'description',
         'url',
         'image_url',
+        'image_urls',
         'github_url',
         'user_id',
+    ];
+
+    protected $casts = [
+        'image_urls' => 'array',
     ];
 
     public function skills(){
