@@ -9,7 +9,7 @@ use App\Http\Controllers\Api\SkillController;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
-use Illuminate\Supprt\Facades\RateLimiter;
+use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
 
 Route::post('/login', function (Request $request) {

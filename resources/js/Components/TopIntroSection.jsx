@@ -19,8 +19,7 @@ export default function TopIntroSection({ copyEmail }) {
     localStorage.setItem('profile', newValue ? 'Yuya' : 'Bell');
   }
   return (
-    <section className="pt-32 pb-20 px-6 bg-[#1C1C1C]" id="about">
-      
+    <section className="pt-14 pb-20 px-6 bg-[#1C1C1C]" id="about">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-12 items-center text-center">
         {/* Left side - Name and Social Links */}
         <div className="text-center">
