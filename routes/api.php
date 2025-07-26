@@ -9,6 +9,8 @@ use App\Http\Controllers\Api\SkillController;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Supprt\Facades\RateLimiter;
+use Illuminate\Support\Str;
 
 Route::post('/login', function (Request $request) {
     $request->validate([
@@ -16,12 +18,23 @@ Route::post('/login', function (Request $request) {
         'password' => 'required',
     ]);
 
+    // IPごとに制限（5回/60秒）
+    $key = 'login-attempt:' . $request->ip() . ':' . Str::lower($request->email);
+    if(RateLimiter::tooManyAttempts($key,5)){
+        $seconds = RateLimiter::availableIn($key);
+        return response()->json([
+            'message' => 'Too many login attempts. Please try again in ' . $seconds . 'seconds.'
+        ], 429);
+    }
+    RateLimiter::hit($key,60); // 60秒でリセット
     $user = User::where('email', $request->email)->first();
     if (! $user || ! Hash::check($request->password, $user->password)) {
         throw ValidationException::withMessages([
             'email' => ['The provided credentials are incorrect.'],
         ]);
     }
+    // 成功したら制限カウントをリセット
+    RateLimiter::clear($key);
     // トークンを生成して返す
     return response()->json([
         'token' => $user->createToken('admin-token')->plainTextToken,
