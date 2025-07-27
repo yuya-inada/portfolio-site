@@ -130,7 +130,7 @@ export default function ExperienceSection({
   return (
     <>
     <section className="py-20 mb-8" id="experience">
-      <div className="max-w-4xl w-full mx-auto mb-7 px-4">
+      <div className="max-w-6xl w-full mx-auto mb-7 px-4">
         {isAuthenticated ? (
           <div className="flex flex-wrap justify-between items-center gap-2">
             <h2 className="text-3xl font-playfair-display text-[#D4B08C] leading-none">
@@ -159,7 +159,7 @@ export default function ExperienceSection({
           </h2>
         )}
       </div>
-      <div className="space-y-12 max-w-2xl mx-auto px-1">
+      <div className="space-y-12 max-w-3xl mx-auto px-1">
         {experiences.length === 0 && (
           <p className="text-center text-gray-400  text-xl mt-10">
             経歴の登録はありません。
@@ -260,7 +260,7 @@ export default function ExperienceSection({
                                     {imageIndices[latestProject.id] > 0 && (
                                       <button
                                         onClick={() => handlePrev(latestProject.id, latestProject.image_urls.length)}
-                                        className="absolute left-0 px-2 py-1 bg-gray-600 text-[fff] rounded hover:bg-black"
+                                        className="absolute left-0 px-2 py-1 bg-black text-[fff] rounded hover:bg-gray-600 hover:border"
                                       >
                                         ◀︎
                                       </button>
@@ -280,7 +280,7 @@ export default function ExperienceSection({
                                     {imageIndices[latestProject.id] < latestProject.image_urls.length - 1 && (
                                       <button
                                         onClick={() => handleNext(latestProject.id, latestProject.image_urls.length)}
-                                        className="absolute right-0 px-2 py-1 bg-gray-600 text-[fff] rounded hover:bg-black"
+                                        className="absolute right-0 px-2 py-1 bg-black text-[fff] rounded hover:bg-gray-600 hover:border"
                                       >
                                         ▶︎
                                       </button>
