@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { Trash } from 'lucide-react';
 import { useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function ProjectsSection(props) {
   console.log('ProjectsSection props:', props);
@@ -12,6 +13,7 @@ export default function ProjectsSection(props) {
   }, [initialProjects]);
   const [editingProject, setEditingProject] = useState(null);
   const [isProjectModalOpen, setIsProjectModalOpen] = useState(false);
+  const [isDetailModal, setIsDetailModal] = useState(false);
   const [formData, setFormData] = useState({
     title: '',
     description: '',
@@ -159,8 +161,6 @@ export default function ProjectsSection(props) {
       left: image.offsetLeft,
       behavior: 'smooth'
     });
-    // const scrollAmount = container.clientWidth * index;
-    // container.scrollTo({ left: scrollAmount, behavior: "smooth"});
 
     setCurrentIndexMap(prev => ({
       ...prev,
@@ -257,7 +257,7 @@ export default function ProjectsSection(props) {
                         onClick={() => scrollPrev(project.id)}
                         className="absolute left-0 top-1/2 -translate-y-1/2 pr-2 z-10 bg-gray-600 hover:bg-[#1C1C1C]/90 px-2 py-1 rounded"
                       >
-                        <span className="text-xl">＜</span>
+                        <span className="text-xl">◀︎</span>
                       </button> 
                     )}
                   {/* 右に矢印 */}
@@ -266,7 +266,7 @@ export default function ProjectsSection(props) {
                       onClick={() => scrollNext(project.id, project.image_urls.length - 1)}
                       className="absolute right-0 top-1/2 -translate-y-1/2 pr-2 z-10 bg-gray-600 hover:bg-[#1C1C1C]/90 px-2 py-1 rounded"
                     >
-                      <span className="text-xl">＞</span>
+                      <span className="text-xl">▶︎</span>
                     </button>
                   )}
                   {/* 画像リスト */}
@@ -298,7 +298,6 @@ export default function ProjectsSection(props) {
                     ))}
                 </div>
               )}
-              <p className="mt-4 text-lg text-white">{project.description}</p>
               {project.url &&  project.url.trim() !== '' ?(
                 <a
                   href={project.url}
@@ -323,14 +322,27 @@ export default function ProjectsSection(props) {
               ) : (
                 <span className="block text-gray-500 block mt-2">GitHubなし</span>
               )}
-              
+              <p className="mt-4 text-lg text-white line-clamp-2">{project.description}</p>
+              {project.description.length > 100 && (
+                <div className="mt-2 flex justify-center">
+                  <button
+                    onClick={() => {
+                      setEditingProject(project);
+                      setIsDetailModal(true);
+                    }}
+                    className="text-sm text-[#D4B08C] hover:underline mt-2"
+                  >
+                    詳しく見る
+                  </button>
+                </div>
+              )}
             </div>
           ))}
         </div>
       )}
     </section>
 
-    {/* モーダル画面 */}
+    {/* 登録or編集　モーダル画面 */}
     {isProjectModalOpen && (
       <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
         <div className="relative bg-[#1C1C1C] p-6 rounded-lg w-full max-w-5xl max-h-[90vh] overflow-y-auto text-white border border-white shadow-2xl shadow-white/60 sm:max-w-lg sm:p-4 sm:rounded-md sm:text-sm">
@@ -490,6 +502,79 @@ export default function ProjectsSection(props) {
           </button>
         </div>
         
+      </div>
+    )}
+    {/* プロジェクト詳細　モーダル画面 */}
+    {isDetailModal && (
+      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div className="relative bg-[#1C1C1C] rounded-lg w-full max-w-3xl max-h-[90vh] overflow-y-auto text-white border border-white shacow-2xl shadow-white/60">
+          {/* ヘッダー固定（タイトル　＋　Close） */}
+          <div className="sticky top-0 z-10 bg-[#1C1C1C] px-6 py-4 pb-1 mb-5 border-b border-[#3D3D3D] flex justify-between items-start">
+            <h2 className="text-3xl mb-4 text-[#D4B08C] font-playfair-display">
+              {editingProject?.title}
+            </h2>
+            <button
+              onClick={() => setIsDetailModal(false)}
+              className="text-sm bg-[#D4B08C] text-[#2A2A2A] rounded px-2 py-1 hover:bg-[#b2946f]"
+            >
+              Close
+            </button>
+          </div>
+          {/* スクロール可能部分 */}
+          <div className="overflow-y-auto px-6 pb-6">
+            {/* 画像スライダー再利用 */}
+            {editingProject?.image_urls?.length > 0 && (
+              <div 
+                ref={e1 => imageContainerRefs.current[editingProject.id] = e1}
+                className="flex space-x-6 overflow-x-auto scroll-smooth"
+              >
+                {editingProject.image_urls.map((url,idx) => (
+                  <img
+                  key={idx}
+                  src={url}
+                  alt={`${editingProject.title} image ${idx + 1}`}
+                  className="h-auto w-auto rounded-lg border border-[#3D3D3D] object-contain"
+                />
+                ))}
+              </div>
+            )}
+            <div className="mt-6 flex flex-wrap gap-3">
+              {editingProject?.skills?.map((skill) => (
+                <span
+                  key={skill.id}
+                  className="px-4 py-2 bg-[#2A2A2A] text-[#D4B08C] rounded-full text-sm"
+                >
+                  {skill.name}
+                </span>
+              ))}
+            </div>
+            <div className="mt-6">
+              {editingProject?.url && (
+                <a
+                  href={editingProject.url}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="block text-[#D4B08C] hover:underline"  
+                >
+                  ・Visit site
+                </a>
+              )}
+              {editingProject?.github_url && (
+                <a
+                  href="{editingProject.github_url}"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="block text-[#D4B08C] hover:underline mt-2"
+                >
+                  ・GitHub
+                </a>
+              )}
+            </div>
+            <div className="mt-4 text-white whitespace-pre-line">
+              {editingProject?.description}
+            </div>
+          </div>
+        </div>
       </div>
     )}
     </>

@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 import { Trash } from 'lucide-react';
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function ExperienceSection({ 
   projects = [],
@@ -100,6 +101,31 @@ export default function ExperienceSection({
     return isMobile;
   }
   const isMobile = useIsMobile();
+
+  const [imageIndices, setImageIndices] = useState({});
+  const imageContainerRefs = useRef({});
+  const [direction, setDirection] = useState('next');
+  useEffect(() => {
+    const initialIndices = {};
+    projects.forEach(p => {
+      initialIndices[p.id] =0;
+    });
+    setImageIndices(initialIndices);
+  }, [projects]);
+  const handleNext = (projectId, totalImages) => {
+    setDirection('next');
+    setImageIndices(prev => ({
+      ...prev,
+      [projectId]: (prev[projectId] + 1) % totalImages
+    }));
+  };
+  const handlePrev = (projectId, totalImages) => {
+    setDirection('prev');
+    setImageIndices(prev => ({
+      ...prev,
+      [projectId]: (prev[projectId] - 1 + totalImages) % totalImages
+    }));
+  };
 
   return (
     <>
@@ -207,68 +233,114 @@ export default function ExperienceSection({
                         </div>
 
                         {/* アコーディオン展開部分 */}
-                        <div
-                          ref={contentRefs.current[project.id]}
-                          className={`relative transition-all duration-500 ease-in-out overflow-hidden bg-[#2A2A2A] mt-2 ml-0 text-sm text-white rounded-md border border-[#3D3D3D] ${
-                            isOpen ? 'max-h-[300px] opacity-100 p-4' : 'max-h-0 opacity-0 p-0'
-                          }`}
-                          >
-                          {/* 閉じるボタン（右上に配置） */}
-                          <button
-                            onClick={() => 
-                              setExpandedProjectIds(prev => prev.filter(id => id !== project.id))
-                            }
-                            className="absolute top-2 right-2 px-2 py-1 text-md bg-[#D4B08C] text-[#2A2A2A] rounded hover:bg-[#b2946f]"
-                          >
-                            ✕
-                          </button>
-                          {/* スキルバッジ表示 */}
-                          <div className="flex gap-2 flex-wrap mb-4 mr-5">
-                            {latestProject.skills?.length > 0 ? (
-                              latestProject.skills.map(skill => (
-                                <span key={skill.id} className="text-xs bg-[#1C1C1C] text-[#D4B08C] rounded-full px-2 py-1">
-                                  {skill.name}
-                                </span>
-                              ))
-                            ) : (
-                              <span className="text-xs text-gray-400 ml-3">スキル情報なし</span>
-                            )}
-                          </div>
-                          {/* 説明 */}
-                          {latestProject.description ? (
-                            <p className="mb-2">{latestProject.description}</p>
-                          ) : (
-                            <p className="mb-2 text-gray-400">説明がありません。</p>
-                          )}
-
-                          {/* URLリンク */}
-                          {latestProject.url && latestProject.url.trim() !== '' ? (
-                            <a
-                              href={latestProject.url}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="text-[#D4B08C] underline mr-4 block"
+                        <AnimatePresence initial={false}>
+                          {isOpen && (
+                            <motion.div
+                              key={`accordion-${latestProject.id}`}
+                              initial={{ height: 0, opacity: 0 }}
+                              animate={{ height: 'auto', opacity: 1 }}
+                              exit={{ height: 0, opacity: 0 }}
+                              transition={{ duration: 0.4, ease: 'easeInOut' }}
+                              className="relative overflow-hidden bg-[#2A2A2A] mt-2 ml-0 text-sm text-white rounded-md border border-[#3D3D3D]"
                             >
-                              Visit site
-                            </a>
-                          ) : (
-                            <span className="text-gray-500 block">URLなし</span>
-                          )}
+                              <div className="p-4">
+                                {/* 閉じるボタン */}
+                                <button
+                                  onClick={() => setExpandedProjectIds(prev => prev.filter(id => id !== project.id))}
+                                  className="absolute top-2 right-2 px-2 py-1 text-md bg-[#D4B08C] text-[#2A2A2A] rounded hover:bg-[#b2946f]"
+                                >
+                                  ✕
+                                </button>
+                                {/* 画像の表示 */}
+                                <div
+                                  ref={e1 => imageContainerRefs.current[latestProject.id] = e1}
+                                  className="flex space-x-4 overflow-x-auto scroll-smooth mb-4 mt-6"
+                                >
+                                  <div className="relative w-full flex justify-center items-center mb-4">
+                                    {imageIndices[latestProject.id] > 0 && (
+                                      <button
+                                        onClick={() => handlePrev(latestProject.id, latestProject.image_urls.length)}
+                                        className="absolute left-0 px-2 py-1 bg-gray-600 text-[fff] rounded hover:bg-black"
+                                      >
+                                        ◀︎
+                                      </button>
+                                    )}
+                                    <AnimatePresence mode="wait" initial={false}>
+                                      <motion.img
+                                        key={imageIndices[latestProject.id] || 0}
+                                        src={latestProject.image_urls[imageIndices[latestProject.id] || 0]}
+                                        alt={`${latestProject.title} image`}
+                                        className="h-auto w-auto rounded-lg border border-[#3D3D3D] object-contain"
+                                        initial={{ opacity: 0, x: direction === 'next' ? 300 : -300 }}
+                                        animate={{ opacity: 1, x: 0 }}
+                                        exit={{ opacity: 0, x: direction === 'next' ? -300 : 300 }}
+                                        transition={{ duration: 0.35 }}
+                                      />
+                                    </AnimatePresence>
+                                    {imageIndices[latestProject.id] < latestProject.image_urls.length - 1 && (
+                                      <button
+                                        onClick={() => handleNext(latestProject.id, latestProject.image_urls.length)}
+                                        className="absolute right-0 px-2 py-1 bg-gray-600 text-[fff] rounded hover:bg-black"
+                                      >
+                                        ▶︎
+                                      </button>
+                                    )}
+                                  </div>
+                                </div>
+                                {/* スキルバッジ表示 */}
+                                <div className="flex gap-2 flex-wrap mb-4 mr-5">
+                                  {latestProject.skills?.length > 0 ? (
+                                    latestProject.skills.map(skill => (
+                                      <span key={skill.id} className="text-xs bg-[#1C1C1C] text-[#D4B08C] rounded-full px-2 py-1">
+                                        {skill.name}
+                                      </span>
+                                    ))
+                                  ) : (
+                                    <span className="text-base text-gray-400 ml-3">スキル情報なし</span>
+                                  )}
+                                </div>
+                                {/* URLリンク */}
+                                {latestProject.url && latestProject.url.trim() !== '' ? (
+                                  <a
+                                    href={latestProject.url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-[#D4B08C] underline mr-4 block"
+                                  >
+                                    Visit site
+                                  </a>
+                                ) : (
+                                  <span className="text-gray-500 block">URLなし</span>
+                                )}
 
-                          {/* GitHubリンク */}
-                          {typeof latestProject.github_url === 'string' && latestProject.github_url.trim() !== '' ? (
-                            <a
-                              href={latestProject.github_url}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="text-[#D4B08C] underline block mt-1"
-                            >
-                              GitHub
-                            </a>
-                          ) : (
-                            <span className="text-gray-500 block mt-1">GitHubなし</span>
+                                {/* GitHubリンク */}
+                                {typeof latestProject.github_url === 'string' && latestProject.github_url.trim() !== '' ? (
+                                  <a
+                                    href={latestProject.github_url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-[#D4B08C] underline block mt-1"
+                                  >
+                                    GitHub
+                                  </a>
+                                ) : (
+                                  <span className="text-gray-500 block mt-1">GitHubなし</span>
+                                )}
+                                {/* 説明 */}
+                                {latestProject.description ? (
+                                  <p className="mb-2 mt-4 text-base">
+                                    {latestProject.description.length > 150
+                                      ? `${latestProject.description.slice(0, 150)}...`
+                                      : latestProject.description
+                                    }
+                                  </p>
+                                ) : (
+                                  <p className="mb-2 text-gray-400">説明がありません。</p>
+                                )}
+                              </div>
+                            </motion.div>
                           )}
-                        </div>
+                        </AnimatePresence>
                       </React.Fragment>
                     );
                   })}
