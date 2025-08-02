@@ -17,6 +17,7 @@ export default function TopIntroSection({ copyEmail }) {
     const newValue = !showYuya;
     setShowYuya(newValue);
     localStorage.setItem('profile', newValue ? 'Yuya' : 'Bell');
+    window.dispatchEvent(new Event('profileChanged'));
   }
   return (
     <section className="pt-14 pb-20 px-6 bg-[#1C1C1C]" id="about">

@@ -1,5 +1,6 @@
-// resources/js/Components/Footer.jsx
-import React from 'react';
+// import React from 'react';
+import React, { useEffect, useState } from 'react';
+
 function copyEmail(){
   navigator.clipboard.writeText('youremail@exsample.com')
   .then(() => {
@@ -12,23 +13,33 @@ function copyEmail(){
 
 export default function Footer() {
   const isAuthenticated = !!localStorage.getItem('auth_token');
+  const [aboutMode, setAboutMode] = useState('yuya');
+
+  useEffect(() => {
+    const handleProfileChange = () => {
+      const storedAbout = localStorage.getItem('profile');
+      console.log('storedeAbout:', storedAbout);
+      setAboutMode(storedAbout === 'Yuya' ? 'yuya' : 'bell');
+    };
+    handleProfileChange();
+
+    window.addEventListener('profileChanged', handleProfileChange);
+
+    return () => {
+      window.removeEventListener('profileChanged', handleProfileChange);
+    }
+  }, []);
   return (
-    // <footer className="bg-[#2A2A2A] border-t border-[#3D3D3D] py-16 text-center">
-    //   <p>&copy; 2025 Yuya Inada. All rights reserved.</p>
-    // </footer>
     <footer className="bg-[#2A2A2A] border-t border-[#3D3D3D] py-6">
       <div className="max-w-6xl mx-auto px-6">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
           <div>
             <h3 className="text-2xl font-playfair-display text-[#D4B08C] mb-6">
-              Bell
+              {aboutMode === 'yuya' ? 'Bell' : 'Yuya Inada'}
             </h3>
             <div className="text-xl md:text-2xl text-[#A8A8A8] font-crimson-text italic mb-4">
-              Cavalier King Charles Spaniel
+              {aboutMode === 'yuya' ? 'Cavalier King Charles Spaniel' : 'Backend-oriented Full Stack Engineer'}
             </div>
-            {/* <div className="text-xl md:text-2xl text-[#A8A8A8] font-crimson-text italic mb-4">
-              Backend-oriented Full Stack Engineer
-            </div> */}
             <p className="text-[#A8A8A8] mt-4 italic">
               Building the future, one line of code at a time.
             </p>
@@ -78,7 +89,7 @@ export default function Footer() {
           </div>
           <div>
             <h3 className="text-2xl font-playfair-display text-[#D4B08C] mb-6">
-              Connect
+              Contact
             </h3>
             <div className="flex space-x-6">
               <div className="relative group inline-block">
@@ -145,7 +156,7 @@ export default function Footer() {
               </div>
             </div>
             <p className="mt-8 text-[#A8A8A8] italic">
-              © 2025 bell. All rights reserved.
+              {aboutMode === 'yuya' ? '©︎ 2025 bell. All rights reserved.' : '©︎ 2025 Yuya Inada. All rights reserved.'}
             </p>
           </div>
         </div>
