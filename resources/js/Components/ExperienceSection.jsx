@@ -209,7 +209,11 @@ export default function ExperienceSection({
               {exp.company} • {exp.period}
             </p>
             <p className="mt-4 text-lg text-white">
-              {exp.description}
+              {(exp.description?.match(/[^。]+。 ?/g) || []).map((sentence, index) => (
+                <p key={index}>
+                  {sentence}
+                </p>
+              ))}
             </p>
 
             {exp.projects && exp.projects.length > 0 && (
@@ -328,12 +332,11 @@ export default function ExperienceSection({
                                 )}
                                 {/* 説明 */}
                                 {latestProject.description ? (
-                                  <p className="mb-2 mt-4 text-base">
-                                    {latestProject.description.length > 150
-                                      ? `${latestProject.description.slice(0, 150)}...`
-                                      : latestProject.description
-                                    }
-                                  </p>
+                                  <div className="mb-2 mt-4 text-base space-y-2">
+                                    {(latestProject.description.match(/[^。]+。?/g) || []).map((sentence, index) => (
+                                      <p key={index}>{sentence}</p>
+                                    ))}
+                                  </div>
                                 ) : (
                                   <p className="mb-2 text-gray-400">説明がありません。</p>
                                 )}
@@ -386,10 +389,11 @@ export default function ExperienceSection({
           />
           {/* Description */}
           <label className="block mb-2 text-sm text-gray-300">Description</label>
-          <input
+          <textarea
             type="text"
             value={experienceFormData.description}
             onChange={e => setFormData({ ...experienceFormData, description: e.target.value })}
+            rows={7}
             className="w-full mb-4 px-3 p-2 bg-[#333] border border-[#555] rounded text-white focus:outline-none focus:ring-2 focus:ring-[#D4B08C]"
           />
           {/* Select Projects */}

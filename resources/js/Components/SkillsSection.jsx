@@ -44,7 +44,15 @@ export default function SkillsSection({ skills }) {
                         alt="Nginx"
                         className="w-16 h-16 object-contain filter invert sepia saturate-100 hue-rotate-[30deg] brightness-[1.2] contrast-[1.1]"
                       />
+                    ) : skill.icon && skill.icon.startsWith('http') ? (
+                      // skill.iconがURLなら画像で表示
+                      <img
+                        src={skill.icon}
+                        alt={skill.name}
+                        className="w-16 h-16"
+                      />
                     ) : (
+                      // それ以外は<i>タグでクラスを指定してアイコンフォントとして表示
                       <i className={`${skill.icon} text-5xl text-[#D4B08C]`}></i>
                     )}
                     <p className="mt-4 text-lg text-center">{skill.name}</p>

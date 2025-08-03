@@ -29,7 +29,10 @@ export default function ProjectsSection(props) {
   // useEffect でスキル一覧を取得
   useEffect(() => {
     axios.get('/api/skills')
-    .then(res => setAllSkills(res.data || res.data.data))
+    .then(res => {
+      console.log('allSkills', res.data);
+      setAllSkills(res.data || res.data.data)
+      })
     .catch(err => console.error('スキル取得失敗', err));
   }, []);
 
@@ -330,7 +333,13 @@ export default function ProjectsSection(props) {
               ) : (
                 <span className="block text-gray-500 block mt-2">GitHubなし</span>
               )}
-              <p className="mt-4 text-lg text-white line-clamp-2">{project.description}</p>
+              <div className="mt-4 text-lg text-white line-clamp-3">
+                {(project.description?.match(/[^。]+。?/g) || []).map((sentence, index) => (
+                  <p key={index}>
+                    {sentence}
+                  </p>
+                ))}
+              </div>
               {project.description.length > 100 && (
                 <div className="mt-2 flex justify-center">
                   <button
@@ -600,7 +609,12 @@ export default function ProjectsSection(props) {
               )}
             </div>
             <div className="mt-4 text-white whitespace-pre-line">
-              {editingProject?.description}
+              {(editingProject?.description?.match(/[^。]+。?/g) || []).map((sentence, index) => (
+                <p key={index}>
+                  {sentence}
+                  {"\n"}
+                </p>
+              ))}
             </div>
           </div>
         </div>
