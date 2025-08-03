@@ -546,7 +546,7 @@ export default function ProjectsSection(props) {
                 {currentIndexMap[editingProject.id] > 0 && (
                   <button
                     onClick={() => scrollPrev(editingProject.id)}
-                    className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-[fff] px-2 py-1 z-10 hover:bg-gray-600 hover:border"
+                    className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-[fff] px-2 py-1 z-5 hover:bg-gray-600 hover:border"
                   >
                     ◀︎
                   </button>
@@ -569,7 +569,7 @@ export default function ProjectsSection(props) {
                 {currentIndexMap[editingProject.id] < editingProject.image_urls.length - 1 && (
                   <button
                     onClick={() => scrollNext(editingProject.id, editingProject.image_urls.length - 1)}
-                    className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-[fff] px-2 py-1 z-10 hover:bg-gray-600 hover:border"
+                    className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-[fff] px-2 py-1 z-5 hover:bg-gray-600 hover:border"
                   >
                     ▶︎
                   </button>
