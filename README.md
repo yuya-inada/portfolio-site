@@ -175,23 +175,23 @@ This portfolio site is deployed to a production environment with the following s
 - 🔒 SSL対応 / SSL Support：Let's Encrypt（via Certbot）
 ```
 ## 🔧 デプロイ手順（概要） / Deployment Steps (Overview)
-```
-　- 1. VPS環境のセットアップ / VPS Setup
-OSの初期設定、Nginx・PHP・MySQL・Node.js等のインストール
-Initial server setup, installing Nginx, PHP, MySQL, Node.js, and other required packages.
-　- 2. Laravelの配置・環境構築 / Laravel Setup
-Git clone → .env設定 → composer install → php artisan migrate --seed
-Cloning the repository, setting up .env, installing dependencies, and running database migrations and seeding.
-　- 3. React（Vite）ビルド / React (Vite) Build
-npm install → npm run build → public/にビルド出力を配置
-Installing packages, building production assets, and placing them in the public/ directory.
-　- 4. Nginxの設定 / Nginx Configuration
-ドメイン設定・SSL証明書の取得・ルーティング設定
-Configuring domain, SSL certificate, and Laravel + Vite routing.
-　-5. セキュリティ・保守 / Security & Maintenance
-ファイアウォール設定、fail2ban導入、API認証の制限など
-Setting up a firewall, enabling fail2ban, restricting admin/API routes, etc.
-```
+
+- 1. VPS環境のセットアップ / VPS Setup
+　　　OSの初期設定、Nginx・PHP・MySQL・Node.js等のインストール
+　　　Initial server setup, installing Nginx, PHP, MySQL, Node.js, and other required packages.
+- 2. Laravelの配置・環境構築 / Laravel Setup
+　　　Git clone → .env設定 → composer install → php artisan migrate --seed
+　　　Cloning the repository, setting up .env, installing dependencies, and running database migrations and seeding.
+- 3. React（Vite）ビルド / React (Vite) Build
+　　　npm install → npm run build → public/にビルド出力を配置
+　　　Installing packages, building production assets, and placing them in the public/ directory.
+- 4. Nginxの設定 / Nginx Configuration
+　　　ドメイン設定・SSL証明書の取得・ルーティング設定
+　　　Configuring domain, SSL certificate, and Laravel + Vite routing.
+- 5. セキュリティ・保守 / Security & Maintenance
+　　　ファイアウォール設定、fail2ban導入、API認証の制限など
+　　　Setting up a firewall, enabling fail2ban, restricting admin/API routes, etc.
+
 ## 🧩 備考 / Notes
  - 本番環境には独自ドメイン（例：owlione.com）を使用しています。SSLはLet’s Encryptを使用。
 A custom domain (e.g., owlione.com) is used for production. SSL is issued via Let’s Encrypt.
