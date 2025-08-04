@@ -175,7 +175,7 @@ This portfolio site is deployed to a production environment with the following s
 - 🔒 SSL対応 / SSL Support：Let's Encrypt（via Certbot）
 ```
 ## 🔧 デプロイ手順（概要） / Deployment Steps (Overview)
-
+```
 　- 1. VPS環境のセットアップ / VPS Setup
 OSの初期設定、Nginx・PHP・MySQL・Node.js等のインストール
 Initial server setup, installing Nginx, PHP, MySQL, Node.js, and other required packages.
