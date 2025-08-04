@@ -150,7 +150,7 @@ npm run dev
 
 # サーバー起動 / Server startup
 php artisan serve
-
+```
 ---
 
 ## 📮 API確認済みエンドポイント例 / Sample Verified API Endpoints
@@ -166,15 +166,15 @@ php artisan serve
 
 このポートフォリオサイトは、以下の構成で本番環境にデプロイしています。
 This portfolio site is deployed to a production environment with the following setup:
-'''
+```
 📍 サーバー / Server：ConoHa VPS（Ubuntu 22.04）
 🔐 Webサーバー / Web Server：Nginx
 🧱 バックエンド / Backend：Laravel 10（PHP 8.2）
 🌐 フロントエンド / Frontend：Vite + React
 🗃️ データベース / Database：MySQL
 🔒 SSL対応 / SSL Support：Let's Encrypt（via Certbot）
-'''
-# 🔧 デプロイ手順（概要） / Deployment Steps (Overview)
+```
+## 🔧 デプロイ手順（概要） / Deployment Steps (Overview)
 　'1. VPS環境のセットアップ / VPS Setup
 OSの初期設定、Nginx・PHP・MySQL・Node.js等のインストール
 Initial server setup, installing Nginx, PHP, MySQL, Node.js, and other required packages.
