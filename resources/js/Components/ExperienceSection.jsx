@@ -357,7 +357,7 @@ export default function ExperienceSection({
     {/* モーダル */}
     {isExperienceModalOpen && (
       <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-        <div className="relative bg-[#1C1C1C] p-6 rounded-lg max-w-md w-full text-white border border-white shadow-2xl shadow-white/60">
+        <div className="relative bg-[#1C1C1C] p-6 rounded-lg max-w-md w-full max-h-[90vh] overflow-y-auto text-white border border-white shadow-2xl shadow-white/60">
           <h2 className="text-xl mb-4 text-[#D4B08C]">
             {editingExperience ? 'Editing Experience' : 'Create Experinece'}
           </h2>
