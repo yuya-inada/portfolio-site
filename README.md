@@ -197,9 +197,10 @@ This portfolio site is deployed to a production environment with the following s
 ---
 
 ## 🧩 備考 / Notes
+```
  - 本番環境には独自ドメイン（例：owlione.com）を使用しています。SSLはLet’s Encryptを使用。
-A custom domain (e.g., owlione.com) is used for production. SSL is issued via Let’s Encrypt.
-
+　　A custom domain (e.g., owlione.com) is used for production. SSL is issued via Let’s Encrypt.
+```
 ---
 ## 📜 ライセンス / License
 
