@@ -175,6 +175,7 @@ This portfolio site is deployed to a production environment with the following s
 - 🔒 SSL対応 / SSL Support：Let's Encrypt（via Certbot）
 ```
 ## 🔧 デプロイ手順（概要） / Deployment Steps (Overview)
+
 　- 1. VPS環境のセットアップ / VPS Setup
 OSの初期設定、Nginx・PHP・MySQL・Node.js等のインストール
 Initial server setup, installing Nginx, PHP, MySQL, Node.js, and other required packages.
@@ -190,7 +191,7 @@ Configuring domain, SSL certificate, and Laravel + Vite routing.
 　-5. セキュリティ・保守 / Security & Maintenance
 ファイアウォール設定、fail2ban導入、API認証の制限など
 Setting up a firewall, enabling fail2ban, restricting admin/API routes, etc.
-
+```
 ## 🧩 備考 / Notes
  - 本番環境には独自ドメイン（例：owlione.com）を使用しています。SSLはLet’s Encryptを使用。
 A custom domain (e.g., owlione.com) is used for production. SSL is issued via Let’s Encrypt.
