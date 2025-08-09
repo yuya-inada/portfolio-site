@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 import { Trash } from 'lucide-react';
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, animate } from "framer-motion";
 
 export default function ExperienceSection({ 
   projects = [],
@@ -102,29 +102,39 @@ export default function ExperienceSection({
   }
   const isMobile = useIsMobile();
 
+  // 画像横スクロール
   const [imageIndices, setImageIndices] = useState({});
   const imageContainerRefs = useRef({});
-  const [direction, setDirection] = useState('next');
   useEffect(() => {
     const initialIndices = {};
     projects.forEach(p => {
-      initialIndices[p.id] =0;
+      initialIndices[p.id] = 0;
     });
     setImageIndices(initialIndices);
   }, [projects]);
-  const handleNext = (projectId, totalImages) => {
-    setDirection('next');
-    setImageIndices(prev => ({
-      ...prev,
-      [projectId]: (prev[projectId] + 1) % totalImages
-    }));
-  };
-  const handlePrev = (projectId, totalImages) => {
-    setDirection('prev');
-    setImageIndices(prev => ({
-      ...prev,
-      [projectId]: (prev[projectId] - 1 + totalImages) % totalImages
-    }));
+
+  const scrollToIndex = (projectId, index) => {
+    const container = imageContainerRefs.current[projectId];
+    if(!container) return;
+
+    const iamge = container.children[index];
+    if(!iamge) return;
+
+    const targetScrollLeft = iamge.offsetLeft;
+
+    animate(container.scrollLeft, targetScrollLeft, {
+      duration: 0.5,
+      ease: "easeOut",
+      onUpdate(value){
+        container.scrollLeft = value;
+      },
+      onComplete(){
+        setImageIndices(prev => ({
+          ...prev,
+          [projectId]: index,
+        }));
+      }
+    });
   };
 
   return (
@@ -257,34 +267,50 @@ export default function ExperienceSection({
                                 </button>
                                 {/* 画像の表示 */}
                                 <div
-                                  ref={e1 => imageContainerRefs.current[latestProject.id] = e1}
                                   className="flex space-x-4 overflow-x-auto scroll-smooth mb-4 mt-6"
                                 >
                                   <div className="relative w-full flex justify-center items-center mb-4">
                                     {imageIndices[latestProject.id] > 0 && (
                                       <button
-                                        onClick={() => handlePrev(latestProject.id, latestProject.image_urls.length)}
-                                        className="absolute left-0 px-2 py-1 bg-black text-[fff] rounded hover:bg-gray-600 hover:border"
+                                        onClick={() => 
+                                          scrollToIndex(
+                                            latestProject.id,
+                                            Math.max(
+                                              imageIndices[latestProject.id] - 1, 0
+                                            )
+                                          )
+                                        }
+                                        className="absolute left-0 px-2 py-1 bg-black text-[#fff] rounded hover:bg-gray-600 hover:border"
                                       >
                                         ◀︎
                                       </button>
                                     )}
-                                    <AnimatePresence mode="wait" initial={false}>
-                                      <motion.img
-                                        key={imageIndices[latestProject.id] || 0}
-                                        src={latestProject.image_urls[imageIndices[latestProject.id] || 0]}
-                                        alt={`${latestProject.title} image`}
-                                        className="h-auto w-auto rounded-lg border border-[#3D3D3D] object-contain"
-                                        initial={{ opacity: 0, x: direction === 'next' ? 300 : -300 }}
-                                        animate={{ opacity: 1, x: 0 }}
-                                        exit={{ opacity: 0, x: direction === 'next' ? -300 : 300 }}
-                                        transition={{ duration: 0.35 }}
-                                      />
-                                    </AnimatePresence>
+                                    {/* 画像リスト */}
+                                    <motion.div
+                                      ref={el => (imageContainerRefs.current[latestProject.id] = el)}
+                                      className="flex space-x-6 overflow-x-hidden"
+                                    >
+                                      {latestProject.image_urls.map((url,idx) => (
+                                        <img
+                                          key={idx}
+                                          src={url}
+                                          alt={`${latestProject.title} image ${idx + 1}`}
+                                          className="h-auto w-auto rounded-lg border border-[#3D3D3D] object-contain"
+                                        />
+                                      ))}
+                                    </motion.div>
                                     {imageIndices[latestProject.id] < latestProject.image_urls.length - 1 && (
                                       <button
-                                        onClick={() => handleNext(latestProject.id, latestProject.image_urls.length)}
-                                        className="absolute right-0 px-2 py-1 bg-black text-[fff] rounded hover:bg-gray-600 hover:border"
+                                        onClick={() => 
+                                          scrollToIndex(
+                                            latestProject.id,
+                                            Math.min(
+                                              imageIndices[latestProject.id] + 1,
+                                              latestProject.image_urls.length - 1
+                                            )
+                                          )
+                                        }
+                                        className="absolute right-0 px-2 py-1 bg-black text-[#fff] rounded hover:bg-gray-600 hover:border"
                                       >
                                         ▶︎
                                       </button>

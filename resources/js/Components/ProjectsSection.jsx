@@ -2,15 +2,12 @@ import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { Trash } from 'lucide-react';
 import { useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, animate } from "framer-motion";
 
 export default function ProjectsSection(props) {
   console.log('ProjectsSection props:', props);
   const { projects: initialProjects, setSkills, onProjectsUpdated } = props;
   const [projects, setProjects] = useState(initialProjects || []);
-  useEffect(() => {
-    setProjects(initialProjects || []);
-  }, [initialProjects]);
   const [editingProject, setEditingProject] = useState(null);
   const [isProjectModalOpen, setIsProjectModalOpen] = useState(false);
   const [isDetailModal, setIsDetailModal] = useState(false);
@@ -21,7 +18,10 @@ export default function ProjectsSection(props) {
     github_url: '',
     image_urls: [''],
   });
-
+  useEffect(() => {
+    setProjects(initialProjects || []);
+  }, [initialProjects]);
+  
   // useStateにスキル一覧と選択中のスキルIDを追加
   const [allSkills, setAllSkills] = useState([]);
   const [selectedSkillIds, setSelectedSkillIds] = useState([]);
@@ -153,22 +153,38 @@ export default function ProjectsSection(props) {
 
   const [currentIndexMap, setCurrentIndexMap] = useState({});
   const imageContainerRefs = useRef({});
-
   const scrollToIndex = (projectId,index) => {
     const container = imageContainerRefs.current[projectId];
     if(!container) return;
 
     const image = container.children[index];
     if(!image) return;
-    container.scrollTo({
-      left: image.offsetLeft,
-      behavior: 'smooth'
+
+    const targetScrollLeft = image.offsetLeft;
+
+    animate(container.scrollLeft, targetScrollLeft, {
+      duration: 0.5,
+      ease: "easeOut",
+      onUpdate(value){
+        container.scrollLeft = value;
+      },
+      onComplete(){
+        setCurrentIndexMap(prev => ({
+          ...prev,
+          [projectId]: index
+        }));
+      }
     });
 
-    setCurrentIndexMap(prev => ({
-      ...prev,
-      [projectId]: index
-    }));
+    // container.scrollTo({
+    //   left: image.offsetLeft,
+    //   behavior: 'smooth'
+    // });
+
+    // setCurrentIndexMap(prev => ({
+    //   ...prev,
+    //   [projectId]: index
+    // }));
   };
   const scrollNext = (projectId, maxIndex) => {
     const currentIndex = currentIndexMap[projectId] || 0;
@@ -182,6 +198,7 @@ export default function ProjectsSection(props) {
       scrollToIndex(projectId, currentIndex - 1);
     }
   };
+
   useEffect(() => {
     if (isDetailModal && editingProject) {
       setCurrentIndexMap(prev => ({
@@ -281,9 +298,10 @@ export default function ProjectsSection(props) {
                     </button>
                   )}
                   {/* 画像リスト */}
-                  <div 
+                  <motion.div 
                     ref={e1 => imageContainerRefs.current[project.id] = e1}
-                    className="flex space-x-6 overflow-x-auto scroll-smooth"
+                    className="flex space-x-6 overflow-x-auto"
+                    // style={{ scrollLeft: scrollX}}
                   >
                     {project.image_urls.map((url,idx) => (
                       <img
@@ -293,7 +311,7 @@ export default function ProjectsSection(props) {
                       className="h-auto w-auto rounded-lg border border-[#3D3D3D] object-contain"
                     />
                     ))}
-                  </div>
+                  </motion.div>
                 </div>
               )}
               {/* スキルアイコン表示部分 */}
