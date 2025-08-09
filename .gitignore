@@ -8,6 +8,11 @@ npm-debug.log
 yarn-error.log
 Thumbs.db
 
+# DB
+/data_only_dump.sql
+/skills.sql
+/skills_backup.sql
+
 # IDE・エディタ関連
 /.fleet
 /.idea
