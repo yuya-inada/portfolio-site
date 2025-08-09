@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { Trash } from 'lucide-react';
 import { useRef } from "react";
-import { motion, AnimatePresence, animate } from "framer-motion";
+import { motion, animate } from "framer-motion";
 
 export default function ProjectsSection(props) {
   console.log('ProjectsSection props:', props);
@@ -151,6 +151,7 @@ export default function ProjectsSection(props) {
   }
   const isMobile = useIsMobile();
 
+  // 画像横スクロール
   const [currentIndexMap, setCurrentIndexMap] = useState({});
   const imageContainerRefs = useRef({});
   const scrollToIndex = (projectId,index) => {
@@ -560,9 +561,9 @@ export default function ProjectsSection(props) {
                   </button>
                 )}
                 {/* 画像リスト */}
-                <div 
+                <motion.div 
                   ref={(e1) => imageContainerRefs.current[editingProject.id] = e1}
-                  className="flex space-x-6 overflow-x-auto scroll-smooth"
+                  className="flex space-x-6 overflow-x-hidden"
                 >
                   {editingProject.image_urls.map((url,idx) => (
                     <img
@@ -572,7 +573,7 @@ export default function ProjectsSection(props) {
                     className="h-auto w-auto rounded-lg border border-[#3D3D3D] object-contain"
                   />
                   ))}
-                </div>
+                </motion.div>
                 {/* 右ボタン */}
                 {currentIndexMap[editingProject.id] < editingProject.image_urls.length - 1 && (
                   <button
