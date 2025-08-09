@@ -218,13 +218,13 @@ export default function ExperienceSection({
             <p className="text-[#A8A8A8] italic mt-4">
               {exp.company} • {exp.period}
             </p>
-            <p className="mt-4 text-lg text-white">
+            <div className="mt-4 text-lg text-white">
               {(exp.description?.match(/[^。]+。 ?/g) || []).map((sentence, index) => (
                 <p key={index}>
                   {sentence}
                 </p>
               ))}
-            </p>
+            </div>
 
             {exp.projects && exp.projects.length > 0 && (
               <div className="mt-6">
