@@ -235,7 +235,7 @@ export default function ProjectsSection(props) {
             プロジェクトの登録はありません。
           </p>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-3xl mx-auto px-4 sm:px-6 md:px-0 overflow-x-hidden">
+        <div className="px-4 sm:px-6 md:px-0 py-6 max-w-3xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
           {[...projects]
             .sort((a,b) => new Date(b.created_at) - new Date(a.created_at))
             .map((project) => (
