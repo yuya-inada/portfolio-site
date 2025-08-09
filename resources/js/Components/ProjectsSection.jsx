@@ -228,7 +228,7 @@ export default function ProjectsSection(props) {
             プロジェクトの登録はありません。
           </p>
       ) : (
-        <div className="flex flex-col gap-8 max-w-3xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
           {[...projects]
             .sort((a,b) => new Date(b.created_at) - new Date(a.created_at))
             .map((project) => (
@@ -237,7 +237,7 @@ export default function ProjectsSection(props) {
               className="bg-[#2A2A2A] p-8 rounded-lg border border-[#3D3D3D] transform transition-all duration-300 hover:scale-[1.01] hover:bg-[#4A4A4A] hover:border-[#D4B08C] hover:shadow-[0_0_15px_rgba(212,176,140,0.3)]"
             >
               <div className="flex justify-between items-start">
-                <h3 className={`text-xl sm:text-3xl font-playfair-display text-[#D4B08C] ${isAuthenticated ? 'truncate max-w-[70%]' : ''}`}>
+                <h3 className={`text-xl sm:text-2xl font-playfair-display text-[#D4B08C] ${isAuthenticated ? 'truncate max-w-[70%]' : ''}`}>
                   {project.title}
                 </h3>
                 {isAuthenticated && (
@@ -333,7 +333,7 @@ export default function ProjectsSection(props) {
               ) : (
                 <span className="block text-gray-500 block mt-2">GitHubなし</span>
               )}
-              <div className="mt-4 text-lg text-white line-clamp-3">
+              <div className="mt-4 text-lg text-white line-clamp-5">
                 {(project.description?.match(/[^。]+。?/g) || []).map((sentence, index) => (
                   <p key={index}>
                     {sentence}

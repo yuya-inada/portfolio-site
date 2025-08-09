@@ -138,27 +138,26 @@ export default function TopIntroSection({ copyEmail }) {
           {showYuya ? (
             <>
             {/* モデル：べるちゃんです */}
-            <p className="mb-4 text-xl">
-              キャバリア8歳女の子、ベルちゃんです🐶
-            </p>
-            <p className="mb-4 text-xl">
-              （2016年10月1日生）
-            </p>
-            <p className="mb-4 text-xl">
-              おっとり穏やかで、これまで一度も人を噛んだことのない心優しい子。
-              でもおやつに関しては「おい、もっとくれよ！」と主張はできます。
-            </p>
-            <p className="mb-4 text-xl">
-              「おすわり、お手、おかわり、待て」は教えてません。
-            </p>
-            <p className="mb-4 text-xl">
-              だって、ぶちゃかわいいだけでいいんです🐶
-            </p>
+            <div className="text-lg">
+              <p className="mb-4">
+                キャバリア8歳女の子、ベルちゃんです🐶
+              </p>
+              <p className="mb-4">
+                おっとり穏やかで、これまで一度も人を噛んだことのない心優しい子。
+                でもおやつに関しては「おい、もっとくれよ！」と主張はできます。
+              </p>
+              <p className="mb-4">
+                「おすわり、お手、おかわり、待て」は教えてません。
+              </p>
+              <p className="mb-4">
+                だって、ぶちゃかわいいだけでいいんです🐶
+              </p>
+            </div>
             </>
           ) : (
             <>
             {/* てめーのAbout Me */}
-            <div className="text-xl leading-relaxed">
+            <div className="text-lg leading-relaxed">
               <p className="mb-4">
                 PHP/Laravelを中心としたWeb開発を得意とする、犬好きなバックエンド寄りのフルスタックエンジニア。
               </p>
