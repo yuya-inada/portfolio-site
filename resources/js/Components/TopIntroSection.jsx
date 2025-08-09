@@ -19,6 +19,18 @@ export default function TopIntroSection({ copyEmail }) {
     localStorage.setItem('profile', newValue ? 'Yuya' : 'Bell');
     window.dispatchEvent(new Event('profileChanged'));
   }
+  const handleConfirmNavigation = (e, url) => {
+    e.preventDefault();
+    if(window.confirm("このリンクを開きますか？")){
+      window.open(url, "_blank", "noopener noreferrer");
+    }
+  };
+  const handleConfirmMailer = (e, url) => {
+    e.preventDefault();
+    if(window.confirm("メールを作成しますか？")){
+      window.open(url, "_blank", "noopener noreferrer");
+    }
+  };
   return (
     <section className="pt-14 pb-20 px-6 bg-[#1C1C1C]" id="about">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-12 items-center text-center">
@@ -66,8 +78,7 @@ export default function TopIntroSection({ copyEmail }) {
             <div className="relative group inline-block">
                 <a
                   href="https://www.instagram.com/owlione_with_obell/"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  onClick={(e) => handleConfirmNavigation(e,"https://www.instagram.com/owlione_with_obell/")}
                   className="text-[#E0E0E0] hover:text-[#D4B08C] transition-colors duration-300"
                 >
                   <i className="fab fa-instagram text-2xl"></i>
@@ -82,8 +93,7 @@ export default function TopIntroSection({ copyEmail }) {
             <div className="relative group inline-block">
                 <a
                   href="https://note.com/inashi_bel"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  onClick={(e) => handleConfirmNavigation(e,"https://note.com/inashi_bel")}
                   className="text-[#E0E0E0] hover:text-[#D4B08C] transition-colors duration-300"
                 >
                   <i className="fas fa-sticky-note text-2xl"></i>
@@ -98,8 +108,7 @@ export default function TopIntroSection({ copyEmail }) {
             <div className="relative group inline-block">
               <a
                 href="https://github.com/yuya-inada"
-                target="_blank"
-                rel="noopener noreferrer"
+                onClick={(e) => handleConfirmNavigation(e, "https://github.com/yuya-inada")}
                 className="text-[#E0E0E0] hover:text-[#D4B08C] transition-colors duration-300"
               >
                 <i className="fab fa-github text-2xl"></i>
@@ -116,6 +125,7 @@ export default function TopIntroSection({ copyEmail }) {
             >
               <a
                 href="mailto:obelu1001@gmail.com"
+                onClick={(e) => handleConfirmMailer(e, "mailto:obelu1001@gmail.com")}
                 className="text-[#E0E0E0] hover:text-[#D4B08C] transition-colors duration-300"
               >
                 <i className="fas fa-envelope text-2xl"></i>
