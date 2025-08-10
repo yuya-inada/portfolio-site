@@ -242,7 +242,7 @@ export default function ProjectsSection(props) {
             .map((project) => (
             <div
               key={project.id}
-              className="bg-[#2A2A2A] p-8 rounded-lg border border-[#3D3D3D] transform transition-all duration-300 hover:scale-[1.01] hover:bg-[#4A4A4A] hover:border-[#D4B08C] hover:shadow-[0_0_15px_rgba(212,176,140,0.3)]"
+              className="bg-[#2A2A2A] p-5 rounded-lg border border-[#3D3D3D] transform transition-all duration-300 hover:scale-[1.01] hover:bg-[#4A4A4A] hover:border-[#D4B08C] hover:shadow-[0_0_15px_rgba(212,176,140,0.3)]"
             >
               <div className="flex justify-between items-start">
                 <h3 className={`text-xl sm:text-2xl font-playfair-display text-[#D4B08C] ${isAuthenticated ? 'truncate max-w-[70%]' : ''}`}>
@@ -342,7 +342,7 @@ export default function ProjectsSection(props) {
               ) : (
                 <span className="text-gray-500 block mt-2 text-sm">GitHubなし</span>
               )}
-              <div className="mt-4 text-lg text-white line-clamp-3">
+              <div className="mt-4 text-base text-white line-clamp-3">
                 {(project.description?.match(/[^。]+。?/g) || []).map((sentence, index) => (
                   <p key={index}>
                     {sentence}
