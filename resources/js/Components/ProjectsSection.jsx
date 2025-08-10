@@ -236,7 +236,7 @@ export default function ProjectsSection(props) {
             プロジェクトの登録はありません。
           </p>
       ) : (
-        <div className="px-4 sm:px-6 md:px-0 py-6 max-w-3xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="px-4 sm:px-6 md:px-0 py-6 max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
           {[...projects]
             .sort((a,b) => new Date(b.created_at) - new Date(a.created_at))
             .map((project) => (
@@ -328,7 +328,7 @@ export default function ProjectsSection(props) {
                   ・Visit site
                 </a>
               ) : (
-                <p className="text-gray-500 mt-4">URLなし</p>
+                <p className="text-gray-500 mt-4 text-sm">URLなし</p>
               )}
               {project.github_url && project.github_url.trim() !== '' ? (
                 <a
@@ -340,7 +340,7 @@ export default function ProjectsSection(props) {
                   ・Visit GitHub
                 </a>
               ) : (
-                <span className="block text-gray-500 block mt-2">GitHubなし</span>
+                <span className="text-gray-500 block mt-2 text-sm">GitHubなし</span>
               )}
               <div className="mt-4 text-lg text-white line-clamp-3">
                 {(project.description?.match(/[^。]+。?/g) || []).map((sentence, index) => (
