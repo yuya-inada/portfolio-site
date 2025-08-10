@@ -342,14 +342,14 @@ export default function ProjectsSection(props) {
               ) : (
                 <span className="block text-gray-500 block mt-2">GitHubなし</span>
               )}
-              <div className="mt-4 text-lg text-white line-clamp-5">
+              <div className="mt-4 text-lg text-white line-clamp-3">
                 {(project.description?.match(/[^。]+。?/g) || []).map((sentence, index) => (
                   <p key={index}>
                     {sentence}
                   </p>
                 ))}
               </div>
-              {project.description.length > 100 && (
+              {project.description.length > 50 && (
                 <div className="mt-2 flex justify-center">
                   <button
                     onClick={() => {
