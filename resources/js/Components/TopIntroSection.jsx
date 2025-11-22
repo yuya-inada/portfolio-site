@@ -148,7 +148,7 @@ export default function TopIntroSection({ copyEmail }) {
           {showYuya ? (
             <>
             {/* モデル：べるちゃんです */}
-            <div className="text-lg">
+            <div className="text-lg text-left">
               <p className="mb-4">
                 キャバリア8歳女の子、ベルちゃんです🐶
               </p>
@@ -167,12 +167,12 @@ export default function TopIntroSection({ copyEmail }) {
           ) : (
             <>
             {/* てめーのAbout Me */}
-            <div className="text-lg leading-relaxed">
+            <div className="text-lg text-left leading-relaxed">
               <p className="mb-4">
                 PHP/Laravelを中心としたWeb開発を得意とする、犬好きなバックエンド寄りのフルスタックエンジニア。
               </p>
               <p className="mb-4">
-                "保守性・拡張性・セキュリティ" を重視し、責務分離や公式ドキュメントに基づいた設計で、堅牢なシステム構築を心がけています。
+                "保守性・拡張性・セキュリティ" を中心に重視し、堅牢で本質を射るシステム構築を心がけています。
               </p>
               <p className="mb-4">
                 ワインボトルメニューサイトや棚卸システム、
